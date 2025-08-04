@@ -35,6 +35,12 @@ String formatPrice({required double amount, String currency = 'NGN'}) {
   ).format(amount);
 }
 
+String createConversationId(
+    {required String senderId, required String receiverId}) {
+  final List<String> sorted = [senderId, receiverId]..sort();
+  return '{$sorted[0]_$sorted[1]}';
+}
+
 // void openLink(String url) async {
 //   final Uri _url = Uri.parse(url);
 //   try {

@@ -28,4 +28,12 @@ class UserProvider extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
+
+  Stream<MyplugUser>? getUserStream() {
+    if (_user != null) {
+      return _userRepo.getUserStream(_user!.id);
+    } else {
+      return null;
+    }
+  }
 }

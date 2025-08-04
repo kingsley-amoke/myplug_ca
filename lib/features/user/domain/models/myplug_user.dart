@@ -25,6 +25,7 @@ class MyplugUser {
   final List<Transaction> transactions;
   final List<Portfolio> portfolios;
   final List<Referee> referees;
+  final List<String> conversations;
   final Referee? referer;
 
   MyplugUser({
@@ -44,6 +45,7 @@ class MyplugUser {
     this.transactions = const [],
     this.portfolios = const [],
     this.referees = const [],
+    this.conversations = const [],
     this.referer,
   });
 
@@ -77,6 +79,7 @@ class MyplugUser {
       referees: (map['referees'] as List? ?? [])
           .map((e) => Referee.fromMap(e as Map<String, dynamic>))
           .toList(),
+      conversations: List<String>.from(map['conversations']),
       referer: map['referer'],
     );
   }
@@ -99,6 +102,7 @@ class MyplugUser {
       'transactions': transactions.map((e) => e.toMap()).toList(),
       'portfolios': portfolios.map((e) => e.toMap()).toList(),
       'referees': referees.map((e) => e.toMap()).toList(),
+      'conversations': conversations,
       'referer': referer,
     };
   }
@@ -119,6 +123,7 @@ class MyplugUser {
     Testimonial? testimonial,
     Transaction? transaction,
     Portfolio? portfolio,
+    String? conversation,
     Referee? referee,
     Referee? referer,
   }) {
@@ -141,6 +146,9 @@ class MyplugUser {
           transaction != null ? [...transactions, transaction] : transactions,
       portfolios: portfolio != null ? [...portfolios, portfolio] : portfolios,
       referees: referee != null ? [...referees, referee] : referees,
+      conversations: conversation != null
+          ? [...conversations, conversation]
+          : conversations,
       referer: referer ?? this.referer,
     );
   }
