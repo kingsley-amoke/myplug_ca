@@ -18,5 +18,8 @@ abstract class UserRepo {
   Future<MyplugUser?> addUser(MyplugUser user);
 
   Future<void> deleteUser(String userId);
+
   Future<MyplugUser> updateProfile(MyplugUser user);
+
+  Stream<List<MyplugUser>> getAllUsersStream();
 }

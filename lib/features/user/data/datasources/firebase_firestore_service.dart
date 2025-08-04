@@ -47,4 +47,16 @@ class FirebaseFirestoreService implements UserProfile {
       return MyplugUser.fromMap(doc.data()!..['id'] = userId);
     });
   }
+
+  @override
+  Stream<List<MyplugUser>> getAllUsersStream() {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) {
+              final data = doc.data();
+              data['id'] = doc.id;
+              return MyplugUser.fromMap(data);
+            }).toList());
+  }
 }

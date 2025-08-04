@@ -34,4 +34,9 @@ class ProfileService implements UserProfile {
   Stream<MyplugUser> getUserStream(String userId) {
     return _userProfileService.getUserStream(userId);
   }
+
+  @override
+  Stream<List<MyplugUser>> getAllUsersStream() {
+    return _userProfileService.getAllUsersStream();
+  }
 }

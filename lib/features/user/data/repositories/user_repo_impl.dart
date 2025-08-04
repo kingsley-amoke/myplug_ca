@@ -68,4 +68,9 @@ class UserRepoImpl implements UserRepo {
   Stream<MyplugUser> getUserStream(String userId) {
     return userProfile.getUserStream(userId);
   }
+
+  @override
+  Stream<List<MyplugUser>> getAllUsersStream() {
+    return userProfile.getAllUsersStream();
+  }
 }
