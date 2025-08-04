@@ -40,4 +40,11 @@ class FirebaseFirestoreService implements UserProfile {
     await _firestore.collection('users').doc(user.id).update(user.toMap());
     return user;
   }
+
+  @override
+  Stream<MyplugUser> getUserStream(String userId) {
+    return _firestore.collection('users').doc(userId).snapshots().map((doc) {
+      return MyplugUser.fromMap(doc.data()!..['id'] = userId);
+    });
+  }
 }

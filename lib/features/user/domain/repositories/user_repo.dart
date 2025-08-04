@@ -3,6 +3,8 @@ import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 abstract class UserRepo {
   MyplugUser? get currentUser;
 
+  Stream<MyplugUser> getUserStream(String userId);
+
   Future<MyplugUser?> signIn({required String email, required String password});
 
   Future<MyplugUser?> signUp({required String email, required String password});

@@ -6,4 +6,5 @@ abstract class UserProfile {
   Future<MyplugUser> updateProfile(MyplugUser user);
   Future<MyplugUser?> addUser(MyplugUser user);
   Future<void> deleteUser(String userId);
+  Stream<MyplugUser> getUserStream(String userId);
 }

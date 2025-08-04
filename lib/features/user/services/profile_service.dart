@@ -29,4 +29,9 @@ class ProfileService implements UserProfile {
   Future<MyplugUser> updateProfile(MyplugUser user) async {
     return await _userProfileService.updateProfile(user);
   }
+
+  @override
+  Stream<MyplugUser> getUserStream(String userId) {
+    return _userProfileService.getUserStream(userId);
+  }
 }

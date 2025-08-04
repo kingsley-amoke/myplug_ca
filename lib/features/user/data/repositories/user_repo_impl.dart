@@ -63,4 +63,9 @@ class UserRepoImpl implements UserRepo {
   Future<MyplugUser> updateProfile(MyplugUser user) async {
     return await userProfile.updateProfile(user);
   }
+
+  @override
+  Stream<MyplugUser> getUserStream(String userId) {
+    return userProfile.getUserStream(userId);
+  }
 }
