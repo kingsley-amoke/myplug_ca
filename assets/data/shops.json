@@ -1,0 +1,171 @@
+[
+  {
+    "name": "Land & Property",
+    "icon": "island",
+    "_id": "1722476755674",
+    "subshops": [
+      { "name": "Houses" },
+      { "name": "Land" },
+      { "name": "Event Centers/Workstations/Meeting & conference room" }
+    ],
+    "color": "#006400"
+  },
+  {
+    "subshops": [
+      { "name": "Spare parts & Accessories" },
+      { "name": "Cars" },
+      { "name": "Buses & Mini Buses" },
+      { "name": "Trucks & Trailers" },
+      { "name": "Bikes" }
+    ],
+    "_id": "1722476994510",
+    "icon": "car",
+    "name": "Vehicles",
+    "color": "#FF0000"
+  },
+  {
+    "name": "Phones / Tablets & Accessories",
+    "subshops": [
+      { "name": "Mobile Phones" },
+      { "name": "Accessories" },
+      { "name": "Tablets" },
+      { "name": "Other Gadgets" }
+    ],
+    "_id": "1722477121428",
+    "icon": "tablet-android"
+  },
+  {
+    "subshops": [
+      { "name": "TV & Monitor" },
+      { "name": "Computers & Laptops" },
+      { "name": "Audio & Music Equipment" },
+      { "name": "Security & Surveillance" },
+      { "name": "Electronic Accessories" },
+      { "name": "Printers & Scanners" },
+      { "name": "Video Game Consoles" },
+      { "name": "Photo and Video Cameras" },
+      { "name": "Softwares" },
+      { "name": "Video Games" },
+      { "name": "Headphones & Other Electronic Gadgets" }
+    ],
+    "_id": "1722477369682",
+    "icon": "youtube-tv",
+    "name": "Electronics & Computers",
+    "color": "#b7281e"
+  },
+  {
+    "subshops": [
+      { "name": "Furniture" },
+      { "name": "Home Accessories" },
+      { "name": "Home/Kitchen Appliances" }
+    ],
+    "name": "Home Equipment & Furniture",
+    "color": "#0000FF",
+    "_id": "1722477454608",
+    "icon": "home-search"
+  },
+  {
+    "icon": "hanger",
+    "color": "#964B00",
+    "name": "Fashion",
+    "_id": "1722477523082",
+    "subshops": [
+      { "name": "Clothing" },
+      { "name": "Shoes" },
+      { "name": "Bags" },
+      { "name": "Watches & Other Accessories" },
+      { "name": "Bridal & Accessories" }
+    ]
+  },
+  {
+    "_id": "1722477632295",
+    "color": "#c90076",
+    "icon": "face-woman-shimmer-outline",
+    "name": "Beauty Treatments & Accessories",
+    "subshops": [
+      { "name": "Soap & Body wash" },
+      { "name": "Skin Care" },
+      { "name": "Tools & Accessories" },
+      { "name": "Fragrances" },
+      { "name": "Make-up" },
+      { "name": "Sexual Enhancement Accessories" }
+    ]
+  },
+  {
+    "name": "Animals & Pets",
+    "icon": "dog-side",
+    "subshops": [
+      { "name": "Dogs & Puppies" },
+      { "name": "Cats & Kitten" },
+      { "name": "Fish" },
+      { "name": "Other Animals" },
+      { "name": "Feeds" }
+    ],
+    "color": "#d4af37",
+    "_id": "1722477808760"
+  },
+  {
+    "color": "#38761d",
+    "_id": 1732483129193,
+    "name": "Beverages",
+    "subshops": [
+      { "name": "Palm wine" },
+      { "name": "Beer" },
+      { "name": "Soft drinks" },
+      { "name": "Juice" },
+      { "name": "Yoghurt" },
+      { "name": "Wine" },
+      { "name": "Gin" }
+    ],
+    "icon": "bottle-soda-classic"
+  },
+  {
+    "color": "#FF5B00",
+    "subshops": [
+      { "name": "Apples" },
+      { "name": "Mangoes" },
+      { "name": "Bananas" },
+      { "name": "Oranges" },
+      { "name": "Paw Paw" },
+      { "name": "Water Melon" },
+      { "name": "Cucumber" },
+      { "name": "Cherries" }
+    ],
+    "name": "Fruits",
+    "_id": 1732484744613,
+    "icon": "fruit-citrus"
+  },
+  {
+    "icon": "hamburger",
+    "name": "Pastries",
+    "color": "#e5cb7a",
+    "subshops": [
+      { "name": "Ice Cream" },
+      { "name": "Parfait" },
+      { "name": "Shawarma" },
+      { "name": "Burgers" },
+      { "name": "Smoothie" }
+    ],
+    "_id": 1732486290549
+  },
+  {
+    "name": "Food Stuffs",
+    "icon": "fish",
+    "subshops": [
+      { "name": "Garri" },
+      { "name": "Rice" },
+      { "name": "Beans" },
+      { "name": "Corn" },
+      { "name": "Yam" },
+      { "name": "Plantain" },
+      { "name": "Beef" },
+      { "name": "Chicken" },
+      { "name": "Pork" },
+      { "name": "Fish" },
+      { "name": "Stockfish" },
+      { "name": "Crayfish" }
+    ],
+    "color": "#31c4a0",
+    "_id": 1732486539153
+  }
+]

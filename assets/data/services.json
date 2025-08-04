@@ -1,0 +1,234 @@
+[
+  {
+    "name": "AC & Refrigeration",
+    "color": "#a0d9ef",
+    "icon": "air-filter",
+    "_id": "1724794638083",
+    "image": "assets/images/ac.png"
+  },
+  {
+    "_id": "1724794638158",
+    "name": "Aluminium Glass",
+    "icon": "window-closed-variant",
+    "image": "https://img.freepik.com/premium-psd/open-window-with-white-frame_632498-18216.jpg",
+    "color": "#16537e"
+  },
+  {
+    "_id": "1724794638159",
+    "color": "#a8926e",
+    "name": "Carpentry",
+    "icon": "hammer"
+  },
+  {
+    "color": "#bcbcbc",
+    "name": "Catering",
+    "_id": "1724794638160",
+    "icon": "silverware-spoon"
+  },
+  {
+    "color": "#8d752b",
+    "icon": "home-lightning-bolt-outline",
+    "name": "Electrical",
+    "_id": "1724794638161"
+  },
+  { "_id": "1724794638162", "icon": "flower", "name": "Home Decoration" },
+  { "icon": "car-select", "name": "Mechanic", "_id": "1724794638163" },
+  { "_id": "1724794638164", "icon": "format-paint", "name": "Painting" },
+  { "_id": "1724794638165", "name": "Laptop Repairs", "icon": "laptop" },
+  { "icon": "pipe-valve", "name": "Plumbing", "_id": "1724794638166" },
+  {
+    "name": "Dispatch",
+    "color": "#ffd966",
+    "icon": "truck-delivery-outline",
+    "_id": "1724794638167"
+  },
+  { "_id": "1724794638168", "icon": "taxi", "name": "Taxi" },
+  {
+    "color": "#c0c0c0",
+    "name": "Appliances & Electronics",
+    "icon": "radio",
+    "_id": "1724795787628"
+  },
+  { "name": "Barbing", "_id": "1724795787700", "icon": "scissors-cutting" },
+  { "name": "Gardening", "_id": "1724795787701", "icon": "xmpp" },
+  { "icon": "alpha-m-box", "name": "Makeup Artist", "_id": "1724795787702" },
+  { "icon": "cellphone-cog", "_id": "1724795787703", "name": "Phone Repairs" },
+  { "icon": "tow-truck", "_id": "1724795787704", "name": "Towing" },
+  { "_id": "1724795787705", "icon": "gas-cylinder", "name": "Welding" },
+  {
+    "color": "#a70c67",
+    "name": "Cleaning",
+    "icon": "spray-bottle",
+    "_id": "1724795968683"
+  },
+  { "icon": "car-electric", "name": "Rewire", "_id": "1724795968762" },
+  { "icon": "camera-iris", "name": "Photography", "_id": "1724795968763" },
+  { "name": "Masonry", "_id": "1724796016651", "icon": "home-city-outline" },
+  {
+    "name": "CCTV Installation",
+    "_id": "2vzYoL9jpWYUjXipwroF",
+    "color": "#cc0000",
+    "icon": "cctv"
+  },
+  {
+    "_id": "7PkLwUb83zLEcqMmYYpl",
+    "icon": "printer",
+    "name": "Printing  / Publishing",
+    "subcategories": [
+      { "name": "Graphics designer" },
+      { "name": "Typist" },
+      { "name": "Printer" }
+    ]
+  },
+  { "name": "MC/Comedian", "_id": "AbnbzB5WnMImj4sRRj5d" },
+  {
+    "icon": "cake-layered",
+    "name": "Bridals",
+    "color": "#7f6c33",
+    "_id": "C4DNErOVnNqOnD9JK912",
+    "subcategories": [
+      { "name": "Wedding gowns" },
+      { "name": "Accessories" },
+      { "name": "Others" }
+    ]
+  },
+  {
+    "color": "",
+    "icon": "washing-machine",
+    "_id": "Dyq9D9et9oRA82Fay4oX",
+    "name": "Laundry"
+  },
+  {
+    "name": "Fashion Designer",
+    "_id": "EicYLt1d2JkwN1RTWb52",
+    "subcategories": [{ "name": "Male" }, { "name": "Female" }]
+  },
+  {
+    "color": "#e69138",
+    "_id": "FrVHhI8BB0g95PEGFAyC",
+    "icon": "cake-variant",
+    "subcategories": [
+      { "name": "Bread bakers" },
+      { "name": "Cake bakers" },
+      { "name": "Cake designers" }
+    ],
+    "name": "Baking / Pastries"
+  },
+  { "name": "Massage Therapist/Masseuse", "_id": "GnASgh2CkysCa8PS8mkx" },
+  {
+    "_id": "OaKHnnsNzEIUwmCboHvl",
+    "name": "Movies production",
+    "subcategories": [
+      { "name": "Producer" },
+      { "name": "Director" },
+      { "name": "Camera" },
+      { "name": "Editor" },
+      { "name": "Others" }
+    ],
+    "icon": "record-rec",
+    "color": "#cc1b1b"
+  },
+  {
+    "name": "Beauty treatments/Manicure/Pedicure",
+    "image": "salon.png",
+    "icon": "hair-dryer",
+    "_id": "OzDAQCVXc1zSfqsokds7",
+    "color": "#01daec"
+  },
+  {
+    "icon": "truck-delivery-outline",
+    "name": "Errands / Dispatch",
+    "subcategories": [{ "name": "Dispatch riders" }, { "name": "Errands" }],
+    "_id": "W812WjVQdNmt53GKAMKe",
+    "color": "#2986cc"
+  },
+  {
+    "_id": "XHnTcilzdFdJdqQ9blKT",
+    "color": "#c1853b",
+    "name": "Restaurants",
+    "icon": "food"
+  },
+  {
+    "subcategories": [
+      { "name": "Passport/photographs" },
+      { "name": "Birthday coverage" },
+      { "name": "Wedding coverage" },
+      { "name": "Burial coverage" },
+      { "name": "Naming ceremony" }
+    ],
+    "_id": "cK3DgYwdwxF1D4UQxRaa",
+    "icon": "camera-outline",
+    "name": "Photographer / VideoGrapher"
+  },
+  {
+    "name": "Music Production",
+    "color": "#2986cc",
+    "_id": "dI6UrwJOYU6yBot9noMM",
+    "subcategories": [{ "name": "Producer" }, { "name": "Backup singer" }],
+    "icon": "music"
+  },
+  {
+    "name": "Pharmaceuticals / First Aiders",
+    "_id": "eqU6TF0k7mHHeOK4lGGy",
+    "color": "#db1919",
+    "icon": "account-injury-outline"
+  },
+  {
+    "name": "Poultry farmer",
+    "icon": "turkey",
+    "color": "#3ac900",
+    "_id": "kBvifnaoST8Q1gCs4Y3h"
+  },
+  {
+    "name": "Instrumentalists",
+    "icon": "guitar-acoustic",
+    "color": "#85311b",
+    "subcategories": [
+      { "name": "Drummer" },
+      { "name": "Keyboardist" },
+      { "name": "Guitarist" },
+      { "name": "Sound engineer" },
+      { "name": "Others" }
+    ],
+    "_id": "mw8a8FgpWjl9Fz9T5DS5"
+  },
+  {
+    "_id": "qgsYKrY0tqzDL3KlplqE",
+    "icon": "cow",
+    "color": "#3ac900",
+    "name": "Cattle Herders"
+  },
+  {
+    "_id": "ropAdhss6pXMuYCfgsXy",
+    "icon": "table-chair",
+    "color": "#fda216",
+    "subcategories": [
+      { "name": "Canopies" },
+      { "name": "Tents" },
+      { "name": "Chairs" },
+      { "name": "Tables" },
+      { "name": "Pots" },
+      { "name": "Coolers" },
+      { "name": "Cooling van" },
+      { "name": "Decorations" },
+      { "name": "Others" }
+    ],
+    "name": "Rentals/Events"
+  },
+  {
+    "name": "Motor Spare parts",
+    "_id": "w4K4XlOhD8OQAmWI5AV9",
+    "icon": "tools"
+  },
+  {
+    "name": "Cobbler",
+    "_id": "zyJtm1O39VgxXKDcesnv",
+    "subcategories": [
+      { "name": "Shoe designer" },
+      { "name": "Shoe maker" },
+      { "name": "Polishing" }
+    ],
+    "icon": "shoe-formal",
+    "color": "#85311b"
+  }
+]

@@ -1,0 +1,147 @@
+import 'package:myplug_ca/features/user/domain/models/referee.dart';
+import 'package:myplug_ca/features/user/domain/models/testimonial.dart';
+
+import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
+
+import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+
+import 'package:myplug_ca/features/user/domain/models/location.dart';
+import 'package:myplug_ca/features/user/domain/models/skill.dart';
+
+class MyplugUser {
+  final String id;
+  final String email;
+  final String? firstName;
+  final String? lastName;
+  final String? phone;
+  final double balance;
+  final double bonus;
+  final bool isAdmin;
+  final bool isSuspended;
+  final String? image;
+  final UserLocation? location;
+  final List<Skill> skills;
+  final List<Testimonial> testimonials;
+  final List<Transaction> transactions;
+  final List<Portfolio> portfolios;
+  final List<Referee> referees;
+  final Referee? referer;
+
+  MyplugUser({
+    required this.id,
+    required this.email,
+    this.firstName,
+    this.lastName,
+    this.phone,
+    this.balance = 0.0,
+    this.bonus = 0.0,
+    this.isAdmin = false,
+    this.isSuspended = false,
+    this.image,
+    this.location,
+    this.skills = const [],
+    this.testimonials = const [],
+    this.transactions = const [],
+    this.portfolios = const [],
+    this.referees = const [],
+    this.referer,
+  });
+
+  factory MyplugUser.fromMap(Map<String, dynamic> map) {
+    return MyplugUser(
+      id: map['id'],
+      email: map['email'],
+      firstName: map['firstName'],
+      lastName: map['lastName'],
+      phone: map['phone'],
+      balance: (map['balance'] ?? 0).toDouble(),
+      bonus: (map['bonus'] ?? 0).toDouble(),
+      isAdmin: map['isAdmin'] ?? false,
+      isSuspended: map['isSuspended'] ?? false,
+      image: map['image'],
+      location: map['location'] != null
+          ? UserLocation.fromMap(map['location'] as Map<String, dynamic>)
+          : null,
+      skills: (map['skills'] as List? ?? [])
+          .map((e) => Skill.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      testimonials: (map['testimonials'] as List? ?? [])
+          .map((e) => Testimonial.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      transactions: (map['transactions'] as List? ?? [])
+          .map((e) => Transaction.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      portfolios: (map['portfolios'] as List? ?? [])
+          .map((e) => Portfolio.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      referees: (map['referees'] as List? ?? [])
+          .map((e) => Referee.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      referer: map['referer'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'phone': phone,
+      'balance': balance,
+      'bonus': bonus,
+      'isAdmin': isAdmin,
+      'isSuspended': isSuspended,
+      'image': image,
+      'location': location?.toMap(),
+      'skills': skills.map((e) => e.toMap()).toList(),
+      'testimonials': testimonials.map((e) => e.toMap()).toList(),
+      'transactions': transactions.map((e) => e.toMap()).toList(),
+      'portfolios': portfolios.map((e) => e.toMap()).toList(),
+      'referees': referees.map((e) => e.toMap()).toList(),
+      'referer': referer,
+    };
+  }
+
+  MyplugUser copyWith({
+    String? id,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? phone,
+    double? balance,
+    double? bonus,
+    bool? isAdmin,
+    bool? isSuspended,
+    String? image,
+    UserLocation? location,
+    Skill? skill,
+    Testimonial? testimonial,
+    Transaction? transaction,
+    Portfolio? portfolio,
+    Referee? referee,
+    Referee? referer,
+  }) {
+    return MyplugUser(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phone: phone ?? this.phone,
+      balance: balance ?? this.balance,
+      bonus: bonus ?? this.bonus,
+      isAdmin: isAdmin ?? this.isAdmin,
+      isSuspended: isSuspended ?? this.isSuspended,
+      image: image ?? this.image,
+      location: location ?? this.location,
+      skills: skill != null ? [...skills, skill] : skills,
+      testimonials:
+          testimonial != null ? [...testimonials, testimonial] : testimonials,
+      transactions:
+          transaction != null ? [...transactions, transaction] : transactions,
+      portfolios: portfolio != null ? [...portfolios, portfolio] : portfolios,
+      referees: referee != null ? [...referees, referee] : referees,
+      referer: referer ?? this.referer,
+    );
+  }
+}

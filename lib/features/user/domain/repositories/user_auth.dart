@@ -1,0 +1,8 @@
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+
+abstract class UserAuth {
+  Future<MyplugUser?> signIn({required String email, required String password});
+  Future<MyplugUser?> signUp({required String email, required String password});
+  Future<void> logout();
+  MyplugUser? get currentUser;
+}
