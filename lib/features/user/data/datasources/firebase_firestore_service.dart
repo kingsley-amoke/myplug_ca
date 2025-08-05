@@ -3,7 +3,9 @@ import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
 
 class FirebaseFirestoreService implements UserProfile {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
+
+  FirebaseFirestoreService(this._firestore);
 
   @override
   Future<MyplugUser?> loadUser(String userId) async {

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ void main() async {
               FirebaseAuthService(FirebaseAuth.instance),
             ),
             userProfile: ProfileService(
-              FirebaseFirestoreService(),
+              FirebaseFirestoreService(FirebaseFirestore.instance),
             ),
           ),
         ),
@@ -38,7 +39,7 @@ void main() async {
         create: (_) => ProductProvider(
           ProductRepoImpl(
             DatabaseService(
-              ProductFirestoreService(),
+              ProductFirestoreService(FirebaseFirestore.instance),
             ),
           ),
         )..loadProducts(),

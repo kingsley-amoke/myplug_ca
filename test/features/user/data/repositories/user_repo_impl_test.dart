@@ -74,5 +74,26 @@ void main() {
       //ASSERT
       expect(user, expectedUser);
     });
+    test('load all user', () async {
+      //ARRANGE
+      final expectedAllUsers = demoUsers;
+      when(() => mockProfileService.loadAllUsers())
+          .thenAnswer((_) async => demoUsers);
+      //ACT
+      final users = await userRepoImpl.loadAllUsers();
+
+      //ASSERT
+      expect(users, expectedAllUsers);
+    });
+    test('add user', () async {
+      //ARRANGE
+      when(() => mockProfileService.addUser(demoUsers[0]))
+          .thenAnswer((_) async => expectedUser);
+      //ACT
+      final user = await userRepoImpl.addUser(demoUsers[0]);
+
+      //ASSERT
+      expect(user, expectedUser);
+    });
   });
 }

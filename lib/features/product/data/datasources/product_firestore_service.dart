@@ -3,7 +3,9 @@ import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/features/product/domain/repositories/product_repository.dart';
 
 class ProductFirestoreService implements ProductRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
+
+  ProductFirestoreService(this._firestore);
 
   @override
   Future<Product?> loadProduct(String productId) async {
