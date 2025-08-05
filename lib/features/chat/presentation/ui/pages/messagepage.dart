@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
+import 'package:myplug_ca/features/product/presentation/ui/pages/product_details.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class MessagePage extends StatelessWidget {
@@ -16,12 +18,12 @@ class MessagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(otherUser.fullname)),
+      appBar: myAppbar(context, title: otherUser.fullname ?? 'Chat'),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              reverse: true,
+              reverse: false,
               itemCount: messages.length,
               itemBuilder: (context, index) {
                 final msg = messages[messages.length - 1 - index];

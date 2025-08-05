@@ -119,7 +119,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                           ),
                           Text(
-                            widget.product.seller.fullname.toCapitalCase(),
+                            widget.product.seller.fullname,
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 20,

@@ -4,6 +4,7 @@ import 'package:flutter_product_card/flutter_product_card.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
+import 'package:myplug_ca/features/product/presentation/ui/pages/product_details.dart';
 
 
 class MyProductCard extends StatelessWidget {
@@ -13,9 +14,9 @@ class MyProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProductCard(
       onTap: () {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(builder: (_) => ProductDetails(product: product)),
-        // );
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => ProductDetails(product: product)),
+        );
       },
       
       image: product.images.isEmpty

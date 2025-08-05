@@ -11,6 +11,7 @@ import 'package:myplug_ca/features/user/domain/models/skill.dart';
 class MyplugUser {
   final String id;
   final String email;
+  final String? bio;
   final String? firstName;
   final String? lastName;
   final String? phone;
@@ -31,6 +32,7 @@ class MyplugUser {
   MyplugUser({
     required this.id,
     required this.email,
+    this.bio,
     this.firstName,
     this.lastName,
     this.phone,
@@ -53,6 +55,7 @@ class MyplugUser {
     return MyplugUser(
       id: map['id'],
       email: map['email'],
+      bio: map['bio'],
       firstName: map['firstName'],
       lastName: map['lastName'],
       phone: map['phone'],
@@ -90,6 +93,7 @@ class MyplugUser {
     return {
       'id': id,
       'email': email,
+      'bio': bio,
       'firstName': firstName,
       'lastName': lastName,
       'phone': phone,
@@ -112,6 +116,7 @@ class MyplugUser {
   MyplugUser copyWith({
     String? id,
     String? email,
+    String? bio,
     String? firstName,
     String? lastName,
     String? phone,
@@ -132,6 +137,7 @@ class MyplugUser {
     return MyplugUser(
       id: id ?? this.id,
       email: email ?? this.email,
+      bio: bio ?? this.bio,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       phone: phone ?? this.phone,

@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:myplug_ca/core/constants/conversations.dart';
+import 'package:myplug_ca/core/constants/users.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class UserProvider extends ChangeNotifier {
   final UserRepoImpl _userRepo;
 
-  MyplugUser? _user;
+  MyplugUser? _user = demoUsers[0];
 
   MyplugUser? get myplugUser => _user;
 
