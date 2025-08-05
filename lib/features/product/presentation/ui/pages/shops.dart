@@ -14,7 +14,7 @@ class Shops extends StatelessWidget {
         itemBuilder: ((context, index) {
           final shop = shops[index];
           return ListTile(
-            title: Text(shop.name, style: TextStyle(color: Colors.black)),
+            title: Text(shop.name, style: const TextStyle(color: Colors.black)),
             leading: CircleAvatar(child: Image.asset(shop.image)),
             onTap: () {
               Navigator.of(context).push(
@@ -24,7 +24,7 @@ class Shops extends StatelessWidget {
           );
         }),
         separatorBuilder: (context, index) {
-          return Divider(indent: 15);
+          return const Divider(indent: 15);
         },
         itemCount: shops.length,
       ),

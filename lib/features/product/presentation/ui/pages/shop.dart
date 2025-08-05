@@ -4,7 +4,6 @@ import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/product/presentation/ui/widgets/product_grid.dart';
 // import 'package:myplug/providers/product_provider.dart';
-import 'package:provider/provider.dart';
 
 class Shop extends StatefulWidget {
   const Shop({super.key, required this.shop});

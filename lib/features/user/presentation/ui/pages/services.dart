@@ -15,7 +15,7 @@ class Services extends StatelessWidget {
           final service = services[index];
 
           return ListTile(
-            title: Text(service.name, style: TextStyle(color: Colors.black)),
+            title: Text(service.name, style: const TextStyle(color: Colors.black)),
             leading: CircleAvatar(child: Image.asset(service.image)),
             onTap: () {
               Navigator.of(context).push(
@@ -25,7 +25,7 @@ class Services extends StatelessWidget {
           );
         }),
         separatorBuilder: (context, index) {
-          return Divider(indent: 15);
+          return const Divider(indent: 15);
         },
         itemCount: services.length,
       ),

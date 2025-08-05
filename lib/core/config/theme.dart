@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData myTheme = ThemeData(
-  primaryColor: Color.fromARGB(255, 218, 165, 121),
+  primaryColor: const Color.fromARGB(255, 218, 165, 121),
   appBarTheme: AppBarTheme(backgroundColor: Colors.grey[50]),
   scaffoldBackgroundColor: Colors.grey[50],
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -9,10 +9,10 @@ ThemeData myTheme = ThemeData(
   ),
   bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey[200]),
   unselectedWidgetColor: Colors.grey[500],
-  textTheme: TextTheme(displaySmall: TextStyle(color: Colors.black)),
+  textTheme: const TextTheme(displaySmall: TextStyle(color: Colors.black)),
   colorScheme: ColorScheme(
     brightness: Brightness.light,
-    primary: Color.fromARGB(255, 218, 165, 121),
+    primary: const Color.fromARGB(255, 218, 165, 121),
     onPrimary: Colors.grey.shade300,
     secondary: Colors.deepOrange,
     onSecondary: Colors.black87,

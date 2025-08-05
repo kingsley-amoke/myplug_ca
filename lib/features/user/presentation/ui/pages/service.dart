@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/features/user/domain/models/skill.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
-import 'package:provider/provider.dart';
 
 class Service extends StatefulWidget {
   const Service({super.key, required this.service});

@@ -39,14 +39,14 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Services'),
+                      const Text('Services'),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (_) => const Services()),
                           );
                         },
-                        child: Text('See all'),
+                        child: const Text('See all'),
                       ),
                     ],
                   ),
@@ -54,14 +54,14 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Shops'),
+                      const Text('Shops'),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (_) => const Shops()),
                           );
                         },
-                        child: Text('See all'),
+                        child: const Text('See all'),
                       ),
                     ],
                   ),

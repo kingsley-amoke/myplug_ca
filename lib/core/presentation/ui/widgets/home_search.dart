@@ -15,7 +15,7 @@ class HomeSearch extends StatelessWidget {
       height: 240,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.only(bottomRight: Radius.circular(120)),
+        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(120)),
       ),
       child: Column(
         children: [
@@ -28,7 +28,7 @@ class HomeSearch extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Hi, Ibanga',
                     style: TextStyle(
                       color: Colors.white,
@@ -64,11 +64,11 @@ class HomeSearch extends StatelessWidget {
               Expanded(
                 child: MyInput(
                   controller: searchController,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   hintText: 'What can we do for you today?',
                 ),
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
             ],
           ),
         ],

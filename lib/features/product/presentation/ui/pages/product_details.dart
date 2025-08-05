@@ -72,7 +72,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           );
                         },
                         separatorBuilder: (context, index) {
-                          return VerticalDivider();
+                          return const VerticalDivider();
                         },
                         itemCount: images.length,
                       ),
@@ -94,7 +94,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   const SizedBox(height: 20),
                   Text(
                     widget.product.title.toSentenceCase(),
-                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -102,7 +102,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Text(
                         formatPrice(amount: widget.product.price),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -156,7 +156,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               length: 2,
               child: Column(
                 children: [
-                  TabBar(
+                  const TabBar(
                     labelStyle: TextStyle(fontWeight: FontWeight.bold),
                     unselectedLabelStyle: TextStyle(
                       color: Colors.black,
@@ -187,8 +187,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                           itemBuilder: (context, index) {
                             final Rating item = widget.product.ratings[index];
                             return Container(
-                              margin: EdgeInsets.symmetric(vertical: 12),
-                              padding: EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: Colors.white,
@@ -197,7 +197,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     color: Colors.grey.withAlpha(50),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -206,7 +206,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 children: [
                                   Text(
                                     item.username.toSentenceCase(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -226,7 +226,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   const SizedBox(height: 5),
                                   Text(
                                     item.comment.toSentenceCase(),
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 ],
                               ),

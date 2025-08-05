@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/conversations.dart';
+import 'package:myplug_ca/core/constants/messages.dart';
 import 'package:myplug_ca/core/constants/users.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/messagepage.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/widgets/chat_item.dart';
@@ -60,7 +61,7 @@ class _ChatPageState extends State<ChatPage> {
                         builder: (_) => MessagePage(
                             currentUserId: currentUserId,
                             otherUser: otherUser,
-                            messages: [])));
+                            messages: demoMessages)));
                   },
                 );
               },

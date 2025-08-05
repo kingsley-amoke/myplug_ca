@@ -12,10 +12,10 @@ class BottomNav extends StatefulWidget {
 final List<Widget> _screens = [
   const ChatPage(),
   // Jobs(),
-  Scaffold(),
+  const Scaffold(),
  const HomePage(),
-  Scaffold(),
-  Scaffold(),
+  const Scaffold(),
+  const Scaffold(),
   // Wallet(),
   // Settings(),
 ];

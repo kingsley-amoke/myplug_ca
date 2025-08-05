@@ -7,14 +7,14 @@ PreferredSizeWidget myAppbar(
 }) {
   return AppBar(
     automaticallyImplyLeading: implyLeading,
-    title: Text(title, style: TextStyle(color: Colors.black)),
+    title: Text(title, style: const TextStyle(color: Colors.black)),
     centerTitle: true,
     leading: implyLeading
         ? IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.chevron_left, color: Colors.black),
+            icon: const Icon(Icons.chevron_left, color: Colors.black),
           )
         : null,
   );

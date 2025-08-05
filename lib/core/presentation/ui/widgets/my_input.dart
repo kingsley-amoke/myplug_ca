@@ -44,7 +44,7 @@ class MyInput extends StatelessWidget {
           color: Theme.of(context).colorScheme.onPrimary,
           fontSize: 16.0,
         ),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).colorScheme.onSurface,

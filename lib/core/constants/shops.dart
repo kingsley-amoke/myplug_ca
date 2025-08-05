@@ -3,7 +3,7 @@ import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
 //shop categories
 
 final List<MyplugShop> shops = [
-  MyplugShop(
+  const MyplugShop(
     id: 1,
     image: "assets/images/shops/house.png",
     name: "Land & Property",
@@ -13,7 +13,7 @@ final List<MyplugShop> shops = [
       "Event Centers/Workstations/Meeting & conference room",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 2,
     image: "assets/images/shops/vehicles.png",
     name: "Vehicles",
@@ -25,13 +25,13 @@ final List<MyplugShop> shops = [
       "Bikes",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 3,
     image: "assets/images/shops/smartphones.png",
     name: "Phones / Tablets & Accessories",
     subshop: ["Mobile Phones", "Accessories", "Tablets", "Other Gadgets"],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 4,
     image: "assets/images/shops/house.png",
     name: "Electronics & Computers",
@@ -49,13 +49,13 @@ final List<MyplugShop> shops = [
       "Headphones & Other Electronic Gadgets",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 5,
     image: "assets/images/shops/furniture.png",
     name: "Home Equipment & Furniture",
     subshop: ["Furniture", "Home Accessories", "Home/Kitchen Appliances"],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 6,
     image: "assets/images/shops/house.png",
     name: "Fashion",
@@ -67,7 +67,7 @@ final List<MyplugShop> shops = [
       "Bridal & Accessories",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 7,
     image: "assets/images/shops/house.png",
     name: "Beauty Treatments",
@@ -80,7 +80,7 @@ final List<MyplugShop> shops = [
       "Sexual Enhancement Accessories",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 8,
     image: "assets/images/shops/pets.png",
     name: "Animals & Pets",
@@ -92,7 +92,7 @@ final List<MyplugShop> shops = [
       "Feeds",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 9,
     image: "assets/images/shops/beverages.png",
     name: "Beverages",
@@ -106,7 +106,7 @@ final List<MyplugShop> shops = [
       "Gin",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 10,
     image: "assets/images/shops/fruits.png",
     name: "Fruits",
@@ -121,13 +121,13 @@ final List<MyplugShop> shops = [
       "Cherries",
     ],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 11,
     image: "assets/images/shops/icecream.png",
     name: "Pastries",
     subshop: ["Ice Cream", "Parfait", "Shawarma", "Burgers", "Smoothie"],
   ),
-  MyplugShop(
+  const MyplugShop(
     id: 12,
     image: "assets/images/shops/house.png",
     name: "Food Stuffs",

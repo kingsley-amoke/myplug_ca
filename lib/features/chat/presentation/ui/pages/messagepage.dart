@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
@@ -9,7 +7,11 @@ class MessagePage extends StatelessWidget {
   final MyplugUser otherUser;
   final List<ChatMessage> messages;
 
-  const MessagePage({super.key, required this.currentUserId, required this.otherUser, required this.messages});
+  const MessagePage(
+      {super.key,
+      required this.currentUserId,
+      required this.otherUser,
+      required this.messages});
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,21 @@ class MessagePage extends StatelessWidget {
                 final isMine = msg.senderId == currentUserId;
 
                 return Align(
-                  alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment:
+                      isMine ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: isMine ? Colors.blueAccent : Colors.grey[300],
+                      color: isMine ? Colors.blueAccent : Colors.grey[700],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       msg.content,
-                      style: TextStyle(color: isMine ? Colors.white : Colors.black),
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 );
@@ -49,7 +55,7 @@ class MessagePage extends StatelessWidget {
               children: [
                 const Expanded(
                   child: TextField(
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Type a message',
                       border: OutlineInputBorder(),
                     ),

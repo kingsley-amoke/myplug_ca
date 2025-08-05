@@ -7,7 +7,7 @@ class ChatProvider extends ChangeNotifier {
 
   ChatProvider(this._chatRepoImpl);
 
-  List<Conversation> _userChats = [];
+  final List<Conversation> _userChats = [];
 
   List<Conversation> get userChats => _userChats;
 
