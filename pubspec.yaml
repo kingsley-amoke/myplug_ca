@@ -20,12 +20,15 @@ dependencies:
   # url_launcher:
   change_case:
   flutter_product_card:
+  
 
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mocktail:
+  build_runner:
  
 
   flutter_lints: ^4.0.0

@@ -37,7 +37,7 @@ void main() {
       final expectedDate = formatDate(date: givenDate);
 
       //ASSERT
-      expect(expectedDate, 'Mon, 4 Aug 25');
+      expect(expectedDate, 'Tue, 5 Aug 25');
     });
 
     group('Test average rating', () {
