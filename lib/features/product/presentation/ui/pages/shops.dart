@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/shops.dart';
 import 'package:myplug_ca/features/product/presentation/ui/pages/shop.dart';
-import 'package:myplug_ca/core/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 
 class Shops extends StatelessWidget {
   const Shops({super.key});

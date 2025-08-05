@@ -84,6 +84,8 @@ class MyplugUser {
     );
   }
 
+  get fullname => '$firstName $lastName';
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

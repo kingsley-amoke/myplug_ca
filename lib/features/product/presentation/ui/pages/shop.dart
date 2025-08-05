@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/core/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/product/presentation/ui/widgets/product_grid.dart';
 // import 'package:myplug/providers/product_provider.dart';
 import 'package:provider/provider.dart';

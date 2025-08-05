@@ -21,7 +21,7 @@ class ProductGrid extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (context, index) {
         final Product product = products[index];
-        // return Text('product card');
+  
 
         return MyProductCard(product: product);
       },

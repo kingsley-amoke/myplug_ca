@@ -7,6 +7,10 @@ import 'package:myplug_ca/features/product/data/datasources/product_firestore_se
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
 import 'package:myplug_ca/features/product/services/database_service.dart';
+import 'package:myplug_ca/features/subscription/data/datasources/firestore_subscription_service.dart';
+import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
+import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:myplug_ca/features/subscription/services/database_service.dart';
 import 'package:myplug_ca/features/user/data/datasources/firebase_auth_service.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
 import 'package:myplug_ca/features/user/data/datasources/firebase_firestore_service.dart';
@@ -43,6 +47,15 @@ void main() async {
             ),
           ),
         )..loadProducts(),
+      ),
+       ChangeNotifierProvider(
+        create: (_) => SubscriptionProvider(
+          SubscriptionRepoImpl(
+            SubscriptionDatabaseService(
+            FirestoreSubscriptionService(FirebaseFirestore.instance),
+            ),
+          ),
+        ),
       ),
     ],
     child: const MyApp(),

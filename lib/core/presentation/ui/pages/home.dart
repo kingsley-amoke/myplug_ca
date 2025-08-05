@@ -6,8 +6,8 @@ import 'package:myplug_ca/features/product/presentation/view_models/product_prov
 import 'package:myplug_ca/features/user/presentation/ui/pages/services.dart';
 import 'package:myplug_ca/features/product/presentation/ui/pages/shops.dart';
 
-import 'package:myplug_ca/core/ui/widgets/home_search.dart';
-import 'package:myplug_ca/core/ui/widgets/homepage_grid.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/home_search.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/homepage_grid.dart';
 import 'package:myplug_ca/features/product/presentation/ui/widgets/product_grid.dart';
 // import 'package:myplug_ca/providers/product_provider.dart';
 import 'package:provider/provider.dart';

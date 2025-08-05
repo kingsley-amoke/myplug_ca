@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/ui/pages/home.dart';
+import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
+import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -9,11 +10,10 @@ class BottomNav extends StatefulWidget {
 }
 
 final List<Widget> _screens = [
-  // Chat(),
+  const ChatPage(),
   // Jobs(),
   Scaffold(),
-  Scaffold(),
-  HomePage(),
+ const HomePage(),
   Scaffold(),
   Scaffold(),
   // Wallet(),
@@ -36,7 +36,7 @@ class _BottomNavState extends State<BottomNav> {
         backgroundColor: _currentIndex == 2
             ? Theme.of(context).primaryColor
             : Theme.of(context).unselectedWidgetColor,
-        child: Icon(Icons.home, color: Colors.white),
+        child: const Icon(Icons.home, color: Colors.white),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -79,7 +79,7 @@ class _BottomNavState extends State<BottomNav> {
                         : Theme.of(context).unselectedWidgetColor,
                   ),
                 ),
-                SizedBox(width: 60),
+                const SizedBox(width: 60),
               ],
             ),
             IconButton(

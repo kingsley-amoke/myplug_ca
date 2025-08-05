@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/skills.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/service.dart';
-import 'package:myplug_ca/core/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 
 class Services extends StatelessWidget {
   const Services({super.key});
