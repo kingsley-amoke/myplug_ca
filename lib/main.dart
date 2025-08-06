@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/app.dart';
+import 'package:myplug_ca/features/job/data/datasources/job_firestore_service.dart';
+import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
+import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:myplug_ca/features/job/services/job_database_service.dart';
 import 'package:myplug_ca/features/product/data/datasources/product_firestore_service.dart';
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
@@ -48,11 +52,20 @@ void main() async {
           ),
         )..loadProducts(),
       ),
-       ChangeNotifierProvider(
+      ChangeNotifierProvider(
         create: (_) => SubscriptionProvider(
           SubscriptionRepoImpl(
             SubscriptionDatabaseService(
-            FirestoreSubscriptionService(FirebaseFirestore.instance),
+              FirestoreSubscriptionService(FirebaseFirestore.instance),
+            ),
+          ),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => JobProvider(
+          JobRepoImpl(
+            JobDatabaseService(
+              JobFirestoreService(FirebaseFirestore.instance),
             ),
           ),
         ),

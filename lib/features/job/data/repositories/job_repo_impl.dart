@@ -1,0 +1,34 @@
+import 'package:myplug_ca/features/job/domain/models/job.dart';
+import 'package:myplug_ca/features/job/domain/repositories/job_repository.dart';
+import 'package:myplug_ca/features/job/services/job_database_service.dart';
+
+class JobRepoImpl extends JobRepository {
+  final JobDatabaseService _jobDatabaseService;
+
+  JobRepoImpl(this._jobDatabaseService);
+
+  @override
+  Future<Job?> createJob(Job job) async {
+    return await _jobDatabaseService.createJob(job);
+  }
+
+  @override
+  Future<void> deleteJob(String jobId) async {
+    return await _jobDatabaseService.deleteJob(jobId);
+  }
+
+  @override
+  Future<Job> updateJob(Job job) async {
+    return await _jobDatabaseService.updateJob(job);
+  }
+
+  @override
+  Future<Job?> loadJob(String jobId) async {
+    return await _jobDatabaseService.loadJob(jobId);
+  }
+
+  @override
+  Future<List<Job>> loadAllJobs() async {
+    return await _jobDatabaseService.loadAllJobs();
+  }
+}

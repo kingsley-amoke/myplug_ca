@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myplug_ca/features/product/domain/models/rating.dart';
+import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 double getScreenHeight(BuildContext context) {
@@ -41,6 +42,14 @@ String createConversationId(
   return '${sorted[0]}_${sorted[1]}';
 }
 
+Map<String, List<Transaction>> groupTransactionsByDate(List<Transaction> txns) {
+  final Map<String, List<Transaction>> grouped = {};
+  for (var txn in txns) {
+    final dateStr = DateFormat.yMMMd().format(txn.date);
+    grouped.putIfAbsent(dateStr, () => []).add(txn);
+  }
+  return grouped;
+}
 // void openLink(String url) async {
 //   final Uri _url = Uri.parse(url);
 //   try {
