@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
+import 'package:myplug_ca/features/job/presentation/ui/pages/job_page.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/wallet.dart';
 
 class BottomNav extends StatefulWidget {
@@ -12,9 +13,8 @@ class BottomNav extends StatefulWidget {
 
 final List<Widget> _screens = [
   const ChatPage(),
-  // Jobs(),
-  const Scaffold(),
- const HomePage(),
+  const JobPage(),
+  const HomePage(),
   const WalletPage(),
   const Scaffold(),
   // Wallet(),

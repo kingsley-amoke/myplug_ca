@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:myplug_ca/core/constants/jobs.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
 
@@ -7,7 +8,7 @@ class JobProvider extends ChangeNotifier {
 
   JobProvider(this._jobRepoImpl);
 
-  List<Job> _jobs = [];
+  List<Job> _jobs = demoJobs;
   List<Job> get jobs => _jobs;
 
   Future<void> loadJobs() async {

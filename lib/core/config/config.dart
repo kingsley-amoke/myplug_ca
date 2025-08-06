@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:myplug_ca/features/job/domain/models/job.dart';
 import 'package:myplug_ca/features/product/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 // import 'package:url_launcher/url_launcher.dart';
@@ -50,6 +51,47 @@ Map<String, List<Transaction>> groupTransactionsByDate(List<Transaction> txns) {
   }
   return grouped;
 }
+
+JobType jobTypeFromString(String? type) {
+  switch (type?.toLowerCase()) {
+    case 'parttime':
+      return JobType.parttime;
+    case 'fulltime':
+      return JobType.fulltime;
+    case 'internship':
+      return JobType.internship;
+    default:
+      return JobType.fulltime; // fallback to fulltime
+  }
+}
+
+String formatTimeAgo(DateTime date) {
+  final now = DateTime.now();
+  final difference = now.difference(date);
+
+  if (difference.inDays >= 365) {
+    final years = (difference.inDays / 365).floor();
+    return years == 1 ? '1 year ago' : '$years years ago';
+  } else if (difference.inDays >= 30) {
+    final months = (difference.inDays / 30).floor();
+    return months == 1 ? '1 month ago' : '$months months ago';
+  } else if (difference.inDays >= 1) {
+    return difference.inDays == 1
+        ? '1 day ago'
+        : '${difference.inDays} days ago';
+  } else if (difference.inHours >= 1) {
+    return difference.inHours == 1
+        ? '1 hour ago'
+        : '${difference.inHours} hours ago';
+  } else if (difference.inMinutes >= 1) {
+    return difference.inMinutes == 1
+        ? '1 minute ago'
+        : '${difference.inMinutes} minutes ago';
+  } else {
+    return 'just now';
+  }
+}
+
 // void openLink(String url) async {
 //   final Uri _url = Uri.parse(url);
 //   try {

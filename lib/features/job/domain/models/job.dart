@@ -1,7 +1,16 @@
+import 'package:myplug_ca/core/config/config.dart';
+
+enum JobType {
+  parttime,
+  fulltime,
+  internship,
+}
+
 class Job {
   final String? id;
   final String title;
   final String description;
+  final JobType type;
   final double salary;
   final String company;
   final String companyLogo;
@@ -13,6 +22,7 @@ class Job {
     this.id,
     required this.title,
     required this.description,
+    required this.type,
     required this.location,
     required this.company,
     required this.companyLogo,
@@ -23,15 +33,16 @@ class Job {
 
   factory Job.fromMap(Map<String, dynamic> map) {
     return Job(
-      id: map['id'],
-      title: map['title'],
-      description: map['description'],
-      location: map['location'],
-      company: map['company'],
-      companyLogo: map['company_logo'],
-      salary: map['salary'],
-      requirements: map['requirements'],
+      id: map['id'] as String?,
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      type: jobTypeFromString(map['type']),
+      salary: (map['salary'] as num).toDouble(),
+      location: map['location'] ?? '',
+      company: map['company'] ?? '',
+      companyLogo: map['companyLogo'] ?? '',
       date: DateTime.parse(map['date']),
+      requirements: List<String>.from(map['requirements'] ?? []),
     );
   }
 
@@ -40,6 +51,7 @@ class Job {
       'id': id,
       'title': title,
       'description': description,
+      'type': type.name,
       'location': location,
       'company': company,
       'company_logo': companyLogo,
@@ -53,6 +65,7 @@ class Job {
     String? id,
     String? title,
     String? description,
+    JobType? type,
     String? location,
     String? company,
     String? companyLogo,
@@ -62,6 +75,7 @@ class Job {
     return Job(
         title: title ?? this.title,
         description: description ?? this.description,
+        type: type ?? this.type,
         location: location ?? this.location,
         company: company ?? this.company,
         companyLogo: companyLogo ?? this.companyLogo,
