@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
+import 'package:myplug_ca/features/user/presentation/ui/pages/wallet.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -14,7 +15,7 @@ final List<Widget> _screens = [
   // Jobs(),
   const Scaffold(),
  const HomePage(),
-  const Scaffold(),
+  const WalletPage(),
   const Scaffold(),
   // Wallet(),
   // Settings(),

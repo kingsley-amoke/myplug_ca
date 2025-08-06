@@ -24,7 +24,8 @@ class HomeSearch extends StatelessWidget {
         children: [
           const SizedBox(height: 40),
           Consumer<UserProvider>(
-            builder: (BuildContext context, UserProvider provider, Widget? child) {
+            builder:
+                (BuildContext context, UserProvider provider, Widget? child) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,7 +34,7 @@ class HomeSearch extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
+                      Text(
                         'Hi, ${provider.myplugUser?.lastName ?? 'Anonymous'}',
                         style: const TextStyle(
                           color: Colors.white,
@@ -53,13 +54,22 @@ class HomeSearch extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                    provider.myplugUser != null ?  Navigator.of(
-                        context,
-                      ).push(MaterialPageRoute(builder: (_) => Profile(user: provider.myplugUser!,)))
-                    : null;
+                      provider.myplugUser != null
+                          ? Navigator.of(
+                              context,
+                            ).push(
+                              MaterialPageRoute(
+                                builder: (_) => ProfilePage(
+                                  user: provider.myplugUser!,
+                                
+                                ),
+                              ),
+                            )
+                          : null;
                     },
                     child: CircleAvatar(
-                      child: Image.asset(provider.myplugUser?.image ?? noUserImage),
+                      child: Image.asset(
+                          provider.myplugUser?.image ?? noUserImage),
                     ),
                   ),
                 ],
