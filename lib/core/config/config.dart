@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
+import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/product/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 // import 'package:url_launcher/url_launcher.dart';

@@ -52,6 +52,7 @@ class ApplyJob extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              //TODO: upload resume
             ],
           ),
         ),

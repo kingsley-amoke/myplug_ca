@@ -1,4 +1,5 @@
 import 'package:myplug_ca/features/job/domain/models/job.dart';
+import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 
 final List<Job> demoJobs = [
   Job(
@@ -10,7 +11,7 @@ final List<Job> demoJobs = [
     company: 'Smoq Dev',
     type: JobType.parttime,
     companyLogo: 'https://example.com/logos/smoqdev.png',
-    location: 'Lagos, Nigeria',
+    location: 'Lagos',
     date: DateTime.now().subtract(const Duration(days: 1)),
     requirements: [
       '2+ years of Flutter experience',
@@ -27,7 +28,7 @@ final List<Job> demoJobs = [
     salary: 120000.0,
     company: 'Designly',
     companyLogo: 'https://example.com/logos/designly.png',
-    location: 'Remote',
+    location: 'Lagos',
     date: DateTime.now().subtract(const Duration(days: 2)),
     requirements: [
       'Proficiency in Figma or Adobe XD',
@@ -44,7 +45,7 @@ final List<Job> demoJobs = [
     salary: 180000.0,
     company: 'TechNova',
     companyLogo: 'https://example.com/logos/technova.png',
-    location: 'Abuja, Nigeria',
+    location: 'Abuja',
     date: DateTime.now().subtract(const Duration(days: 3)),
     requirements: [
       'Strong knowledge of Node.js',
@@ -60,7 +61,7 @@ final List<Job> demoJobs = [
     type: JobType.internship,
     company: 'DataScope',
     companyLogo: 'https://example.com/logos/datascope.png',
-    location: 'Remote',
+    location: 'Enugu',
     date: DateTime.now().subtract(const Duration(days: 4)),
     requirements: [
       'SQL and Excel expertise',
@@ -76,7 +77,7 @@ final List<Job> demoJobs = [
     salary: 200000.0,
     company: 'InnovateX',
     companyLogo: 'https://example.com/logos/innovatex.png',
-    location: 'Port Harcourt, Nigeria',
+    location: 'Rivers',
     date: DateTime.now().subtract(const Duration(days: 5)),
     requirements: [
       '3+ years in product management',
@@ -92,7 +93,7 @@ final List<Job> demoJobs = [
     salary: 175000.0,
     company: 'CloudGear',
     companyLogo: 'https://example.com/logos/cloudgear.png',
-    location: 'Remote',
+    location: 'Niger',
     date: DateTime.now().subtract(const Duration(days: 6)),
     requirements: [
       'CI/CD tools experience (GitHub Actions, Jenkins)',
@@ -108,7 +109,7 @@ final List<Job> demoJobs = [
     salary: 95000.0,
     company: 'QualityHub',
     companyLogo: 'https://example.com/logos/qualityhub.png',
-    location: 'Lagos, Nigeria',
+    location: 'Lagos',
     date: DateTime.now().subtract(const Duration(days: 7)),
     requirements: [
       'Manual and automated testing experience',
@@ -124,7 +125,7 @@ final List<Job> demoJobs = [
     salary: 85000.0,
     company: 'DeepThink',
     companyLogo: 'https://example.com/logos/deepthink.png',
-    location: 'Remote',
+    location: 'Ebonyi',
     date: DateTime.now().subtract(const Duration(days: 8)),
     requirements: [
       'Understanding of ML concepts',
@@ -140,7 +141,7 @@ final List<Job> demoJobs = [
     salary: 100000.0,
     company: 'DocuFlow',
     companyLogo: 'https://example.com/logos/docuflow.png',
-    location: 'Ibadan, Nigeria',
+    location: 'Ibadan',
     date: DateTime.now().subtract(const Duration(days: 9)),
     requirements: [
       'Excellent writing skills',

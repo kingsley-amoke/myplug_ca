@@ -1,10 +1,5 @@
 import 'package:myplug_ca/core/config/config.dart';
-
-enum JobType {
-  parttime,
-  fulltime,
-  internship,
-}
+import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 
 class Job {
   final String? id;
