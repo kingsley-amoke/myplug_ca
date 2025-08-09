@@ -1,10 +1,10 @@
 import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/features/product/domain/repositories/product_repository.dart';
 
-class DatabaseService implements ProductRepository {
+class ProductDatabaseService implements ProductRepository {
   final ProductRepository _databaseService;
 
-  DatabaseService(this._databaseService);
+  ProductDatabaseService(this._databaseService);
 
   @override
   Future<Product?> loadProduct(String productId) async {

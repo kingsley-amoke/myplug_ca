@@ -2,10 +2,10 @@ import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/chat/domain/repositories/chat_repository.dart';
 
-class DatabaseService extends ChatRepository {
+class ChatDatabaseService extends ChatRepository {
   final ChatRepository _databaseService;
 
-  DatabaseService(this._databaseService);
+  ChatDatabaseService(this._databaseService);
 
   @override
   Future<String> createConversation(String conversationId) async {

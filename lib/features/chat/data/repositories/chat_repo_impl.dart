@@ -4,7 +4,7 @@ import 'package:myplug_ca/features/chat/domain/repositories/chat_repository.dart
 import 'package:myplug_ca/features/chat/services/database_service.dart';
 
 class ChatRepoImpl extends ChatRepository {
-  final DatabaseService _databaseService;
+  final ChatDatabaseService _databaseService;
   ChatRepoImpl(this._databaseService);
 
   @override

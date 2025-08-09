@@ -3,7 +3,7 @@ import 'package:myplug_ca/features/product/domain/repositories/product_repositor
 import 'package:myplug_ca/features/product/services/database_service.dart';
 
 class ProductRepoImpl extends ProductRepository {
-  final DatabaseService _databaseService;
+  final ProductDatabaseService _databaseService;
 
   ProductRepoImpl(this._databaseService);
 

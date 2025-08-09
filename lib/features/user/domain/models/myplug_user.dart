@@ -126,12 +126,12 @@ class MyplugUser {
     bool? isSuspended,
     String? image,
     UserLocation? location,
-    Skill? skill,
-    Testimonial? testimonial,
-    Transaction? transaction,
-    Portfolio? portfolio,
-    String? conversation,
-    Referee? referee,
+    List<Skill>? skills,
+    List<Testimonial>? testimonials,
+    List<Transaction>? transactions,
+    List<Portfolio>? portfolios,
+    List<String>? conversations,
+    List<Referee>? referees,
     Referee? referer,
   }) {
     return MyplugUser(
@@ -147,16 +147,12 @@ class MyplugUser {
       isSuspended: isSuspended ?? this.isSuspended,
       image: image ?? this.image,
       location: location ?? this.location,
-      skills: skill != null ? [...skills, skill] : skills,
-      testimonials:
-          testimonial != null ? [...testimonials, testimonial] : testimonials,
-      transactions:
-          transaction != null ? [...transactions, transaction] : transactions,
-      portfolios: portfolio != null ? [...portfolios, portfolio] : portfolios,
-      referees: referee != null ? [...referees, referee] : referees,
-      conversations: conversation != null
-          ? [...conversations, conversation]
-          : conversations,
+      skills: skills ?? this.skills,
+      testimonials: testimonials ?? this.testimonials,
+      transactions: transactions ?? this.transactions,
+      portfolios: portfolios ?? this.portfolios,
+      referees: referees ?? this.referees,
+      conversations: conversations ?? this.conversations,
       referer: referer ?? this.referer,
     );
   }

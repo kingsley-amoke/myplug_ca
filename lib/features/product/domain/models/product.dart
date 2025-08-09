@@ -56,13 +56,13 @@ class Product {
   }
 
   Product copyWith({
-    final String? id,
-    final String? title,
-    final String? description,
-    final String? location,
-    final double? price,
-    final Rating? rating,
-    final String? image,
+    String? id,
+    String? title,
+    String? description,
+    String? location,
+    double? price,
+    Rating? rating,
+    List<String>? images,
   }) {
     return Product(
       id: id ?? this.id,
@@ -73,7 +73,7 @@ class Product {
       shop: shop,
       seller: seller,
       ratings: rating != null ? [...ratings, rating] : ratings,
-      images: image != null ? [...images, image] : images,
+      images: images ?? this.images,
     );
   }
 }

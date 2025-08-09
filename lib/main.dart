@@ -3,6 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/app.dart';
+import 'package:myplug_ca/core/presentation/viewmodels/myplug_provider.dart';
+import 'package:myplug_ca/features/chat/data/datasources/firestore_chat_service.dart';
+import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
+import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:myplug_ca/features/chat/services/database_service.dart';
 import 'package:myplug_ca/features/job/data/datasources/job_firestore_service.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
@@ -29,45 +34,61 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  final firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
+
+  final userAuthService = UserAuthService(FirebaseAuthService(auth));
+  final userProfileService =
+      ProfileService(FirebaseFirestoreService(firestore));
+
+  final productDatabaseService =
+      ProductDatabaseService(ProductFirestoreService(firestore));
+  final subscriptionDatabaseService =
+      SubscriptionDatabaseService(FirestoreSubscriptionService(firestore));
+  final jobDatabaseService = JobDatabaseService(JobFirestoreService(firestore));
+  final chatDatabaseService = ChatDatabaseService(
+    FirestoreChatService(firestore),
+  );
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
         create: (_) => UserProvider(
           UserRepoImpl(
-            userAuth: UserAuthService(
-              FirebaseAuthService(FirebaseAuth.instance),
-            ),
-            userProfile: ProfileService(
-              FirebaseFirestoreService(FirebaseFirestore.instance),
-            ),
+            userAuth: userAuthService,
+            userProfile: userProfileService,
           ),
         ),
       ),
       ChangeNotifierProvider(
         create: (_) => ProductProvider(
-          ProductRepoImpl(
-            DatabaseService(
-              ProductFirestoreService(FirebaseFirestore.instance),
-            ),
-          ),
+          ProductRepoImpl(productDatabaseService),
         )..loadProducts(),
       ),
       ChangeNotifierProvider(
         create: (_) => SubscriptionProvider(
-          SubscriptionRepoImpl(
-            SubscriptionDatabaseService(
-              FirestoreSubscriptionService(FirebaseFirestore.instance),
-            ),
-          ),
+          SubscriptionRepoImpl(subscriptionDatabaseService),
         ),
       ),
       ChangeNotifierProvider(
         create: (_) => JobProvider(
-          JobRepoImpl(
-            JobDatabaseService(
-              JobFirestoreService(FirebaseFirestore.instance),
-            ),
-          ),
+          JobRepoImpl(jobDatabaseService),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => ChatProvider(
+          ChatRepoImpl(chatDatabaseService),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => MyplugProvider(
+          userRepoImpl: UserRepoImpl(
+              userAuth: userAuthService, userProfile: userProfileService),
+          chatRepoImpl: ChatRepoImpl(chatDatabaseService),
+          jobRepoImpl: JobRepoImpl(jobDatabaseService),
+          subscriptionRepoImpl:
+              SubscriptionRepoImpl(subscriptionDatabaseService),
+          productRepoImpl: ProductRepoImpl(productDatabaseService),
         ),
       ),
     ],

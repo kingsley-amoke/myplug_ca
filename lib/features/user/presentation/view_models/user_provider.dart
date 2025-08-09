@@ -1,8 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/core/constants/conversations.dart';
 import 'package:myplug_ca/core/constants/users.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
+import 'package:myplug_ca/features/user/domain/models/location.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
+import 'package:myplug_ca/features/user/domain/models/referee.dart';
+import 'package:myplug_ca/features/user/domain/models/skill.dart';
+import 'package:myplug_ca/features/user/domain/models/testimonial.dart';
+import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 
 class UserProvider extends ChangeNotifier {
   final UserRepoImpl _userRepo;
@@ -37,5 +42,42 @@ class UserProvider extends ChangeNotifier {
     } else {
       return null;
     }
+  }
+
+  //update profile
+  Future<void> updateProfile({
+    String? bio,
+    String? firstName,
+    String? lastName,
+    String? phone,
+    String? image,
+    UserLocation? location,
+    List<Skill>? skills,
+    List<Testimonial>? testimonials,
+    List<Transaction>? transactions,
+    List<Portfolio>? portfolios,
+    List<String>? conversations,
+    List<Referee>? referees,
+  }) async {
+    final updatedProfile = _user?.copyWith(
+      bio: bio,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      image: image,
+      location: location,
+      testimonials: testimonials,
+      skills: skills,
+      transactions: transactions,
+      portfolios: portfolios,
+      conversations: conversations,
+      referees: referees,
+    );
+    if (updatedProfile != null) {
+      await _userRepo.updateProfile(updatedProfile);
+    }
+
+    _user = updatedProfile;
+    notifyListeners();
   }
 }

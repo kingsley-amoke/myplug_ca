@@ -4,7 +4,9 @@ import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/chat/domain/repositories/chat_repository.dart';
 
 class FirestoreChatService extends ChatRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
+
+  FirestoreChatService(this._firestore);
 
   @override
   Future<String> createConversation(String conversationId) async {

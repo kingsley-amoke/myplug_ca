@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/core/constants/jobs.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class JobProvider extends ChangeNotifier {
   final JobRepoImpl _jobRepoImpl;
@@ -22,13 +22,6 @@ class JobProvider extends ChangeNotifier {
     return await _jobRepoImpl.loadJob(jobId);
   }
 
-  Future<void> deleteJob(String jobId) async {
-    await _jobRepoImpl.deleteJob(jobId);
-
-    _jobs.removeWhere((job) => job.id == jobId);
-    notifyListeners();
-  }
-
   Future<void> updateJob(Job job) async {
     final updatedJob = await _jobRepoImpl.updateJob(job);
 
@@ -46,36 +39,16 @@ class JobProvider extends ChangeNotifier {
   }) {
     List<Job> matches = [];
     for (Job item in _jobs) {
-      // bool matches = true;
-
-      // Filter by location (optional)
-      if (location != null) {
-        // print(location);
-        if (item.location.toLowerCase() == location.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-
-      // Filter by jobType (optional)
-      if (jobType != null) {
-        if (item.type.name.toLowerCase() == jobType.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-
-      // Filter by minSalary only (optional)
-      if (minSalary != null) {
-        if (item.salary >= minSalary) {
-          matches.add(item);
-        }
+      if (minSalary == null && location == null && jobType == null) {
+        matches = _jobs;
       }
 
       if (location != null && jobType != null && minSalary != null) {
-        matches.clear();
+        // matches.clear();
         if (item.salary >= minSalary) {
           matches.add(item);
         }
-        if (item.type.name.toLowerCase() == jobType.toLowerCase()) {
+        if (jobType == item.type.name) {
           matches.add(item);
         }
         if (location.toLowerCase() == item.location.toLowerCase()) {
@@ -83,16 +56,65 @@ class JobProvider extends ChangeNotifier {
         }
       }
 
-      if (minSalary == null && location == null && jobType == null) {
-        matches = _jobs;
+      if (location != null && jobType != null && minSalary == null) {
+        // matches.clear();
+        if (jobType == item.type.name) {
+          matches.add(item);
+        }
+        if (location.toLowerCase() == item.location.toLowerCase()) {
+          matches.add(item);
+        }
+      }
+
+      if (location != null && minSalary != null && jobType == null) {
+        // matches.clear();
+        if (item.salary >= minSalary) {
+          matches.add(item);
+        }
+        if (location.toLowerCase() == item.location.toLowerCase()) {
+          matches.add(item);
+        }
+      }
+      if (jobType != null && minSalary != null && location == null) {
+        // matches.clear();
+        if (item.salary >= minSalary) {
+          matches.add(item);
+        }
+        if (jobType == item.type.name) {
+          matches.add(item);
+        }
+      }
+
+      if (location != null) {
+        if (item.location.toLowerCase() == location.toLowerCase()) {
+          matches.add(item);
+        }
+      }
+
+      if (jobType != null) {
+        if (item.type.name.toLowerCase() == jobType.toLowerCase()) {
+          matches.add(item);
+        }
+      }
+      if (minSalary != null) {
+        if (item.salary >= minSalary) {
+          matches.add(item);
+        }
       }
     }
-
-    // print(matches);
 
     filteredJobs = matches;
 
     notifyListeners();
     return matches;
+  }
+
+  Future<void> deleteJob(MyplugUser user, String jobId) async {
+    if (user.isAdmin) {
+      await _jobRepoImpl.deleteJob(jobId);
+
+      _jobs.removeWhere((job) => job.id == jobId);
+      notifyListeners();
+    }
   }
 }
