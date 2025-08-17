@@ -15,7 +15,7 @@ class UserProvider extends ChangeNotifier {
   final UserRepoImpl _userRepo;
 
   List<MyplugUser> allUsers = [];
-  List<MyplugUser> userByService = [];
+  List<MyplugUser> usersByService = [];
   MyplugUser? _user;
 
   UserLocation? userLocation;
@@ -56,11 +56,14 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  List<MyplugUser> getUserByService(Skill service) {
-    userByService =
-        allUsers.where((item) => item.skills.first == service).toList();
-    notifyListeners();
-    return userByService;
+  void getUsersByService(Skill service) async {
+    await _userRepo.loadAllUsers();
+
+    usersByService = allUsers.where((item) {
+      return item.skills.first.name == service.name;
+    }).toList();
+
+    // notifyListeners();
   }
 
   Future<void> getLocation() async {

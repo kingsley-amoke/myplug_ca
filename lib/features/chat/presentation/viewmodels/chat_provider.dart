@@ -21,7 +21,7 @@ class ChatProvider extends ChangeNotifier {
     _userChats = conversations;
     filteredConversations = conversations;
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   void resetFilteredConversatioins() {
@@ -58,19 +58,23 @@ class ChatProvider extends ChangeNotifier {
 
   //send message
 
-  void sendMessage(
-      {required ChatMessage message, required String conversationId}) {
-    _chatRepoImpl.sendMessage(message: message, conversationId: conversationId);
+  Future<void> sendMessage(
+      {required ChatMessage message, required String conversationId}) async {
+    await _chatRepoImpl.sendMessage(
+      message: message,
+      conversationId: conversationId,
+    );
   }
 
   //delete message
 
   //create conversation
-  void createConversation(
-      {required String senderId, required String receiverId}) {
+  Future<String> createConversation(
+      {required String senderId, required String receiverId}) async {
     final conversationId =
         createConversationId(senderId: senderId, receiverId: receiverId);
-    _chatRepoImpl.createConversation(conversationId);
+    await _chatRepoImpl.createConversation(conversationId);
+    return conversationId;
   }
   //delete conversation
 }

@@ -8,6 +8,7 @@ import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/messagepage.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/widgets/chat_item.dart';
 import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
@@ -17,28 +18,34 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-const currentUserId = '1';
-
 void searchConversation(BuildContext context, {required String searchQuery}) {
+  final userProvider = context.read<UserProvider>();
+
   if (searchQuery == '') {
     context.read<ChatProvider>().resetFilteredConversatioins();
   }
 
   context.read<ChatProvider>().filterChat(
-      searchQuery: searchQuery, allUsers: demoUsers, userId: currentUserId);
+      searchQuery: searchQuery,
+      allUsers: userProvider.allUsers,
+      userId: userProvider.myplugUser!.id!);
 }
 
 class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
+    final currentUserId = context.read<UserProvider>().myplugUser!.id!;
+
     return Scaffold(
       appBar: myAppbar(context, title: "Chats", implyLeading: false),
       body: StreamBuilder<List<Conversation>>(
           stream: context.watch<MyplugProvider>().getUserConversationStream(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
+              print(snapshot);
               return const Center(child: CircularProgressIndicator());
             }
+
             context.read<ChatProvider>().initUserConversations(snapshot.data!);
 
             return Column(
@@ -102,8 +109,10 @@ class _ChatPageState extends State<ChatPage> {
                                 .filteredConversations[index];
                             final otherId = convo.participants
                                 .firstWhere((id) => id != currentUserId);
-                            final otherUser =
-                                demoUsers.firstWhere((u) => u.id == otherId);
+                            final otherUser = context
+                                .read<UserProvider>()
+                                .allUsers
+                                .firstWhere((u) => u.id == otherId);
 
                             return ChatItem(
                               conversation: convo,

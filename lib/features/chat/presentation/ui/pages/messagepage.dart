@@ -100,6 +100,8 @@ class MessagePage extends StatefulWidget {
   State<MessagePage> createState() => _MessagePageState();
 }
 
+final messageController = TextEditingController();
+
 class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,7 @@ class _MessagePageState extends State<MessagePage> {
                   return ListView.builder(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    reverse: true, // new messages at bottom
+                    reverse: false, // new messages at bottom
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final msg = messages[index];
@@ -209,6 +211,7 @@ class _MessagePageState extends State<MessagePage> {
                   ),
                   Expanded(
                     child: TextField(
+                      controller: messageController,
                       decoration: InputDecoration(
                         hintText: 'Type a message...',
                         filled: true,
@@ -233,7 +236,22 @@ class _MessagePageState extends State<MessagePage> {
                     child: IconButton(
                       icon: const Icon(Icons.send, color: Colors.white),
                       onPressed: () {
-                        // send logic
+                        final message = ChatMessage(
+                          senderId: widget.currentUserId,
+                          receiverId: widget.otherUser.id!,
+                          content: messageController.text,
+                          timestamp: DateTime.now(),
+                        );
+
+                        context
+                            .read<ChatProvider>()
+                            .sendMessage(
+                              message: message,
+                              conversationId: widget.conversationId,
+                            )
+                            .then((_) {
+                          messageController.clear();
+                        });
                       },
                     ),
                   ),

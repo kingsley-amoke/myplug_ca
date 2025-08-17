@@ -19,6 +19,8 @@ class FirestoreChatService extends ChatRepository {
         'participants': conversationId.split('_'), // Assuming deterministic ID
         'last_message': null,
         'last_sent_at': null,
+        'last_message_status': null,
+        'is_last_message_from_current_user': null,
       });
     }
 
@@ -62,20 +64,22 @@ class FirestoreChatService extends ChatRepository {
   }
 
   @override
-  Future<void> sendMessage(
-      {required ChatMessage message, required String conversationId}) async {
+  Future<void> sendMessage({
+    required ChatMessage message,
+    required String conversationId,
+  }) async {
     final docRef = _firestore
         .collection('chats')
         .doc(conversationId)
         .collection('messages')
         .doc();
 
-    await docRef.set(message.copyWith(id: conversationId).toMap());
+    await docRef.set(message.copyWith(id: docRef.id).toMap());
 
     // Update conversation metadata
     await _firestore.collection('chats').doc(conversationId).update({
       'last_message': message.content,
-      'last_sent_at': message.timestamp,
+      'last_sent_at': message.timestamp.toIso8601String(),
     });
   }
 
