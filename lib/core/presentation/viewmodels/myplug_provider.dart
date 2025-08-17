@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
+import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
@@ -45,4 +46,10 @@ class MyplugProvider extends ChangeNotifier {
   //delete user
 
   //delete chat
+
+  //get user conversation
+  Stream<List<Conversation>> getUserConversationStream() {
+    return chatRepoImpl
+        .getUserConversationsStream(userRepoImpl.currentUser!.id!);
+  }
 }

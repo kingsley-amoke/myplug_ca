@@ -7,7 +7,7 @@ PreferredSizeWidget myAppbar(
 }) {
   return AppBar(
     automaticallyImplyLeading: implyLeading,
-    title: Text(title, style: const TextStyle(color: Colors.black)),
+    title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
     centerTitle: true,
     leading: implyLeading
         ? IconButton(

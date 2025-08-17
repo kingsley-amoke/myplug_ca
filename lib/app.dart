@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/theme.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/bottom_nav.dart';
+import 'package:myplug_ca/core/presentation/ui/pages/auth.dart';
+import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -9,9 +10,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {'login': (_) => const LoginPage()},
       title: 'My Plug',
       theme: myTheme,
-      home: const BottomNav(),
+      themeMode: ThemeMode.system,
+      home: const Auth(),
     );
   }
 }

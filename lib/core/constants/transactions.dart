@@ -20,7 +20,7 @@ List<Transaction> demoTransactions = [
     type: TransactionType.credit,
     description: 'Account funded successfully',
     amount: 4000,
-    date: DateTime.now().add(Duration(days: 2)),
+    date: DateTime.now().add(const Duration(days: 2)),
   ),
    Transaction(
     id: '5',

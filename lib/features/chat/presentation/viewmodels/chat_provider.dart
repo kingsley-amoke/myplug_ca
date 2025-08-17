@@ -1,21 +1,76 @@
 import 'package:flutter/foundation.dart';
+import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/constants/conversations.dart';
 import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
+import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class ChatProvider extends ChangeNotifier {
   final ChatRepoImpl _chatRepoImpl;
 
   ChatProvider(this._chatRepoImpl);
 
-  final List<Conversation> _userChats = [];
+  List<Conversation> _userChats = [];
 
   List<Conversation> get userChats => _userChats;
 
+  List<Conversation> filteredConversations = [];
+
+  void initUserConversations(List<Conversation> conversations) {
+    _userChats = conversations;
+    filteredConversations = conversations;
+
+    notifyListeners();
+  }
+
+  void resetFilteredConversatioins() {
+    filteredConversations = _userChats;
+  }
+
+  void filterChat(
+      {required String userId,
+      required List<MyplugUser> allUsers,
+      required String searchQuery}) {
+    filteredConversations = filteredConversations.where((convo) {
+      final otherId = convo.participants.firstWhere((id) => id != userId);
+      final user = allUsers.firstWhere((u) => u.id == otherId);
+      final name = '${user.firstName} ${user.lastName}'.toLowerCase();
+      return name.contains(searchQuery.toLowerCase()) ||
+          (convo.lastMessage
+                  ?.toLowerCase()
+                  .contains(searchQuery.toLowerCase()) ??
+              false);
+    }).toList();
+
+    notifyListeners();
+  }
+
+  void onOpenConversation(Conversation conversation) {
+    conversation.unreadCount = 0;
+    notifyListeners();
+  }
+
+  //load message
+  Stream<List<ChatMessage>> loadMessage(String conversationId) {
+    return _chatRepoImpl.getMessageStream(conversationId);
+  }
+
   //send message
+
+  void sendMessage(
+      {required ChatMessage message, required String conversationId}) {
+    _chatRepoImpl.sendMessage(message: message, conversationId: conversationId);
+  }
 
   //delete message
 
   //create conversation
-
+  void createConversation(
+      {required String senderId, required String receiverId}) {
+    final conversationId =
+        createConversationId(senderId: senderId, receiverId: receiverId);
+    _chatRepoImpl.createConversation(conversationId);
+  }
   //delete conversation
 }

@@ -27,7 +27,7 @@ void main() {
   group('Auth tests for user repo impl', () {
     test('sign in', () async {
       //ARRANGE
-      when(() => mockProfileService.loadUser(expectedUser.id))
+      when(() => mockProfileService.loadUser(expectedUser.id!))
           .thenAnswer((_) async => demoUsers[0]);
       when(() => mockAuthService.signUp(
           email: expectedUser.email,
@@ -45,7 +45,7 @@ void main() {
     });
     test('sign up', () async {
       //ARRANGE
-      when(() => mockProfileService.loadUser(expectedUser.id))
+      when(() => mockProfileService.loadUser(expectedUser.id!))
           .thenAnswer((_) async => demoUsers[0]);
       when(() => mockAuthService.signUp(
           email: expectedUser.email,
@@ -56,7 +56,7 @@ void main() {
 
 //ACT
       final user = await userRepoImpl.signUp(
-          email: expectedUser.email, password: '123456');
+          user: expectedUser, password: '123456');
 
 //ASSERT
       expect(user, expectedUser);
@@ -66,10 +66,10 @@ void main() {
   group('Database tests for user repo impl', () {
     test('load user', () async {
       //ARRANGE
-      when(() => mockProfileService.loadUser(expectedUser.id))
+      when(() => mockProfileService.loadUser(expectedUser.id!))
           .thenAnswer((_) async => demoUsers[0]);
       //ACT
-      final user = await userRepoImpl.loadUser(expectedUser.id);
+      final user = await userRepoImpl.loadUser(expectedUser.id!);
 
       //ASSERT
       expect(user, expectedUser);

@@ -58,7 +58,7 @@ void main() async {
             userAuth: userAuthService,
             userProfile: userProfileService,
           ),
-        ),
+        )..getLocation(),
       ),
       ChangeNotifierProvider(
         create: (_) => ProductProvider(

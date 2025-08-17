@@ -13,6 +13,7 @@ class MyInput extends StatelessWidget {
     this.maxLines = 1,
     this.onEditingComplete,
     this.onChanged,
+    this.validator,
   });
 
   final TextEditingController controller;
@@ -25,11 +26,13 @@ class MyInput extends StatelessWidget {
   final int? maxLines;
   final void Function()? onEditingComplete;
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
+      validator: validator,
       obscureText: obscureText,
       keyboardType: keyboardType,
       readOnly: readOnly,

@@ -20,4 +20,12 @@ class UserLocation {
         'longitude': longitude,
         'address': address,
       };
+
+  UserLocation copyWith(
+      {double? latitude, double? longitude, String? address}) {
+    return UserLocation(
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
+        address: address ?? this.address);
+  }
 }

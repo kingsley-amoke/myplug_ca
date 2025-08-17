@@ -17,13 +17,18 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   intl:
-  # url_launcher:
+  url_launcher:
   change_case:
   flutter_product_card:
   star_rating:
   
 
   cupertino_icons: ^1.0.8
+  babstrap_settings_screen_updated: ^1.0.0
+  social_media_buttons: ^1.0.0
+  image_picker: ^1.2.0
+  geocoding: ^4.0.0
+  geolocator: ^14.0.2
 
 dev_dependencies:
   flutter_test:

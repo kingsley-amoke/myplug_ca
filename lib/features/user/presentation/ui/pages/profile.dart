@@ -4,8 +4,11 @@ import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/presentation/ui/widgets/bio_section.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/portfolio_section.dart';
+import 'package:myplug_ca/features/user/presentation/ui/widgets/skills_section.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/testimonial_section.dart';
+import 'package:change_case/change_case.dart';
 
 class ProfilePage extends StatelessWidget {
   final MyplugUser user;
@@ -29,12 +32,11 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-            
                   _buildLocation(user),
                   const SizedBox(height: 16),
-                  _buildSkills(user),
+                  skillsSection(user),
                   const SizedBox(height: 16),
-                  _buildBio(user),
+                  BioSection(user: user),
                   const SizedBox(height: 24),
                   portfolioSection(context, user: user),
                   const SizedBox(height: 24),
@@ -51,9 +53,8 @@ class ProfilePage extends StatelessWidget {
   Widget _buildHeader(BuildContext context, {required MyplugUser user}) {
     return Column(
       //TODO: change image to network
-  mainAxisAlignment: MainAxisAlignment.start,
-  crossAxisAlignment: 
-  CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: getScreenHeight(context) / 4,
@@ -62,9 +63,9 @@ class ProfilePage extends StatelessWidget {
         ),
         const SizedBox(width: 16),
         Padding(
-          padding: const EdgeInsets.only(top:16.0, left:16.0),
+          padding: const EdgeInsets.only(top: 16.0, left: 16.0),
           child: Text(
-            user.fullname,
+            user.fullname.toCapitalCase(),
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ),
@@ -80,36 +81,11 @@ class ProfilePage extends StatelessWidget {
       children: [
         const Icon(Icons.location_on, size: 18, color: Colors.grey),
         const SizedBox(width: 6),
-        Text(loc.address ?? 'Unknown location'),
-      ],
-    );
-  }
-
-  Widget _buildSkills(MyplugUser user) {
-    if (user.skills.isEmpty) return const SizedBox.shrink();
-
-    return Wrap(
-      spacing: 8,
-      runSpacing: 4,
-      children: user.skills
-          .map((skill) => Chip(
-                label: Text(skill.name),
-                avatar: CircleAvatar(
-                  backgroundImage: AssetImage(skill.image),
-                ),
-              ))
-          .toList(),
-    );
-  }
-
-  Widget _buildBio(MyplugUser user) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('About Me',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        const SizedBox(height: 6),
-        Text(user.bio ?? 'No bio provided.'),
+        Text(
+          loc.address ?? 'Unknown location',
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+        ),
       ],
     );
   }

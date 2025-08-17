@@ -17,7 +17,7 @@ class UserRepoImpl implements UserRepo {
       {required String email, required String password}) async {
     final res = await userAuth.signIn(email: email, password: password);
     if (res != null) {
-      return userProfile.loadUser(res.id);
+      return userProfile.loadUser(res.id!);
     } else {
       return null;
     }
@@ -25,10 +25,10 @@ class UserRepoImpl implements UserRepo {
 
   @override
   Future<MyplugUser?> signUp(
-      {required String email, required String password}) async {
-    final res = await userAuth.signUp(email: email, password: password);
+      {required MyplugUser user, required String password}) async {
+    final res = await userAuth.signUp(email: user.email, password: password);
     if (res != null) {
-      return await userProfile.loadUser(res.id);
+      return await userProfile.addUser(user.copyWith(id: res.id!));
     } else {
       return null;
     }

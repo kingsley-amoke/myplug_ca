@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/product/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 double getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
@@ -92,15 +93,31 @@ String formatTimeAgo(DateTime date) {
   }
 }
 
-// void openLink(String url) async {
-//   final Uri _url = Uri.parse(url);
-//   try {
-//     launchUrl(_url).then((e) {
-//       if (!e) {
-//         print('cannot launch url');
-//       }
-//     });
-//   } catch (e) {
-//     print(e.toString());
-//   }
-// }
+Future<String?> getAddressFromCordinates(
+    {required double latitude, required double longitude}) async {
+  List<Placemark> placemarks =
+      await placemarkFromCoordinates(latitude, longitude);
+
+  if (placemarks.isNotEmpty) {
+    final Placemark place = placemarks.first;
+
+    String fullAddress =
+        "${place.street}, ${place.locality}, ${place.administrativeArea}";
+
+    return fullAddress;
+  }
+  return null;
+}
+
+void openLink(String url) async {
+  final Uri url0 = Uri.parse(url);
+  try {
+    launchUrl(url0).then((e) {
+      if (!e) {
+        print('cannot launch url');
+      }
+    });
+  } catch (e) {
+    print(e.toString());
+  }
+}

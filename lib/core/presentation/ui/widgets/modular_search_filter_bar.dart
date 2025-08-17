@@ -12,7 +12,7 @@ class ModularSearchFilterBar extends StatefulWidget {
   final bool showSalary;
   final bool showPrice;
 
-  ModularSearchFilterBar({
+  const ModularSearchFilterBar({
     super.key,
     required this.onSearch,
     this.locations = const [],
@@ -57,22 +57,39 @@ class _ModularSearchFilterBarState extends State<ModularSearchFilterBar> {
         Row(
           children: [
             IconButton(
-              icon: const Icon(Icons.filter_list_sharp),
+              icon: const Icon(Icons.tune),
               onPressed: () => setState(() => _showFilters = !_showFilters),
             ),
             Expanded(
               child: TextField(
                 controller: _searchController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Search...',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
                 onChanged: (_) => _applyFilters(),
               ),
+              // child: TextField(
+              //   controller: _searchController,
+              //   decoration: const InputDecoration(
+              //     hintText: 'Search...',
+              //     border: OutlineInputBorder(),
+              //     contentPadding: EdgeInsets.symmetric(horizontal: 8),
+              //   ),
+              //   onChanged: (_) => _applyFilters(),
+              // ),
             ),
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
               onPressed: _applyFilters,
             ),
           ],

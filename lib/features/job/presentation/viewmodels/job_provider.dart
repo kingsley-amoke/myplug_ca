@@ -31,6 +31,10 @@ class JobProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void initFilteredJobs() {
+    filteredJobs = _jobs;
+  }
+
   List<Job> filterByParams<T>({
     // required List<T> items,
     String? location,

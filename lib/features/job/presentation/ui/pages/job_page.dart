@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/nigerian_states.dart';
-import 'package:myplug_ca/core/constants/shops.dart';
-import 'package:myplug_ca/core/models/filter.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
@@ -26,7 +24,11 @@ class _JobPageState extends State<JobPage> {
     JobType.remote,
   ];
 
-  List<Job> filteredJobs = [];
+  @override
+  void initState() {
+    context.read<JobProvider>().initFilteredJobs();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,24 +37,24 @@ class _JobPageState extends State<JobPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                      'Land your dream job with our professional cv review'),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomButton(
-                      text: 'Check it out Now!',
-                      onPressed: () {
-                        //TODO: implement cv review page
-                      }),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const Text(
+            //           'Land your dream job with our professional cv review'),
+            //       const SizedBox(
+            //         height: 10,
+            //       ),
+            //       CustomButton(
+            //           text: 'Check it out Now!',
+            //           onPressed: () {
+            //             //TODO: implement cv review page
+            //           }),
+            //     ],
+            //   ),
+            // ),
             ModularSearchFilterBar(
               onSearch: (search, filters) {
                 context.read<JobProvider>().filterByParams(

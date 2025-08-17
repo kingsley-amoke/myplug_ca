@@ -7,9 +7,8 @@ ThemeData myTheme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: Colors.grey[50],
   ),
-  bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey[200]),
+  bottomAppBarTheme: BottomAppBarThemeData(color: Colors.grey[200]),
   unselectedWidgetColor: Colors.grey[500],
-  textTheme: const TextTheme(displaySmall: TextStyle(color: Colors.black)),
   colorScheme: ColorScheme(
     brightness: Brightness.light,
     primary: const Color.fromARGB(255, 218, 165, 121),
@@ -18,7 +17,7 @@ ThemeData myTheme = ThemeData(
     onSecondary: Colors.black87,
     error: Colors.red,
     onError: Colors.grey.shade300,
-    surface: Colors.grey.shade500,
-    onSurface: Colors.grey.shade400,
+    surface: Colors.white,
+    onSurface: Colors.black,
   ),
 );

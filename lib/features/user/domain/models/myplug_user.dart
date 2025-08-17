@@ -9,7 +9,7 @@ import 'package:myplug_ca/features/user/domain/models/location.dart';
 import 'package:myplug_ca/features/user/domain/models/skill.dart';
 
 class MyplugUser {
-  final String id;
+  final String? id;
   final String email;
   final String? bio;
   final String? firstName;
@@ -30,7 +30,7 @@ class MyplugUser {
   final Referee? referer;
 
   MyplugUser({
-    required this.id,
+    this.id,
     required this.email,
     this.bio,
     this.firstName,
@@ -87,7 +87,7 @@ class MyplugUser {
     );
   }
 
-  get fullname => '$firstName $lastName';
+  String get fullname => '$firstName $lastName';
 
   Map<String, dynamic> toMap() {
     return {

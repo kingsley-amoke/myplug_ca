@@ -27,8 +27,8 @@ void main() {
           )).thenAnswer((_) async => demoUser);
 
       when(() => mockUserRepoImpl.signUp(
-          email: demoUser.email,
-          password: '123456')).thenAnswer((_) async => demoUser);
+         
+          password: '123456', user: demoUser)).thenAnswer((_) async => demoUser);
 
       // Act
       await provider.signIn(email: 'smoq@gmail.com', password: '123456');
@@ -40,12 +40,12 @@ void main() {
     test('signUp should call repo and set user', () async {
       // Arrange
       when(() => mockUserRepoImpl.signUp(
-            email: demoUser.email,
+            user: demoUser,
             password: '123456',
           )).thenAnswer((_) async => demoUser);
 
       // Act
-      await provider.signUp(email: demoUser.email, password: '123456');
+      await provider.signUp(user: demoUser, password: '123456', address: '');
 
       // Assert
       expect(provider.myplugUser, equals(demoUser));

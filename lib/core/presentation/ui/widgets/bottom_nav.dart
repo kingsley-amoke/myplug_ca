@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
+import 'package:myplug_ca/core/presentation/ui/pages/settings.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
 import 'package:myplug_ca/features/job/presentation/ui/pages/job_page.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/wallet.dart';
@@ -16,9 +17,8 @@ final List<Widget> _screens = [
   const JobPage(),
   const HomePage(),
   const WalletPage(),
-  const Scaffold(),
-  // Wallet(),
-  // Settings(),
+  const Settings(),
+
 ];
 
 int _currentIndex = 2;

@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/core/constants/users.dart';
+import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/services/location_service.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
 import 'package:myplug_ca/features/user/domain/models/location.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
@@ -12,7 +14,11 @@ import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 class UserProvider extends ChangeNotifier {
   final UserRepoImpl _userRepo;
 
-  MyplugUser? _user = demoUsers[0];
+  List<MyplugUser> allUsers = [];
+  List<MyplugUser> userByService = [];
+  MyplugUser? _user;
+
+  UserLocation? userLocation;
 
   MyplugUser? get myplugUser => _user;
 
@@ -21,12 +27,18 @@ class UserProvider extends ChangeNotifier {
   UserProvider(this._userRepo);
 
   Future<void> signIn({required String email, required String password}) async {
-    _user = await _userRepo.signUp(email: email, password: password);
+    _user = await _userRepo.signIn(email: email, password: password);
+    getLocation();
     notifyListeners();
   }
 
-  Future<void> signUp({required String email, required String password}) async {
-    _user = await _userRepo.signUp(email: email, password: password);
+  Future<void> signUp(
+      {required MyplugUser user,
+      required String address,
+      required String password}) async {
+    userLocation = userLocation?.copyWith(address: address);
+    user.copyWith(location: userLocation);
+    _user = await _userRepo.signUp(user: user, password: password);
     notifyListeners();
   }
 
@@ -38,10 +50,52 @@ class UserProvider extends ChangeNotifier {
 
   Stream<MyplugUser>? getUserStream() {
     if (_user != null) {
-      return _userRepo.getUserStream(_user!.id);
+      return _userRepo.getUserStream(_user!.id!);
     } else {
       return null;
     }
+  }
+
+  List<MyplugUser> getUserByService(Skill service) {
+    userByService =
+        allUsers.where((item) => item.skills.first == service).toList();
+    notifyListeners();
+    return userByService;
+  }
+
+  Future<void> getLocation() async {
+    allUsers = await _userRepo.loadAllUsers();
+    final locationData = await LocationService.getUserLocationInfo();
+    if (locationData != null) {
+      userLocation = UserLocation(
+        latitude: locationData['latitude'],
+        longitude: locationData['longitude'],
+      );
+
+      if (FirebaseAuth.instance.currentUser != null) {
+        _user =
+            await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
+        if (userLocation != null) {
+          final fullAddress = await getAddressFromCordinates(
+              latitude: userLocation!.latitude,
+              longitude: userLocation!.longitude);
+
+          userLocation = userLocation!.copyWith(address: fullAddress);
+          print(userLocation.toString());
+          _user = _user?.copyWith(location: userLocation);
+          _userRepo.updateProfile(_user!);
+        }
+      }
+    } else {
+      if (FirebaseAuth.instance.currentUser != null) {
+        _user =
+            await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
+
+        userLocation = _user!.location;
+      }
+    }
+
+    notifyListeners();
   }
 
   //update profile

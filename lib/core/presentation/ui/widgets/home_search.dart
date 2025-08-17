@@ -43,7 +43,7 @@ class HomeSearch extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Lagos',
+                        provider.myplugUser?.location?.address ?? '',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 14,
@@ -61,7 +61,6 @@ class HomeSearch extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (_) => ProfilePage(
                                   user: provider.myplugUser!,
-                                
                                 ),
                               ),
                             )

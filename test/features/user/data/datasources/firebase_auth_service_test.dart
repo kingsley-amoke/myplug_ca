@@ -36,7 +36,7 @@ void main() {
 
       when(() => mockUserCredential.user).thenReturn(mockUser);
       when(() => mockUser.email).thenReturn(demoUser.email);
-      when(() => mockUser.uid).thenReturn(demoUser.id);
+      when(() => mockUser.uid).thenReturn(demoUser.id!);
 
       //ACT
       final user = await firebaseAuthService.signIn(
@@ -56,7 +56,7 @@ void main() {
 
       when(() => mockUserCredential.user).thenReturn(mockUser);
       when(() => mockUser.email).thenReturn(demoUser.email);
-      when(() => mockUser.uid).thenReturn(demoUser.id);
+      when(() => mockUser.uid).thenReturn(demoUser.id!);
 
       //ACT
       final user = await firebaseAuthService.signUp(
@@ -71,7 +71,7 @@ void main() {
       //ARRANGE
       when(() => mockFirebaseAuth.currentUser).thenReturn(mockUser);
       when(() => mockUser.email).thenReturn(demoUser.email);
-      when(() => mockUser.uid).thenReturn(demoUser.id);
+      when(() => mockUser.uid).thenReturn(demoUser.id!);
 
 //ACT
       final user = firebaseAuthService.currentUser;

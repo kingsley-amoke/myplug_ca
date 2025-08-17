@@ -56,7 +56,7 @@ void main() {
       when(() => mockDocSnap.data()).thenReturn(demoUser1.toMap());
 
       //ACT:
-      expectedUser = await userProfileService.loadUser(demoUser1.id);
+      expectedUser = await userProfileService.loadUser(demoUser1.id!);
       //ASSERT
       expect(expectedUser, demoUser1);
       expect(expectedUser, isA<MyplugUser>);
@@ -69,7 +69,7 @@ void main() {
       when(() => mockDocSnap.data()).thenReturn(null);
 
       //ACT
-      expectedUser = await userProfileService.loadUser(demoUser1.id);
+      expectedUser = await userProfileService.loadUser(demoUser1.id!);
       //ASSERT
       expect(expectedUser, isNull);
     });

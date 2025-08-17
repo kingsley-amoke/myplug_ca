@@ -1,7 +1,7 @@
 
   import 'package:flutter/material.dart';
 
-Widget sectionHeader(String title, VoidCallback onAdd) {
+Widget sectionHeader({required String title, IconData? icon, required VoidCallback onAdd}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

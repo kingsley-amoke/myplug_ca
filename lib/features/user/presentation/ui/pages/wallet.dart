@@ -1,6 +1,7 @@
 // lib/features/wallet/views/wallet_page.dart
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/transaction_group.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/wallet_card.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
@@ -17,7 +18,7 @@ class WalletPage extends StatelessWidget {
         context.read<UserProvider>().myplugUser!.transactions);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Wallet')),
+      appBar: myAppbar(context, title: 'Wallet', implyLeading: false),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -32,20 +33,17 @@ class WalletPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final date = groupedTxns.keys.elementAt(index);
                         final txns = groupedTxns[date]!;
-                        return transactionGroup(context, date:date, txns:txns);
+                        return transactionGroup(context,
+                            date: date, txns: txns);
                       },
                     ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
     );
   }
-
- 
-
-
-
- 
 }

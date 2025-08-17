@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'myplug-ca.firebaseapp.com',
     storageBucket: 'myplug-ca.firebasestorage.app',
   );
+
 }

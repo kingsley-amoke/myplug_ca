@@ -7,7 +7,7 @@ abstract class UserRepo {
 
   Future<MyplugUser?> signIn({required String email, required String password});
 
-  Future<MyplugUser?> signUp({required String email, required String password});
+  Future<MyplugUser?> signUp({required MyplugUser user, required String password});
 
   Future<void> logout();
 
