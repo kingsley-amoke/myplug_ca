@@ -15,8 +15,8 @@ class MyplugUser {
   final String? firstName;
   final String? lastName;
   final String? phone;
-  final double balance;
-  final double bonus;
+  double balance;
+  double bonus;
   final bool isAdmin;
   final bool isSuspended;
   final String? image;

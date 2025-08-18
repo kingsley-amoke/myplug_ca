@@ -63,6 +63,26 @@ class FirestoreChatService extends ChatRepository {
     await convoRef.delete();
   }
 
+  // @override
+  // Future<void> sendMessage({
+  //   required ChatMessage message,
+  //   required String conversationId,
+  // }) async {
+  //   final docRef = _firestore
+  //       .collection('chats')
+  //       .doc(conversationId)
+  //       .collection('messages')
+  //       .doc();
+
+  //   await docRef.set(message.copyWith(id: docRef.id).toMap());
+
+  //   // Update conversation metadata
+  //   await _firestore.collection('chats').doc(conversationId).update({
+  //     'last_message': message.content,
+  //     'last_sent_at': message.timestamp.toIso8601String(),
+  //   });
+  // }
+
   @override
   Future<void> sendMessage({
     required ChatMessage message,
@@ -74,13 +94,28 @@ class FirestoreChatService extends ChatRepository {
         .collection('messages')
         .doc();
 
-    await docRef.set(message.copyWith(id: docRef.id).toMap());
+    // Save message as "sent"
+    final newMessage = message.copyWith(
+      id: docRef.id,
+      status: MessageStatus.sent,
+    );
+
+    await docRef.set(newMessage.toMap());
 
     // Update conversation metadata
     await _firestore.collection('chats').doc(conversationId).update({
-      'last_message': message.content,
-      'last_sent_at': message.timestamp.toIso8601String(),
+      'last_message': newMessage.content,
+      'last_sent_at': newMessage.timestamp.toIso8601String(),
     });
+
+    // (Optional) Mark as delivered immediately if all participants are online
+    // Or listen via snapshot when recipient retrieves messages, then update
+    _firestore
+        .collection('chats')
+        .doc(conversationId)
+        .collection('messages')
+        .doc(docRef.id)
+        .update({'status': MessageStatus.delivered.name});
   }
 
   @override
@@ -95,17 +130,46 @@ class FirestoreChatService extends ChatRepository {
             .toList());
   }
 
+  // @override
+  // Stream<List<ChatMessage>> getMessageStream(String conversationId) {
+  //   return _firestore
+  //       .collection('chats')
+  //       .doc(conversationId)
+  //       .collection('messages')
+  //       .orderBy('timestamp')
+  //       .snapshots()
+  //       .map((snapshot) => snapshot.docs
+  //           .map((doc) => ChatMessage.fromMap(doc.data(), doc.id))
+  //           .toList());
+  // }
   @override
-  Stream<List<ChatMessage>> getMessageStream(String conversationId) {
+  Stream<List<ChatMessage>> getMessageStream(
+      {required String conversationId, required String currentUserId}) {
     return _firestore
         .collection('chats')
         .doc(conversationId)
         .collection('messages')
-        .orderBy('timestamp')
+        .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => ChatMessage.fromMap(doc.data(), doc.id))
-            .toList());
+        .map((snapshot) {
+      final messages = snapshot.docs.map((doc) {
+        return ChatMessage.fromMap(doc.data(), doc.id);
+      }).toList();
+
+      // Mark messages addressed to current user as delivered
+      for (var msg in messages) {
+        if (msg.senderId != currentUserId && msg.status == MessageStatus.sent) {
+          _firestore
+              .collection('chats')
+              .doc(conversationId)
+              .collection('messages')
+              .doc(msg.id)
+              .update({'status': MessageStatus.delivered.name});
+        }
+      }
+
+      return messages;
+    });
   }
 
   @override
@@ -125,5 +189,21 @@ class FirestoreChatService extends ChatRepository {
       'lastMessage': null,
       'lastSentAt': null,
     });
+  }
+
+  @override
+  Future<void> markMessagesAsSeen(
+      String conversationId, String currentUserId) async {
+    final query = await _firestore
+        .collection('chats')
+        .doc(conversationId)
+        .collection('messages')
+        .where('sender_id', isNotEqualTo: currentUserId)
+        .where('status', isEqualTo: MessageStatus.delivered.name)
+        .get();
+
+    for (var doc in query.docs) {
+      await doc.reference.update({'status': MessageStatus.seen.name});
+    }
   }
 }

@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:myplug_ca/core/constants/shops.dart';
 import 'package:myplug_ca/core/constants/skills.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/subscription_section.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
+import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
+import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/services.dart';
 import 'package:myplug_ca/features/product/presentation/ui/pages/shops.dart';
 
-import 'package:myplug_ca/core/presentation/ui/widgets/home_search.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/hero_section.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/homepage_grid.dart';
 import 'package:myplug_ca/features/product/presentation/ui/widgets/product_grid.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 // import 'package:myplug_ca/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +33,8 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HomeSearch(searchController: _searchController),
+            HeroSection(searchController: _searchController),
+            const SubscriptionSection(),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 18.0,

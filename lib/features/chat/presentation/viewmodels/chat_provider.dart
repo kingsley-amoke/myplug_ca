@@ -32,15 +32,20 @@ class ChatProvider extends ChangeNotifier {
       {required String userId,
       required List<MyplugUser> allUsers,
       required String searchQuery}) {
+    // print(searchQuery);
+
     filteredConversations = filteredConversations.where((convo) {
       final otherId = convo.participants.firstWhere((id) => id != userId);
       final user = allUsers.firstWhere((u) => u.id == otherId);
       final name = '${user.firstName} ${user.lastName}'.toLowerCase();
-      return name.contains(searchQuery.toLowerCase()) ||
+
+      final filtered = name.contains(searchQuery.toLowerCase()) ||
           (convo.lastMessage
                   ?.toLowerCase()
                   .contains(searchQuery.toLowerCase()) ??
               false);
+
+      return filtered;
     }).toList();
 
     notifyListeners();
@@ -52,8 +57,10 @@ class ChatProvider extends ChangeNotifier {
   }
 
   //load message
-  Stream<List<ChatMessage>> loadMessage(String conversationId) {
-    return _chatRepoImpl.getMessageStream(conversationId);
+  Stream<List<ChatMessage>> loadMessage(
+      {required String conversationId, required String currentUserId}) {
+    return _chatRepoImpl.getMessageStream(
+        conversationId: conversationId, currentUserId: currentUserId);
   }
 
   //send message
@@ -64,6 +71,12 @@ class ChatProvider extends ChangeNotifier {
       message: message,
       conversationId: conversationId,
     );
+  }
+
+  Future<void> markMessagesAsSeen(
+      String conversationId, String currentUserId) async {
+    return await _chatRepoImpl.markMessagesAsSeen(
+        conversationId, currentUserId);
   }
 
   //delete message

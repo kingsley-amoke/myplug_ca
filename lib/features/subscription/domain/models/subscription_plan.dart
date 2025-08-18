@@ -1,47 +1,56 @@
+import 'package:myplug_ca/features/subscription/domain/models/highlight.dart';
+
 class SubscriptionPlan {
   final String id;
   final String title;
-  final String description;
+  final List<String> features;
   final double price;
   final Duration duration;
+  final Highlight highlight;
 
-  SubscriptionPlan({
-    required this.id,
-    required this.title,
-    required this.price,
-    required this.duration,
-    required this.description,
-  });
+  SubscriptionPlan(
+      {required this.id,
+      required this.title,
+      required this.price,
+      required this.duration,
+      required this.features,
+      required this.highlight});
 
   factory SubscriptionPlan.fromMap(Map<String, dynamic> map) =>
       SubscriptionPlan(
         id: map['id'],
         title: map['title'],
-        description: map['description'],
+        features: List<String>.from(map['features']),
         price: (map['price'] as num).toDouble(),
-        duration: Duration(days: map['durationDays']),
+        duration: Duration(
+          days: map['durationDays'],
+        ),
+        highlight: SubHighlight.fromString(map['highlight']),
       );
 
   Map<String, dynamic> toMap() => {
         'id': id,
         'title': title,
-        'description': description,
+        'features': features,
         'price': price,
         'durationDays': duration.inDays,
+        'highlight': highlight.value
       };
 
   SubscriptionPlan copyWith({
     String? title,
     double? price,
-    String? description,
+    List<String>? features,
     Duration? duration,
+    Highlight? highlight,
   }) {
     return SubscriptionPlan(
       id: id,
       title: title ?? this.title,
-      description: description ?? this.description,
+      features: features ?? this.features,
       price: price ?? this.price,
       duration: duration ?? this.duration,
+      highlight: highlight ?? this.highlight,
     );
   }
 }

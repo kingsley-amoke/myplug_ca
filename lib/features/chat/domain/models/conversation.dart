@@ -49,7 +49,9 @@
 
 // lib/features/chat/domain/models/conversation.dart
 
-enum MessageStatus { sent, delivered, read }
+// enum MessageStatus { sent, delivered, read }
+
+import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 
 class Conversation {
   final String? id;
@@ -125,8 +127,8 @@ class Conversation {
         return MessageStatus.sent;
       case 'delivered':
         return MessageStatus.delivered;
-      case 'read':
-        return MessageStatus.read;
+      case 'seen':
+        return MessageStatus.seen;
       default:
         return null;
     }

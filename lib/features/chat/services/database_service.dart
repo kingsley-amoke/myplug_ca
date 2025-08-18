@@ -40,8 +40,10 @@ class ChatDatabaseService extends ChatRepository {
   }
 
   @override
-  Stream<List<ChatMessage>> getMessageStream(String conversationId) {
-    return _databaseService.getMessageStream(conversationId);
+  Stream<List<ChatMessage>> getMessageStream(
+      {required String conversationId, required String currentUserId}) {
+    return _databaseService.getMessageStream(
+        conversationId: conversationId, currentUserId: currentUserId);
   }
 
   @override
@@ -51,5 +53,12 @@ class ChatDatabaseService extends ChatRepository {
   }) async {
     return await _databaseService.deleteMessage(
         conversationId: conversationId, messageId: messageId);
+  }
+
+  @override
+  Future<void> markMessagesAsSeen(
+      String conversationId, String currentUserId) async {
+    return await _databaseService.markMessagesAsSeen(
+        conversationId, currentUserId);
   }
 }

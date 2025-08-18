@@ -4,7 +4,9 @@ import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
+import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class MyplugProvider extends ChangeNotifier {
   final ChatRepoImpl chatRepoImpl;
@@ -28,6 +30,25 @@ class MyplugProvider extends ChangeNotifier {
   //apply job
 
   //subscribe
+  Future<bool> subscribeUser(
+      {required MyplugUser user, required Subscription subscription}) async {
+    //charge user wallet
+
+    final updatedUser = userRepoImpl.deductUserBalance(
+        user: user, amount: subscription.plan.price);
+
+    if (updatedUser == null) {
+      return false;
+    }
+
+    //save subscription
+    subscriptionRepoImpl.createSubscription(subscription);
+
+    //update user
+    userRepoImpl.updateProfile(user);
+
+    return true;
+  }
 
   //cancel subscription
 

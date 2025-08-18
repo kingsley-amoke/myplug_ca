@@ -73,4 +73,13 @@ class UserRepoImpl implements UserRepo {
   Stream<List<MyplugUser>> getAllUsersStream() {
     return userProfile.getAllUsersStream();
   }
+
+  MyplugUser? deductUserBalance(
+      {required MyplugUser user, required double amount}) {
+    if (user.balance < amount) {
+      return null;
+    }
+    user.balance -= amount;
+    return user;
+  }
 }

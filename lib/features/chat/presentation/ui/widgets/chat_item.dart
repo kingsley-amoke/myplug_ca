@@ -60,6 +60,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myplug_ca/core/constants/images.dart';
+import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
@@ -209,7 +210,7 @@ class ChatItem extends StatelessWidget {
         return const Icon(Icons.check, size: 16, color: Colors.grey);
       case MessageStatus.delivered:
         return const Icon(Icons.done_all, size: 16, color: Colors.grey);
-      case MessageStatus.read:
+      case MessageStatus.seen:
         return const Icon(Icons.done_all, size: 16, color: Colors.blue);
       default:
         return const SizedBox.shrink();

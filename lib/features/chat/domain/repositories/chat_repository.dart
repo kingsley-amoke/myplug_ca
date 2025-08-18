@@ -10,10 +10,13 @@ abstract class ChatRepository {
       {required ChatMessage message, required String conversationId});
 
   Stream<List<Conversation>> getUserConversationsStream(String userId);
-  Stream<List<ChatMessage>> getMessageStream(String conversationId);
+  Stream<List<ChatMessage>> getMessageStream(
+      {required String conversationId, required String currentUserId});
 
   Future<void> deleteMessage({
     required String conversationId,
     required String messageId,
   });
+
+  Future<void> markMessagesAsSeen(String conversationId, String currentUserId);
 }

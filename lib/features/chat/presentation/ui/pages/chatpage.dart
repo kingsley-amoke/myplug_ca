@@ -26,9 +26,10 @@ void searchConversation(BuildContext context, {required String searchQuery}) {
   }
 
   context.read<ChatProvider>().filterChat(
-      searchQuery: searchQuery,
-      allUsers: userProvider.allUsers,
-      userId: userProvider.myplugUser!.id!);
+        searchQuery: searchQuery,
+        allUsers: userProvider.allUsers,
+        userId: userProvider.myplugUser!.id!,
+      );
 }
 
 class _ChatPageState extends State<ChatPage> {

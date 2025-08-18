@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:myplug_ca/core/models/toast.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/product/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:toastification/toastification.dart';
 
 double getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
@@ -107,6 +109,57 @@ Future<String?> getAddressFromCordinates(
     return fullAddress;
   }
   return null;
+}
+
+String formatPlanDuration(Duration duration) {
+  final days = duration.inDays;
+
+  if (days < 7) {
+    return "$days day${days == 1 ? '' : 's'}";
+  } else if (days < 30) {
+    final weeks = (days / 7).floor();
+    return "$weeks week${weeks == 1 ? '' : 's'}";
+  } else if (days < 365) {
+    final months = (days / 30).floor();
+    return "$months month${months == 1 ? '' : 's'}";
+  } else {
+    final years = (days / 365).floor();
+    return "$years year${years == 1 ? '' : 's'}";
+  }
+}
+
+//show toast
+
+void showToast(
+  BuildContext context, {
+  required String message,
+  required ToastType type,
+}) {
+  ToastificationType toastType;
+
+  switch (type) {
+    case ToastType.success:
+      toastType = ToastificationType.success;
+      break;
+    case ToastType.error:
+      toastType = ToastificationType.error;
+      break;
+    case ToastType.info:
+      toastType = ToastificationType.info;
+      break;
+  }
+
+  toastification.show(
+    context: context,
+    type: toastType,
+    style: ToastificationStyle.fillColored,
+    title: Text(message),
+    autoCloseDuration: const Duration(seconds: 3),
+    alignment: Alignment.topCenter,
+    animationDuration: const Duration(milliseconds: 300),
+    borderRadius: BorderRadius.circular(8),
+    showProgressBar: true,
+  );
 }
 
 void openLink(String url) async {

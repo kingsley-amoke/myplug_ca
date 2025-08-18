@@ -32,9 +32,10 @@ class SubscriptionProvider extends ChangeNotifier {
 
   Future<void> cancel() async {
     if (_subscription != null) {
-      await _subscriptionRepoImpl.cancelSubscription(_subscription!.id);
+      await _subscriptionRepoImpl.cancelSubscription(_subscription!.id!);
       _subscription =
           _subscription!.copyWith(isActive: false, endDate: DateTime.now());
+      _subscription = null;
       notifyListeners();
     }
   }

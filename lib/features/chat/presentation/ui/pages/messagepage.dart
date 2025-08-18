@@ -82,6 +82,7 @@ import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class MessagePage extends StatefulWidget {
@@ -104,6 +105,18 @@ final messageController = TextEditingController();
 
 class _MessagePageState extends State<MessagePage> {
   @override
+  void initState() {
+    super.initState();
+
+    // When user enters chat, mark all as seen
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<ChatProvider>()
+          .markMessagesAsSeen(widget.conversationId, widget.currentUserId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppbar(context, title: widget.otherUser.fullname ?? 'Chat'),
@@ -112,9 +125,10 @@ class _MessagePageState extends State<MessagePage> {
           /// MESSAGES
           Expanded(
             child: StreamBuilder<List<ChatMessage>>(
-                stream: context
-                    .watch<ChatProvider>()
-                    .loadMessage(widget.conversationId),
+                stream: context.watch<ChatProvider>().loadMessage(
+                    conversationId: widget.conversationId,
+                    currentUserId:
+                        context.read<UserProvider>().myplugUser!.id!),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
@@ -124,7 +138,7 @@ class _MessagePageState extends State<MessagePage> {
                   return ListView.builder(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    reverse: false, // new messages at bottom
+                    reverse: true, // new messages at bottom
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final msg = messages[index];
@@ -171,12 +185,22 @@ class _MessagePageState extends State<MessagePage> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  msg.content,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        msg.content,
+                                        softWrap: true,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    // if (isMine) _buildStatusIcon(msg.status),
+                                  ],
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
@@ -262,5 +286,18 @@ class _MessagePageState extends State<MessagePage> {
         ],
       ),
     );
+  }
+}
+
+Widget _buildStatusIcon(MessageStatus status) {
+  switch (status) {
+    case MessageStatus.sending:
+      return const Icon(Icons.access_time, size: 14, color: Colors.grey);
+    case MessageStatus.sent:
+      return const Icon(Icons.check, size: 14, color: Colors.grey);
+    case MessageStatus.delivered:
+      return const Icon(Icons.done_all, size: 14, color: Colors.grey);
+    case MessageStatus.seen:
+      return const Icon(Icons.done_all, size: 14, color: Colors.blueAccent);
   }
 }

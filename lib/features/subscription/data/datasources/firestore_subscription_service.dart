@@ -11,10 +11,9 @@ class FirestoreSubscriptionService implements SubscriptionRepository {
 
   @override
   Future<void> createSubscription(Subscription subscription) async {
-    await _firestore
-        .collection(_collection)
-        .doc(subscription.id)
-        .set(subscription.toMap());
+    final docRef = _firestore.collection(_collection).doc();
+
+    return await docRef.set(subscription.copyWith(id: docRef.id).toMap());
   }
 
   @override
@@ -33,10 +32,7 @@ class FirestoreSubscriptionService implements SubscriptionRepository {
 
   @override
   Future<void> cancelSubscription(String subscriptionId) async {
-    await _firestore.collection(_collection).doc(subscriptionId).update({
-      'isActive': false,
-      'endDate': DateTime.now().toIso8601String(),
-    });
+    await _firestore.collection(_collection).doc(subscriptionId).delete();
   }
 
   @override

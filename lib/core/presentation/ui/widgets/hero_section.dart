@@ -5,8 +5,8 @@ import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomeSearch extends StatelessWidget {
-  const HomeSearch({super.key, required this.searchController});
+class HeroSection extends StatelessWidget {
+  const HeroSection({super.key, required this.searchController});
 
   final TextEditingController searchController;
 

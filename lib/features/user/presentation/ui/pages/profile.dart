@@ -2,13 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
+import 'package:myplug_ca/core/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
+import 'package:myplug_ca/features/subscription/presentation/ui/widgets/cancel_sub.dart';
+import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/bio_section.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/portfolio_section.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/skills_section.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/testimonial_section.dart';
 import 'package:change_case/change_case.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   final MyplugUser user;
@@ -37,6 +42,22 @@ class ProfilePage extends StatelessWidget {
                   skillsSection(user),
                   const SizedBox(height: 16),
                   BioSection(user: user),
+                  const SizedBox(height: 24),
+                  Consumer<SubscriptionProvider>(builder: (BuildContext context,
+                      SubscriptionProvider provider, Widget? child) {
+                    if (provider.subscription != null) {
+                      return CancelSubscriptionCard(
+                          subscription: provider.subscription!,
+                          onCancel: () {
+                            provider.cancel().then((_) {
+                              showToast(context,
+                                  message: 'Success', type: ToastType.success);
+                            });
+                          });
+                    } else {
+                      return _buildSubscriptionSection(context);
+                    }
+                  }),
                   const SizedBox(height: 24),
                   portfolioSection(context, user: user),
                   const SizedBox(height: 24),
@@ -89,4 +110,28 @@ class ProfilePage extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget _buildSubscriptionSection(BuildContext context) {
+  return Card(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    elevation: 2,
+    child: ListTile(
+      leading: const Icon(Icons.workspace_premium, color: Colors.amber),
+      title: const Text(
+        "Upgrade Subscription",
+        style: TextStyle(fontWeight: FontWeight.w600),
+      ),
+      subtitle: const Text("Unlock premium features & benefits"),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const SubscriptionPage(),
+          ),
+        );
+      },
+    ),
+  );
 }

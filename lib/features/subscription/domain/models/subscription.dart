@@ -1,7 +1,7 @@
 import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
 
 class Subscription {
-  final String id;
+  final String? id;
   final String userId;
   final SubscriptionPlan plan;
   final DateTime startDate;
@@ -9,7 +9,7 @@ class Subscription {
   final bool isActive;
 
   Subscription({
-    required this.id,
+    this.id,
     required this.userId,
     required this.plan,
     required this.startDate,
@@ -40,9 +40,10 @@ class Subscription {
     DateTime? startDate,
     DateTime? endDate,
     bool? isActive,
+    String? id,
   }) {
     return Subscription(
-      id: id,
+      id: id ?? this.id,
       userId: userId,
       plan: plan ?? this.plan,
       startDate: startDate ?? this.startDate,

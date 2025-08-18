@@ -1,8 +1,7 @@
 name: myplug_ca
 description: "A new Flutter project."
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -21,7 +20,7 @@ dependencies:
   change_case:
   flutter_product_card:
   star_rating:
-  
+  toastification:
 
   cupertino_icons: ^1.0.8
   babstrap_settings_screen_updated: ^1.0.0
@@ -35,7 +34,6 @@ dev_dependencies:
     sdk: flutter
   mocktail:
   build_runner:
- 
 
   flutter_lints: ^4.0.0
 
