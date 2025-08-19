@@ -98,7 +98,7 @@ String formatTimeAgo(DateTime date) {
 
 //address
 
-Future<String?> getAddressFromCordinates(
+Future<String?> getStateFromCordinates(
     {required double latitude, required double longitude}) async {
   List<Placemark> placemarks =
       await placemarkFromCoordinates(latitude, longitude);
@@ -111,7 +111,7 @@ Future<String?> getAddressFromCordinates(
   return null;
 }
 
-Future<String?> getStateFromCordinates(
+Future<String?> getAddressFromCordinates(
     {required double latitude, required double longitude}) async {
   List<Placemark> placemarks =
       await placemarkFromCoordinates(latitude, longitude);
