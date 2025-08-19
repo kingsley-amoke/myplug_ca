@@ -96,7 +96,22 @@ String formatTimeAgo(DateTime date) {
   }
 }
 
+//address
+
 Future<String?> getAddressFromCordinates(
+    {required double latitude, required double longitude}) async {
+  List<Placemark> placemarks =
+      await placemarkFromCoordinates(latitude, longitude);
+
+  if (placemarks.isNotEmpty) {
+    final Placemark place = placemarks.first;
+
+    return place.subAdministrativeArea;
+  }
+  return null;
+}
+
+Future<String?> getStateFromCordinates(
     {required double latitude, required double longitude}) async {
   List<Placemark> placemarks =
       await placemarkFromCoordinates(latitude, longitude);

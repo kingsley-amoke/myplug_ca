@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/images.dart';
+import 'package:myplug_ca/core/presentation/ui/pages/search.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
@@ -96,6 +97,15 @@ class HeroSection extends StatelessWidget {
                   controller: searchController,
                   prefixIcon: const Icon(Icons.search),
                   hintText: 'What can we do for you today?',
+                  onEditingComplete: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => GlobalSearchPage(
+                          searchTerm: searchController.text.trim(),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 30),

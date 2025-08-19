@@ -62,6 +62,48 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  List<MyplugUser> filterByParams({
+    String? location,
+    String? search,
+  }) {
+    List<MyplugUser> matches = [];
+
+    for (MyplugUser user in usersByService) {
+      bool match = true;
+
+      // Location filter
+      if (location != null &&
+          user.location?.state?.toLowerCase() != location.toLowerCase()) {
+        match = false;
+      }
+
+      // Search term filter (ignore if null or empty)
+      if (search != null && search.trim().isNotEmpty) {
+        final term = search.toLowerCase();
+
+        final firstName = user.firstName?.toLowerCase();
+        final lastName = user.lastName?.toLowerCase();
+        final email = user.email.toLowerCase();
+        final skills = user.skills.map((s) => s.name.toLowerCase()).join(" ");
+
+        if (!(firstName!.contains(term) ||
+            lastName!.contains(term) ||
+            email.contains(term) ||
+            skills.contains(term))) {
+          match = false;
+        }
+      }
+
+      if (match) {
+        matches.add(user);
+      }
+    }
+
+    usersByService = matches;
+    notifyListeners();
+    return matches;
+  }
+
   void getUsersByService(Skill service) async {
     usersByServiceLoading = true;
     await _userRepo.loadAllUsers();
@@ -90,11 +132,20 @@ class UserProvider extends ChangeNotifier {
             await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
         if (userLocation != null) {
           final fullAddress = await getAddressFromCordinates(
-              latitude: userLocation!.latitude,
-              longitude: userLocation!.longitude);
+            latitude: userLocation!.latitude,
+            longitude: userLocation!.longitude,
+          );
 
-          userLocation = userLocation!.copyWith(address: fullAddress);
-          print(userLocation.toString());
+          final state = await getStateFromCordinates(
+            latitude: userLocation!.latitude,
+            longitude: userLocation!.longitude,
+          );
+
+          userLocation = userLocation!.copyWith(
+            address: fullAddress,
+            state: state,
+          );
+
           _user = _user?.copyWith(location: userLocation);
           _userRepo.updateProfile(_user!);
         }
