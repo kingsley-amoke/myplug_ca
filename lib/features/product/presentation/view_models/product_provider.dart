@@ -4,7 +4,7 @@ import 'package:myplug_ca/core/constants/products.dart';
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/domain/models/rating.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class ProductProvider extends ChangeNotifier {

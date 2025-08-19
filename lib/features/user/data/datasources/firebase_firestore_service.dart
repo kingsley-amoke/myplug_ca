@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
 import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
 
 class FirebaseFirestoreService implements UserProfile {
@@ -52,7 +53,7 @@ class FirebaseFirestoreService implements UserProfile {
 
   @override
   Stream<List<MyplugUser>> getAllUsersStream() {
-    return FirebaseFirestore.instance
+    return _firestore
         .collection('users')
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
@@ -60,5 +61,14 @@ class FirebaseFirestoreService implements UserProfile {
               data['id'] = doc.id;
               return MyplugUser.fromMap(data);
             }).toList());
+  }
+
+  @override
+  Future<String> uploadPortfolio(Portfolio portfolio) async {
+    final docRef = _firestore.collection('portfolio').doc();
+
+    await docRef.set(portfolio.copyWith(id: docRef.id).toMap());
+
+    return docRef.id;
   }
 }

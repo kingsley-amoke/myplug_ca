@@ -1,7 +1,10 @@
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/section_header.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/add_testimonial.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:star_rating/star_rating.dart';
 
 Widget testimonialsSection(
@@ -9,14 +12,22 @@ Widget testimonialsSection(
   required MyplugUser user,
 }) {
   void onAdd() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const AddTestimonialPage()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => AddTestimonialPage(
+              user: user,
+            )));
   }
+
+  bool isOwner = context.read<UserProvider>().myplugUser?.id == user.id;
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      sectionHeader(title: 'Testimonials', onAdd: onAdd),
+      sectionHeader(
+        title: 'Testimonials',
+        onAdd: onAdd,
+        show: !isOwner,
+      ),
       const SizedBox(height: 8),
       if (user.testimonials.isEmpty)
         const Text('No testimonials yet.')
@@ -29,7 +40,7 @@ Widget testimonialsSection(
           itemBuilder: (context, index) {
             final t = user.testimonials[index];
             return ListTile(
-              title: Text(t.content),
+              title: Text(t.comment.toSentenceCase()),
               subtitle: StarRating(
                 rating: t.rating,
                 length: 5,

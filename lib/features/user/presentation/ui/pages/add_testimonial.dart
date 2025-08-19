@@ -1,9 +1,15 @@
 // lib/features/user/views/add_testimonial_page.dart
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class AddTestimonialPage extends StatefulWidget {
-  const AddTestimonialPage({super.key});
-
+  const AddTestimonialPage({super.key, required this.user});
+  final MyplugUser user;
   @override
   State<AddTestimonialPage> createState() => _AddTestimonialPageState();
 }
@@ -18,7 +24,18 @@ class _AddTestimonialPageState extends State<AddTestimonialPage> {
       final content = _contentController.text.trim();
       final rating = _rating;
 
-      // TODO: Save testimonial logic here
+      final userProvider = context.read<UserProvider>();
+
+      if (userProvider.isLoggedIn) {
+        final Rating newRating = Rating(
+          comment: content,
+          rating: rating,
+          username: userProvider.myplugUser!.fullname,
+          date: DateTime.now(),
+        );
+
+        userProvider.addTestimonial(user: widget.user, rating: newRating);
+      }
 
       Navigator.pop(context);
     }
@@ -33,7 +50,7 @@ class _AddTestimonialPageState extends State<AddTestimonialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Testimonial')),
+      appBar: myAppbar(context, title: 'Add Testimonial'),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(

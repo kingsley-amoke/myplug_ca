@@ -2,8 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class AddPortfolioPage extends StatefulWidget {
   const AddPortfolioPage({super.key});
@@ -18,13 +22,12 @@ class _AddPortfolioPageState extends State<AddPortfolioPage> {
   final _descriptionController = TextEditingController();
   final _linkController = TextEditingController();
 
-  final List<XFile> _images = [];
+  final List<File> _images = [];
   bool _isSubmitting = false;
 
   Future<void> _pickImages() async {
-    final ImagePicker picker = ImagePicker();
-    final List<XFile> picked = await picker.pickMultiImage();
-    if (picked.isNotEmpty) {
+    final List<File>? picked = await pickMultiImage();
+    if (picked != null && picked.isNotEmpty) {
       setState(() {
         _images.addAll(picked);
       });
@@ -32,31 +35,27 @@ class _AddPortfolioPageState extends State<AddPortfolioPage> {
   }
 
   Future<void> _submitPortfolio() async {
+    final navigator = Navigator.of(context);
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isSubmitting = true);
 
     try {
-      // Upload images & save portfolio logic here
-      // e.g., call UserRepository.addPortfolio(...)
-      // For now, just mock saving:
-      await Future.delayed(const Duration(seconds: 2));
+      await context.read<UserProvider>().uploadPortfolio(
+            images: _images,
+            title: _titleController.text.trim(),
+            description: _descriptionController.text.trim(),
+            link: _linkController.text.trim().isEmpty
+                ? null
+                : _linkController.text.trim(),
+          );
 
-      // Create Portfolio model
-      Portfolio newPortfolio = Portfolio(
-        title: _titleController.text.trim(),
-        description: _descriptionController.text.trim(),
-        imageUrls: _images.map((e) => e.path).toList(),
-        link: _linkController.text.trim().isEmpty
-            ? null
-            : _linkController.text.trim(),
-      );
+      showToast(context, message: 'Success', type: ToastType.success);
 
-      Navigator.pop(context, newPortfolio); // Return the new portfolio
+      navigator.pop();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${e.toString()}")),
-      );
+      showToast(context,
+          message: 'Something went wrong', type: ToastType.error);
     } finally {
       setState(() => _isSubmitting = false);
     }

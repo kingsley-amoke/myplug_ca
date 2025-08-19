@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/product/domain/models/rating.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
 
 List<Rating> demoRatings = [
   Rating(

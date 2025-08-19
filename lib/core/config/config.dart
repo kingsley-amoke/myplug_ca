@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
-import 'package:myplug_ca/features/product/domain/models/rating.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:toastification/toastification.dart';
@@ -176,6 +176,26 @@ Future<File?> pickImage({ImageSource source = ImageSource.gallery}) async {
 
     if (pickedFile != null) {
       return File(pickedFile.path);
+    } else {
+      return null; // User cancelled
+    }
+  } catch (e) {
+    print("Error picking image: $e");
+    return null;
+  }
+}
+
+Future<List<File>?> pickMultiImage(
+    {ImageSource source = ImageSource.gallery}) async {
+  try {
+    final List<XFile> picked = await _picker.pickMultiImage(
+      maxWidth: 1080,
+      maxHeight: 1080,
+      imageQuality: 80, // Compress quality (0-100)
+    );
+
+    if (picked.isNotEmpty) {
+      return picked.map((i) => File(i.path)).toList();
     } else {
       return null; // User cancelled
     }

@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/services/location_service.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
 import 'package:myplug_ca/features/user/domain/models/location.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
@@ -112,7 +115,7 @@ class UserProvider extends ChangeNotifier {
     String? image,
     UserLocation? location,
     List<Skill>? skills,
-    List<Testimonial>? testimonials,
+    List<Rating>? testimonials,
     List<Transaction>? transactions,
     List<Portfolio>? portfolios,
     List<String>? conversations,
@@ -163,5 +166,51 @@ class UserProvider extends ChangeNotifier {
     }
 
     return false;
+  }
+
+  Future<void> addTestimonial(
+      {required MyplugUser user, required Rating rating}) async {
+    user.testimonials.add(rating);
+    List<Rating> newTestimonials = user.testimonials;
+
+    await updateProfile(testimonials: newTestimonials);
+
+    notifyListeners();
+  }
+
+  Future<void> uploadPortfolio({
+    required List<File> images,
+    required String title,
+    required String description,
+    String? link,
+  }) async {
+    final List<String> downloadUrls = [];
+
+    for (File image in images) {
+      final downloadUrl = await _userRepo.uploadImage(
+          imageFile: image, path: 'portfolio', userId: myplugUser!.id!);
+
+      if (downloadUrl != null) {
+        downloadUrls.add(downloadUrl);
+      }
+    }
+
+    Portfolio newPortfolio = Portfolio(
+      title: title,
+      description: description,
+      imageUrls: downloadUrls,
+      link: link,
+    );
+
+    final id = await _userRepo.uploadPortfolio(newPortfolio);
+    myplugUser!.portfolios.add(
+      newPortfolio.copyWith(id: id),
+    );
+
+    List<Portfolio> newPortfolios = myplugUser!.portfolios;
+
+    updateProfile(portfolios: newPortfolios);
+
+    notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
 
 abstract class UserProfile {
   Future<MyplugUser?> loadUser(String userId);
@@ -8,4 +9,5 @@ abstract class UserProfile {
   Future<void> deleteUser(String userId);
   Stream<MyplugUser> getUserStream(String userId);
   Stream<List<MyplugUser>> getAllUsersStream();
+  Future<String> uploadPortfolio(Portfolio portfolio);
 }

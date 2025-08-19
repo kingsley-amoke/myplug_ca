@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
 import 'package:myplug_ca/features/user/services/auth_service.dart';
 import 'package:myplug_ca/features/user/services/profile_service.dart';
 import 'package:myplug_ca/features/user/domain/repositories/user_repo.dart';
@@ -96,5 +97,9 @@ class UserRepoImpl implements UserRepo {
 
   Future<void> deleteImage(String url) async {
     userProfile.deleteImage(url);
+  }
+
+  Future<String> uploadPortfolio(Portfolio portfolio) async {
+    return await userProfile.uploadPortfolio(portfolio);
   }
 }

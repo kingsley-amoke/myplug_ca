@@ -1,5 +1,5 @@
 import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/domain/models/rating.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:myplug_ca/core/constants/users.dart';
 import 'package:myplug_ca/core/constants/shops.dart';
 

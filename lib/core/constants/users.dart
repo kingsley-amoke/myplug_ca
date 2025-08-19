@@ -1,4 +1,3 @@
-
 import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/constants/location.dart';
 import 'package:myplug_ca/core/constants/portfolios.dart';
@@ -16,9 +15,9 @@ final List<MyplugUser> demoUsers = [
     firstName: 'Smoq',
     lastName: 'Jerry',
     bio: 'I am a professional web and mobile developer. Contact me on .....',
-    skills: [...services.sublist(0,3)],
+    skills: [...services.sublist(0, 3)],
     portfolios: demoPortfolios,
-    testimonials: demoTestimonials,
+    testimonials: [],
     transactions: demoTransactions,
   ),
   MyplugUser(

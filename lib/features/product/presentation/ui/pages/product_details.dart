@@ -5,7 +5,7 @@ import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/domain/models/rating.dart';
+import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:star_rating/star_rating.dart';
 
 class ProductDetails extends StatefulWidget {

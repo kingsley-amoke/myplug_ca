@@ -79,7 +79,9 @@ class ProfilePage extends StatelessWidget {
         SizedBox(
           height: getScreenHeight(context) / 4,
           width: getScreenWidth(context),
-          child: Image.network(user.image!),
+          child: user.image != null
+              ? Image.network(user.image!)
+              : Image.asset(noUserImage),
         ),
         const SizedBox(width: 16),
         Padding(

@@ -1,3 +1,4 @@
+import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/referee.dart';
 import 'package:myplug_ca/features/user/domain/models/testimonial.dart';
 
@@ -22,7 +23,7 @@ class MyplugUser {
   final String? image;
   final UserLocation? location;
   final List<Skill> skills;
-  final List<Testimonial> testimonials;
+  final List<Rating> testimonials;
   final List<Transaction> transactions;
   final List<Portfolio> portfolios;
   final List<Referee> referees;
@@ -71,7 +72,7 @@ class MyplugUser {
           .map((e) => Skill.fromMap(e as Map<String, dynamic>))
           .toList(),
       testimonials: (map['testimonials'] as List? ?? [])
-          .map((e) => Testimonial.fromMap(e as Map<String, dynamic>))
+          .map((e) => Rating.fromMap(e as Map<String, dynamic>))
           .toList(),
       transactions: (map['transactions'] as List? ?? [])
           .map((e) => Transaction.fromMap(e as Map<String, dynamic>))
@@ -127,7 +128,7 @@ class MyplugUser {
     String? image,
     UserLocation? location,
     List<Skill>? skills,
-    List<Testimonial>? testimonials,
+    List<Rating>? testimonials,
     List<Transaction>? transactions,
     List<Portfolio>? portfolios,
     List<String>? conversations,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PortfolioDetailsPage extends StatelessWidget {
   final Portfolio portfolio;
@@ -94,10 +94,7 @@ class PortfolioDetailsPage extends StatelessWidget {
                 icon: const Icon(Icons.link),
                 label: const Text("View Project"),
                 onPressed: () async {
-                  final Uri url = Uri.parse(portfolio.link!);
-                  if (await canLaunchUrl(url)) {
-                    await launchUrl(url, mode: LaunchMode.externalApplication);
-                  }
+                  openLink(portfolio.link!);
                 },
               ),
           ],
