@@ -128,6 +128,11 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //add review
+  Future<void> addReview(Product product) async {
+    _productRepoImpl.updateProduct(product);
+  }
+
 //delete product
   Future<void> deleteProduct(
       {required MyplugUser user, required Product product}) async {

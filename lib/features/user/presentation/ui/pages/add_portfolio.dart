@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -90,7 +88,7 @@ class _AddPortfolioPageState extends State<AddPortfolioPage> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(
-                  labelText: "Description",
+                  hintText: "Description",
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 4,

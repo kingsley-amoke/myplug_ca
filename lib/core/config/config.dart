@@ -106,7 +106,7 @@ Future<String?> getStateFromCordinates(
   if (placemarks.isNotEmpty) {
     final Placemark place = placemarks.first;
 
-    return place.subAdministrativeArea;
+    return place.locality;
   }
   return null;
 }

@@ -6,6 +6,10 @@ import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/core/domain/models/rating.dart';
+import 'package:myplug_ca/features/product/presentation/ui/widgets/review.dart';
+import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
+
+import 'package:provider/provider.dart';
 import 'package:star_rating/star_rating.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -17,16 +21,33 @@ class ProductDetails extends StatefulWidget {
   State<ProductDetails> createState() => _ProductDetailsState();
 }
 
-final List<String> images = [
-  noUserImage,
-  noProductImage,
-  'assets/images/services/bride.png',
-  'assets/images/services/cars.png',
-];
-
 String currentImage = noProductImage;
+bool showContact = false;
 
 class _ProductDetailsState extends State<ProductDetails> {
+  void submitReview({
+    required Rating review,
+  }) {
+    setState(() {
+      widget.product.ratings.add(review);
+    });
+
+    context.read<ProductProvider>().addReview(
+          widget.product,
+        );
+  }
+
+  void _showAddReviewDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ProductRatingDialog(
+          submitReview: (rev) => submitReview(review: rev),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +72,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
 
             // --- IMAGE GALLERY ---
-            if (images.isNotEmpty)
+            if (widget.product.images.isNotEmpty)
               Container(
                 height: 90,
                 margin: const EdgeInsets.only(top: 12),
@@ -59,7 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   itemBuilder: (context, index) {
-                    final String item = images[index];
+                    final String item = widget.product.images[index];
                     return GestureDetector(
                       onTap: () {
                         setState(() => currentImage = item);
@@ -84,7 +105,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   },
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 10),
-                  itemCount: images.length,
+                  itemCount: widget.product.images.length,
                 ),
               ),
 
@@ -147,9 +168,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                   const SizedBox(height: 16),
                   CustomButton(
                     onPressed: () {
-                      // implement contact seller
+                      setState(() {
+                        showContact = true;
+                      });
                     },
-                    text: 'Contact Seller',
+                    text: showContact
+                        ? widget.product.seller.phone!
+                        : 'Contact Seller',
                     color: Colors.green,
                   ),
                 ],
@@ -194,81 +219,105 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
 
                         // --- REVIEWS ---
-                        widget.product.ratings.isNotEmpty
-                            ? ListView.builder(
-                                padding: const EdgeInsets.all(16),
-                                itemCount: widget.product.ratings.length,
-                                itemBuilder: (context, index) {
-                                  final Rating item =
-                                      widget.product.ratings[index];
-                                  return Container(
-                                    margin: const EdgeInsets.only(bottom: 16),
-                                    padding: const EdgeInsets.all(14),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.1),
-                                          spreadRadius: 2,
-                                          blurRadius: 6,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              item.username.toSentenceCase(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+
+                        Column(
+                          children: [
+                            Expanded(
+                              child: widget.product.ratings.isNotEmpty
+                                  ? ListView.builder(
+                                      padding: const EdgeInsets.all(16),
+                                      itemCount: widget.product.ratings.length,
+                                      itemBuilder: (context, index) {
+                                        final Rating item =
+                                            widget.product.ratings[index];
+                                        return Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 16),
+                                          padding: const EdgeInsets.all(14),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color:
+                                                    Colors.grey.withAlpha(10),
+                                                spreadRadius: 2,
+                                                blurRadius: 6,
+                                                offset: const Offset(0, 3),
                                               ),
-                                            ),
-                                            Text(
-                                              formatDate(date: item.date),
-                                              style: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        StarRating(
-                                          length: 5,
-                                          rating: item.rating,
-                                          starSize: 18,
-                                          color: Colors.amber,
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          item.comment.toSentenceCase(),
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            height: 1.4,
+                                            ],
                                           ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    item.username
+                                                        .toSentenceCase(),
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    formatDate(date: item.date),
+                                                    style: TextStyle(
+                                                      color: Colors.grey[600],
+                                                      fontSize: 13,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 6),
+                                              StarRating(
+                                                length: 5,
+                                                rating: item.rating,
+                                                starSize: 18,
+                                                color: Colors.amber,
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                item.comment.toSentenceCase(),
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  height: 1.4,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : const Center(
+                                      child: Text(
+                                        "No reviews yet.",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16,
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  );
-                                },
-                              )
-                            : const Center(
-                                child: Text(
-                                  "No reviews yet.",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                  ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: ElevatedButton.icon(
+                                onPressed: () => _showAddReviewDialog(context),
+                                icon: const Icon(Icons.rate_review),
+                                label: const Text("Add Review"),
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 48),
                                 ),
                               ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),

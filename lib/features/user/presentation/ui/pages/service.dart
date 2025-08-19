@@ -31,50 +31,51 @@ class _ServiceState extends State<Service> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppbar(context, title: widget.service.name),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              ModularSearchFilterBar(
-                onSearch: (searchTerm, filters) {
-                  context
-                      .read<UserProvider>()
-                      .getUsersByService(widget.service);
-                  context.read<UserProvider>().filterByParams(
-                      location: filters['location'], search: searchTerm);
-                },
-                locations: nigerianStates,
-              ),
-              Consumer<UserProvider>(
-                builder: (BuildContext context, UserProvider provider,
-                    Widget? child) {
-                  if (provider.usersByServiceLoading) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: getScreenHeight(context) / 3,
-                        ),
-                        const Center(child: CircularProgressIndicator()),
-                      ],
-                    );
-                  }
-                  final navigator = Navigator.of(context);
-                  if (provider.usersByService.isEmpty) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: getScreenHeight(context) / 3,
-                        ),
-                        const Center(
-                          child: Text('No user for now'),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return ListView.builder(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            ModularSearchFilterBar(
+              onSearch: (searchTerm, filters) {
+                context.read<UserProvider>().getUsersByService(widget.service);
+                context.read<UserProvider>().filterByParams(
+                    location: filters['location'], search: searchTerm);
+              },
+              locations: nigerianStates,
+              showSalary: false,
+            ),
+            Consumer<UserProvider>(
+              builder:
+                  (BuildContext context, UserProvider provider, Widget? child) {
+                if (provider.usersByServiceLoading) {
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: getScreenHeight(context) / 3,
+                      ),
+                      const Center(child: CircularProgressIndicator()),
+                    ],
+                  );
+                }
+                final navigator = Navigator.of(context);
+                if (provider.usersByService.isEmpty) {
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: getScreenHeight(context) / 3,
+                      ),
+                      const Center(
+                        child: Text('No user for now'),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Flexible(
+                    child: ListView.builder(
                       itemCount: provider.usersByService.length,
                       shrinkWrap: false,
+                      primary: true,
+                      scrollDirection: Axis.vertical,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         final item = provider.usersByService[index];
@@ -108,12 +109,12 @@ class _ServiceState extends State<Service> {
                           },
                         );
                       },
-                    );
-                  }
-                },
-              ),
-            ],
-          ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

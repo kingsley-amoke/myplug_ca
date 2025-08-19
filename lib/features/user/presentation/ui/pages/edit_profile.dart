@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 
@@ -37,7 +37,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     if (imageFile != null) {
       userProvider.uploadProfilePic(imageFile).then((res) {
-        print(res);
         if (res) {
           showToast(context, message: 'Success', type: ToastType.success);
         } else {
@@ -50,10 +49,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _saveProfile() {
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: Save logic with UserViewModel
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated successfully')),
-      );
+      context.read<UserProvider>().updateProfile(
+            firstName: _firstNameController.text.trim(),
+            lastName: _lastNameController.text.trim(),
+            phone: _phoneController.text.trim(),
+          );
     }
   }
 
@@ -126,6 +126,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 MyInput(
                   controller: _phoneController,
                   hintText: user?.phone ?? 'Phone Number',
+                  keyboardType: TextInputType.phone,
                   validator: (v) => textValidator(v),
                 ),
 

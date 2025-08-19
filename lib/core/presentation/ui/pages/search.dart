@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/features/chat/presentation/ui/pages/messagepage.dart';
+import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
 import 'package:myplug_ca/features/job/presentation/ui/widgets/job_item.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/presentation/ui/widgets/product_card.dart';
+
 import 'package:myplug_ca/features/product/presentation/ui/widgets/product_grid.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:change_case/change_case.dart';
+import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/user_card.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -44,15 +44,21 @@ class _GlobalSearchPageState extends State<GlobalSearchPage> {
     _allProducts = context.read<ProductProvider>().products;
     _allUsers = context.read<UserProvider>().allUsers;
 
-//Users fitering
+// //Users fitering
     _filteredUsers = _allUsers.where((user) {
       if (widget.searchTerm.trim().isEmpty) return false;
+
       final lower = widget.searchTerm.toLowerCase();
-      return user.firstName!.toLowerCase().contains(lower) ||
+      final loggedUserId = context.read<UserProvider>().myplugUser?.id;
+
+      final matchesSearch = user.firstName!.toLowerCase().contains(lower) ||
           user.lastName!.toLowerCase().contains(lower) ||
           user.location!.state!.toLowerCase().contains(lower) ||
           user.email.toLowerCase().contains(lower) ||
           user.skills.any((s) => s.name.toLowerCase().contains(lower));
+
+      // must match search and not be the logged in user
+      return matchesSearch && user.id != loggedUserId;
     }).toList();
 
     // Products filtering
@@ -60,7 +66,7 @@ class _GlobalSearchPageState extends State<GlobalSearchPage> {
       if (widget.searchTerm.trim().isEmpty) return false;
       final lower = widget.searchTerm.toLowerCase();
       return product.title.toLowerCase().contains(lower) ||
-          (product.description?.toLowerCase().contains(lower) ?? false) ||
+          (product.description.toLowerCase().contains(lower)) ||
           product.location.toLowerCase().contains(lower);
     }).toList();
 
@@ -76,6 +82,8 @@ class _GlobalSearchPageState extends State<GlobalSearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
+    final provider = context.read<UserProvider>();
     return Scaffold(
       appBar: myAppbar(context, title: 'Results'),
       body: SingleChildScrollView(
@@ -87,7 +95,35 @@ class _GlobalSearchPageState extends State<GlobalSearchPage> {
                 title: "Users",
                 children: _filteredUsers
                     .map(
-                      (u) => UserCard(user: u),
+                      (u) => UserCard(
+                        user: u,
+                        onViewProfile: () {
+                          navigator.push(
+                            MaterialPageRoute(
+                              builder: (_) => ProfilePage(user: u),
+                            ),
+                          );
+                        },
+                        onBook: () {
+                          if (provider.myplugUser != null) {
+                            context
+                                .read<ChatProvider>()
+                                .createConversation(
+                                    senderId: provider.myplugUser!.id!,
+                                    receiverId: u.id!)
+                                .then((conversationId) {
+                              navigator.push(
+                                MaterialPageRoute(
+                                  builder: (_) => MessagePage(
+                                      currentUserId: provider.myplugUser!.id!,
+                                      otherUser: u,
+                                      conversationId: conversationId),
+                                ),
+                              );
+                            });
+                          }
+                        },
+                      ),
                     )
                     .toList(),
               ),
@@ -96,8 +132,8 @@ class _GlobalSearchPageState extends State<GlobalSearchPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
                       'Products',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

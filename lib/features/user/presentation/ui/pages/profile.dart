@@ -13,6 +13,7 @@ import 'package:myplug_ca/features/user/presentation/ui/widgets/portfolio_sectio
 import 'package:myplug_ca/features/user/presentation/ui/widgets/skills_section.dart';
 import 'package:myplug_ca/features/user/presentation/ui/widgets/testimonial_section.dart';
 import 'package:change_case/change_case.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -43,21 +44,25 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 16),
                   BioSection(user: user),
                   const SizedBox(height: 24),
-                  Consumer<SubscriptionProvider>(builder: (BuildContext context,
-                      SubscriptionProvider provider, Widget? child) {
-                    if (provider.subscription != null) {
-                      return CancelSubscriptionCard(
-                          subscription: provider.subscription!,
-                          onCancel: () {
-                            provider.cancel().then((_) {
-                              showToast(context,
-                                  message: 'Success', type: ToastType.success);
-                            });
-                          });
-                    } else {
-                      return _buildSubscriptionSection(context);
-                    }
-                  }),
+                  context.read<UserProvider>().myplugUser?.id == user.id
+                      ? Consumer<SubscriptionProvider>(builder:
+                          (BuildContext context, SubscriptionProvider provider,
+                              Widget? child) {
+                          if (provider.subscription != null) {
+                            return CancelSubscriptionCard(
+                                subscription: provider.subscription!,
+                                onCancel: () {
+                                  provider.cancel().then((_) {
+                                    showToast(context,
+                                        message: 'Success',
+                                        type: ToastType.success);
+                                  });
+                                });
+                          } else {
+                            return _buildSubscriptionSection(context);
+                          }
+                        })
+                      : Container(),
                   const SizedBox(height: 24),
                   portfolioSection(context, user: user),
                   const SizedBox(height: 24),

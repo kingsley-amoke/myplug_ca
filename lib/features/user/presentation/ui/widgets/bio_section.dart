@@ -55,17 +55,18 @@ class _BioSectionState extends State<BioSection> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      TextFormField(
+                      TextField(
                         controller: _bioController,
                         decoration: InputDecoration(
-                          labelText: widget.user.bio ?? "Write here..",
-                          labelStyle: const TextStyle(),
-                          border: const OutlineInputBorder(),
+                          hintText: widget.user.bio ?? "Write here..",
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
-                        maxLines: 3,
-                        validator: (val) => val == null || val.isEmpty
-                            ? "Enter a description"
-                            : null,
+                        maxLines: 4,
                       ),
                       TextButton(
                           onPressed: onFinishedEditing,

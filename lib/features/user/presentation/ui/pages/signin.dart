@@ -47,82 +47,80 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(loginImage),
-                const Spacer(),
-                Text(
-                  "Welcome Back",
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFFDAA579),
-                      ),
-                ),
-                const SizedBox(height: 8),
-                const Text("Login to continue your journey"),
-                const SizedBox(height: 32),
-
-                // Email Field
-                MyInput(
-                  controller: emailController,
-                  hintText: "Email",
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  validator: (v) => emailValidator(v),
-                ),
-                const SizedBox(height: 16),
-
-                // Password Field
-                MyInput(
-                    controller: passwordController,
-                    obscureText: true,
-                    hintText: "Password",
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    validator: (v) => textValidator(
-                          v,
-                        )),
-                const SizedBox(height: 24),
-
-                // Login Button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: isLoading ? null : _login,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFDAA579),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(loginImage),
+              const Spacer(),
+              Text(
+                "Welcome Back",
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFFDAA579),
                     ),
-                    child: isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text(
-                            "Login",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                  ),
-                ),
+              ),
+              const SizedBox(height: 8),
+              const Text("Login to continue your journey"),
+              const SizedBox(height: 32),
 
-                const SizedBox(height: 16),
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const SignupPage()));
-                    },
-                    child: const Text("Don't have an account? Sign Up"),
+              // Email Field
+              MyInput(
+                controller: emailController,
+                hintText: "Email",
+                prefixIcon: const Icon(Icons.email_outlined),
+                validator: (v) => emailValidator(v),
+              ),
+              const SizedBox(height: 16),
+
+              // Password Field
+              MyInput(
+                  controller: passwordController,
+                  obscureText: true,
+                  hintText: "Password",
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  validator: (v) => textValidator(
+                        v,
+                      )),
+              const SizedBox(height: 24),
+
+              // Login Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: isLoading ? null : _login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFDAA579),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Text(
+                          "Login",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                 ),
-                const Spacer(),
-              ],
-            ),
+              ),
+
+              const SizedBox(height: 16),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const SignupPage()));
+                  },
+                  child: const Text("Don't have an account? Sign Up"),
+                ),
+              ),
+              const Spacer(),
+            ],
           ),
         ),
       ),

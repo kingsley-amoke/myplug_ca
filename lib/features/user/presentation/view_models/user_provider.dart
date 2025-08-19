@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/services/location_service.dart';
 import 'package:myplug_ca/core/domain/models/rating.dart';
@@ -13,7 +12,6 @@ import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
 import 'package:myplug_ca/features/user/domain/models/referee.dart';
 import 'package:myplug_ca/features/user/domain/models/skill.dart';
-import 'package:myplug_ca/features/user/domain/models/testimonial.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -109,12 +107,13 @@ class UserProvider extends ChangeNotifier {
     await _userRepo.loadAllUsers();
 
     usersByService = allUsers.where((item) {
-      return item.skills.first.name == service.name &&
-          item.id != myplugUser?.id;
+      final hasSkill = item.skills
+          .any((s) => s.name.toLowerCase() == service.name.toLowerCase());
+      final notLoggedUser = item.id != myplugUser?.id;
+      return hasSkill && notLoggedUser;
     }).toList();
 
     usersByServiceLoading = false;
-
     notifyListeners();
   }
 
