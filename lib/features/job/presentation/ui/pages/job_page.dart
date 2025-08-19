@@ -58,9 +58,11 @@ class _JobPageState extends State<JobPage> {
             ModularSearchFilterBar(
               onSearch: (search, filters) {
                 context.read<JobProvider>().filterByParams(
-                    location: filters['location'],
-                    jobType: filters['jobType'],
-                    minSalary: filters['salary']);
+                      location: filters['location'],
+                      jobType: filters['jobType'],
+                      minSalary: filters['salary'],
+                      searchTerm: search,
+                    );
               },
               jobTypes: jobtypes,
               locations: nigerianStates,

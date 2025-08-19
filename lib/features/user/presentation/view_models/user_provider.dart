@@ -22,6 +22,7 @@ class UserProvider extends ChangeNotifier {
   List<MyplugUser> allUsers = [];
   List<MyplugUser> usersByService = [];
   MyplugUser? _user;
+  bool usersByServiceLoading = true;
 
   UserLocation? userLocation;
 
@@ -62,13 +63,17 @@ class UserProvider extends ChangeNotifier {
   }
 
   void getUsersByService(Skill service) async {
+    usersByServiceLoading = true;
     await _userRepo.loadAllUsers();
 
     usersByService = allUsers.where((item) {
-      return item.skills.first.name == service.name;
+      return item.skills.first.name == service.name &&
+          item.id != myplugUser?.id;
     }).toList();
 
-    // notifyListeners();
+    usersByServiceLoading = false;
+
+    notifyListeners();
   }
 
   Future<void> getLocation() async {

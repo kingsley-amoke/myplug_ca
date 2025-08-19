@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/nigerian_states.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
@@ -33,15 +34,15 @@ class _ShopState extends State<Shop> {
           child: Column(
             children: [
               ModularSearchFilterBar(
-                onSearch: (serchTerm, filters) {
+                onSearch: (searchTerm, filters) {
                   context
                       .read<ProductProvider>()
                       .getProductsByCategory(widget.shop);
                   context.read<ProductProvider>().filterByParams(
-                        location: filters['location'],
-                        rating: filters['rating'],
-                        minPrice: filters['price'],
-                      );
+                      location: filters['location'],
+                      rating: filters['rating'],
+                      minPrice: filters['price'],
+                      searchTerm: searchTerm);
                 },
                 locations: nigerianStates,
                 showRating: true,
@@ -50,7 +51,26 @@ class _ShopState extends State<Shop> {
               ),
               Consumer<ProductProvider>(
                 builder: (context, provider, child) {
-                  return ProductGrid(products: provider.productsByCategory);
+                  if (provider.productsByCategoryLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (provider.productsByCategory.isNotEmpty) {
+                    return ProductGrid(products: provider.productsByCategory);
+                  } else {
+                    return Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: getScreenHeight(context) / 3,
+                          ),
+                          const Text('No product here'),
+                        ],
+                      ),
+                    );
+                  }
                 },
               ),
             ],

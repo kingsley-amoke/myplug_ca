@@ -1,3 +1,4 @@
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
@@ -189,7 +190,7 @@ class _ModularSearchFilterBarState extends State<ModularSearchFilterBar> {
                     title: const Text('Job Type'),
                     children: widget.jobTypes.map((jt) {
                       return RadioListTile<String>(
-                        title: Text(jt!.name),
+                        title: Text(jt!.name.toCapitalCase()),
                         value: jt.name,
                         groupValue: _selectedJobType,
                         onChanged: (value) =>

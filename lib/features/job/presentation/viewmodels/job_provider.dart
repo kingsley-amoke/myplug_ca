@@ -35,80 +35,130 @@ class JobProvider extends ChangeNotifier {
     filteredJobs = _jobs;
   }
 
-  List<Job> filterByParams<T>({
-    // required List<T> items,
+  // List<Job> filterByParams<T>(
+  //     {
+  //     // required List<T> items,
+  //     String? location,
+  //     String? jobType,
+  //     double? minSalary,
+  //     String? searchTerm}) {
+  //   List<Job> matches = [];
+  //   for (Job item in _jobs) {
+  //     if (minSalary == null && location == null && jobType == null) {
+  //       matches = _jobs;
+  //     }
+
+  //     if (location != null && jobType != null && minSalary != null) {
+  //       // matches.clear();
+  //       if (item.salary >= minSalary) {
+  //         matches.add(item);
+  //       }
+  //       if (jobType == item.type.name) {
+  //         matches.add(item);
+  //       }
+  //       if (location.toLowerCase() == item.location.toLowerCase()) {
+  //         matches.add(item);
+  //       }
+  //     }
+
+  //     if (location != null && jobType != null && minSalary == null) {
+  //       // matches.clear();
+  //       if (jobType == item.type.name) {
+  //         matches.add(item);
+  //       }
+  //       if (location.toLowerCase() == item.location.toLowerCase()) {
+  //         matches.add(item);
+  //       }
+  //     }
+
+  //     if (location != null && minSalary != null && jobType == null) {
+  //       // matches.clear();
+  //       if (item.salary >= minSalary) {
+  //         matches.add(item);
+  //       }
+  //       if (location.toLowerCase() == item.location.toLowerCase()) {
+  //         matches.add(item);
+  //       }
+  //     }
+  //     if (jobType != null && minSalary != null && location == null) {
+  //       // matches.clear();
+  //       if (item.salary >= minSalary) {
+  //         matches.add(item);
+  //       }
+  //       if (jobType == item.type.name) {
+  //         matches.add(item);
+  //       }
+  //     }
+
+  //     if (location != null) {
+  //       if (item.location.toLowerCase() == location.toLowerCase()) {
+  //         matches.add(item);
+  //       }
+  //     }
+
+  //     if (jobType != null) {
+  //       if (item.type.name.toLowerCase() == jobType.toLowerCase()) {
+  //         matches.add(item);
+  //       }
+  //     }
+  //     if (minSalary != null) {
+  //       if (item.salary >= minSalary) {
+  //         matches.add(item);
+  //       }
+  //     }
+  //   }
+
+  //   filteredJobs = matches;
+
+  //   notifyListeners();
+  //   return matches;
+  // }
+
+  List<Job> filterByParams({
     String? location,
     String? jobType,
     double? minSalary,
+    String? searchTerm,
   }) {
     List<Job> matches = [];
+
     for (Job item in _jobs) {
-      if (minSalary == null && location == null && jobType == null) {
-        matches = _jobs;
+      bool match = true;
+
+      // Location filter
+      if (location != null &&
+          item.location.toLowerCase() != location.toLowerCase()) {
+        match = false;
       }
 
-      if (location != null && jobType != null && minSalary != null) {
-        // matches.clear();
-        if (item.salary >= minSalary) {
-          matches.add(item);
-        }
-        if (jobType == item.type.name) {
-          matches.add(item);
-        }
-        if (location.toLowerCase() == item.location.toLowerCase()) {
-          matches.add(item);
-        }
+      // Job type filter
+      if (jobType != null &&
+          item.type.name.toLowerCase() != jobType.toLowerCase()) {
+        match = false;
       }
 
-      if (location != null && jobType != null && minSalary == null) {
-        // matches.clear();
-        if (jobType == item.type.name) {
-          matches.add(item);
-        }
-        if (location.toLowerCase() == item.location.toLowerCase()) {
-          matches.add(item);
-        }
+      // Salary filter
+      if (minSalary != null && item.salary < minSalary) {
+        match = false;
       }
 
-      if (location != null && minSalary != null && jobType == null) {
-        // matches.clear();
-        if (item.salary >= minSalary) {
-          matches.add(item);
-        }
-        if (location.toLowerCase() == item.location.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-      if (jobType != null && minSalary != null && location == null) {
-        // matches.clear();
-        if (item.salary >= minSalary) {
-          matches.add(item);
-        }
-        if (jobType == item.type.name) {
-          matches.add(item);
+      // Search term filter (ignore if null or empty)
+      if (searchTerm != null && searchTerm.trim().isNotEmpty) {
+        final term = searchTerm.toLowerCase();
+        final title = item.title.toLowerCase();
+        final description = item.description?.toLowerCase() ?? '';
+
+        if (!(title.contains(term) || description.contains(term))) {
+          match = false;
         }
       }
 
-      if (location != null) {
-        if (item.location.toLowerCase() == location.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-
-      if (jobType != null) {
-        if (item.type.name.toLowerCase() == jobType.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-      if (minSalary != null) {
-        if (item.salary >= minSalary) {
-          matches.add(item);
-        }
+      if (match) {
+        matches.add(item);
       }
     }
 
     filteredJobs = matches;
-
     notifyListeners();
     return matches;
   }

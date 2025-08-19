@@ -14,6 +14,7 @@ class ProductProvider extends ChangeNotifier {
 
   List<Product> _products = [];
   List<Product> _productsByCategory = [];
+  bool productsByCategoryLoading = true;
   Product? _currentProduct;
   List<Product> _myProducts = [];
 
@@ -39,96 +40,56 @@ class ProductProvider extends ChangeNotifier {
   }
 
   void getProductsByCategory(MyplugShop shop) {
+    productsByCategoryLoading = true;
     _productsByCategory = _products.where((item) => item.shop == shop).toList();
+    productsByCategoryLoading = false;
     notifyListeners();
   }
 
-  List<Product> filterByParams<T>({
+  List<Product> filterByParams({
     String? location,
     double? rating,
     double? minPrice,
+    String? searchTerm,
   }) {
     List<Product> matches = [];
 
     for (Product item in _productsByCategory) {
-      // bool matches = true;
+      bool match = true;
 
-      if (minPrice == null && location == null && rating == null) {
-        matches = _productsByCategory;
+      // Location filter
+      if (location != null &&
+          item.location.toLowerCase() != location.toLowerCase()) {
+        match = false;
       }
 
-      if (location != null && rating != null && minPrice != null) {
-        // matches.clear();
-        if (item.price >= minPrice) {
-          matches.add(item);
-        }
-        if (getAverageRating(ratings: item.ratings) >= rating) {
-          matches.add(item);
-        }
-        if (location.toLowerCase() == item.location.toLowerCase()) {
-          matches.add(item);
-        }
+      // Rating filter
+      if (rating != null && getAverageRating(ratings: item.ratings) < rating) {
+        match = false;
       }
 
-      if (location != null && rating != null && minPrice == null) {
-        // matches.clear();
-        if (getAverageRating(ratings: item.ratings) >= rating) {
-          matches.add(item);
-        }
-        if (location.toLowerCase() == item.location.toLowerCase()) {
-          matches.add(item);
-        }
+      // Price filter
+      if (minPrice != null && item.price < minPrice) {
+        match = false;
       }
 
-      if (location != null && minPrice != null && rating == null) {
-        // matches.clear();
-        if (item.price >= minPrice) {
-          matches.add(item);
-        }
-        if (location.toLowerCase() == item.location.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-      if (rating != null && minPrice != null && location == null) {
-        // matches.clear();
-        if (item.price >= minPrice) {
-          matches.add(item);
-        }
-        if (getAverageRating(ratings: item.ratings) >= rating) {
-          matches.add(item);
+      // Search term filter (ignore if null or empty)
+      if (searchTerm != null && searchTerm.trim().isNotEmpty) {
+        final term = searchTerm.toLowerCase();
+        final name = item.title.toLowerCase();
+        final description = item.description.toLowerCase();
+
+        if (!(name.contains(term) || description.contains(term))) {
+          match = false;
         }
       }
 
-      if (location != null) {
-        // print(location);
-        // matches.clear();
-        if (item.location.toLowerCase() == location.toLowerCase()) {
-          matches.add(item);
-        }
-      }
-
-      // Filter by jobType (optional)
-      if (rating != null) {
-        // matches.clear();
-        if (getAverageRating(ratings: item.ratings) >= rating) {
-          matches.add(item);
-        }
-      }
-
-      // Filter by minSalary only (optional)
-      if (minPrice != null) {
-        // print('here');
-        // matches.clear();
-        if (item.price >= minPrice) {
-          matches.add(item);
-        }
+      if (match) {
+        matches.add(item);
       }
     }
 
-    // print(matches);
-
     _productsByCategory = matches;
-
     notifyListeners();
     return matches;
   }
