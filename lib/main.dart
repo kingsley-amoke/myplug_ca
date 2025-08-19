@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/app.dart';
 import 'package:myplug_ca/core/presentation/viewmodels/myplug_provider.dart';
+import 'package:myplug_ca/core/services/upload_image_service.dart';
 import 'package:myplug_ca/features/chat/data/datasources/firestore_chat_service.dart';
 import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
 import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
@@ -36,10 +38,13 @@ void main() async {
 
   final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  final storage = FirebaseStorage.instance;
 
   final userAuthService = UserAuthService(FirebaseAuthService(auth));
-  final userProfileService =
-      ProfileService(FirebaseFirestoreService(firestore));
+  final userProfileService = ProfileService(
+    userProfileService: FirebaseFirestoreService(firestore),
+    imageUploadService: FirebaseImageUpload(storage),
+  );
 
   final productDatabaseService =
       ProductDatabaseService(ProductFirestoreService(firestore));

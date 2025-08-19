@@ -1,17 +1,24 @@
+import 'package:flutter/material.dart';
 
-  import 'package:flutter/material.dart';
-
-Widget sectionHeader({required String title, IconData? icon, required VoidCallback onAdd}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        IconButton(
-          onPressed: onAdd,
-          icon: const Icon(Icons.add),
-          tooltip: 'Add $title',
-        ),
-      ],
-    );
-  }
+Widget sectionHeader(
+    {required String title,
+    IconData? icon,
+    bool show = true,
+    required VoidCallback onAdd}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        title,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      show
+          ? IconButton(
+              onPressed: onAdd,
+              icon: Icon(icon ?? Icons.add),
+              tooltip: 'Add $title',
+            )
+          : Container(),
+    ],
+  );
+}

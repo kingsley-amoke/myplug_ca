@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/services/auth_service.dart';
 import 'package:myplug_ca/features/user/services/profile_service.dart';
@@ -81,5 +83,18 @@ class UserRepoImpl implements UserRepo {
     }
     user.balance -= amount;
     return user;
+  }
+
+  Future<String?> uploadImage({
+    required File imageFile,
+    required String path,
+    required String userId,
+  }) async {
+    return await userProfile.uploadImage(
+        imageFile: imageFile, path: path, userId: userId);
+  }
+
+  Future<void> deleteImage(String url) async {
+    userProfile.deleteImage(url);
   }
 }

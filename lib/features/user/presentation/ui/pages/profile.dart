@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/core/models/toast.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/widgets/cancel_sub.dart';
@@ -73,14 +73,13 @@ class ProfilePage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context, {required MyplugUser user}) {
     return Column(
-      //TODO: change image to network
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: getScreenHeight(context) / 4,
           width: getScreenWidth(context),
-          child: Image.asset(user.image ?? noUserImage),
+          child: Image.network(user.image!),
         ),
         const SizedBox(width: 16),
         Padding(

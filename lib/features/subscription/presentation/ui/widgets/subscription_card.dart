@@ -1,7 +1,7 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/models/toast.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/viewmodels/myplug_provider.dart';
 import 'package:myplug_ca/features/subscription/domain/models/highlight.dart';
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';

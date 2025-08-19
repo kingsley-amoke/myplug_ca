@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
+import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +45,7 @@ class HeroSection extends StatelessWidget {
                       ),
                       Text(
                         provider.myplugUser?.location?.address ?? '',
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 14,
@@ -64,11 +66,22 @@ class HeroSection extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : null;
+                          : Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const LoginPage(),
+                              ),
+                            );
                     },
                     child: CircleAvatar(
-                      child: Image.asset(
-                          provider.myplugUser?.image ?? noUserImage),
+                      child: provider.myplugUser?.image != null
+                          ? ClipOval(
+                              child: Image.network(
+                                provider.myplugUser!.image!,
+                              ),
+                            )
+                          : ClipOval(
+                              child: Image.asset(noUserImage),
+                            ),
                     ),
                   ),
                 ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/core/config/config.dart';
@@ -136,5 +138,30 @@ class UserProvider extends ChangeNotifier {
 
     _user = updatedProfile;
     notifyListeners();
+  }
+
+  Future<bool> uploadProfilePic(File imageFile) async {
+    if (isLoggedIn) {
+      if (myplugUser!.image != null) {
+        _userRepo.deleteImage(myplugUser!.image!);
+      }
+      _userRepo
+          .uploadImage(
+        imageFile: imageFile,
+        path: 'users',
+        userId: myplugUser!.id!,
+      )
+          .then((url) {
+        if (url != null) {
+          updateProfile(image: url);
+          return true;
+        } else {
+          return false;
+        }
+      });
+      notifyListeners();
+    }
+
+    return false;
   }
 }

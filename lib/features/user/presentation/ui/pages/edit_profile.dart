@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 
 import 'package:myplug_ca/core/constants/validators.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
@@ -27,8 +32,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
   MyplugUser? user;
 
   void _pickImage() async {
-    // TODO: Implement image picker logic
-    // For now, just simulate selection
+    final userProvider = context.read<UserProvider>();
+    File? imageFile = await pickImage();
+
+    if (imageFile != null) {
+      userProvider.uploadProfilePic(imageFile).then((res) {
+        print(res);
+        if (res) {
+          showToast(context, message: 'Success', type: ToastType.success);
+        } else {
+          // showToast(context,
+          //     message: 'Something went wrong', type: ToastType.error);
+        }
+      });
+    }
   }
 
   void _saveProfile() {
@@ -68,14 +85,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 GestureDetector(
                   onTap: _pickImage,
                   child: Center(
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: user?.image != null
-                          ? NetworkImage(user!.image ?? '')
-                          : const AssetImage(noUserImage),
-                      child: user!.image == null
-                          ? const Icon(Icons.camera_alt, size: 40)
-                          : null,
+                    child: Consumer<UserProvider>(
+                      builder: (context, provider, child) {
+                        return CircleAvatar(
+                          radius: 50,
+                          backgroundImage: provider.myplugUser!.image != null
+                              ? NetworkImage(provider.myplugUser!.image!)
+                              : const AssetImage(noUserImage),
+                          child: user!.image == null
+                              ? const Icon(Icons.camera_alt, size: 40)
+                              : null,
+                        );
+                      },
                     ),
                   ),
                 ),

@@ -8,6 +8,7 @@ import 'package:myplug_ca/core/presentation/ui/pages/policy.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/terms.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:babstrap_settings_screen_updated/babstrap_settings_screen_updated.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/settings_user_card.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/pages/dashboard.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/change_password.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/edit_profile.dart';
@@ -37,12 +38,24 @@ class Settings extends StatelessWidget {
           return ListView(
             children: [
               // User card
-              BigUserCard(
+              SettingsUserCard(
                 backgroundColor: Colors.red,
                 userName: user?.fullname ?? "Smoq Dev",
                 userProfilePic: user?.image != null
-                    ? NetworkImage(user!.image!)
-                    : const AssetImage(noUserImage),
+                    ? ClipOval(
+                        child: Image.network(
+                          user!.image!,
+                          width: 99,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : ClipOval(
+                        child: Image.asset(
+                          noUserImage,
+                          width: 99,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 cardActionWidget: SettingsItem(
                   icons: Icons.edit,
                   iconStyle: IconStyle(

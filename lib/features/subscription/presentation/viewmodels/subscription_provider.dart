@@ -21,6 +21,7 @@ class SubscriptionProvider extends ChangeNotifier {
 
   Future<void> loadUserSubscription(String userId) async {
     _subscription = await _subscriptionRepoImpl.getUserSubscription(userId);
+    checkAndCancelSubscription();
     notifyListeners();
   }
 
@@ -45,5 +46,12 @@ class SubscriptionProvider extends ChangeNotifier {
       _subscription = sub;
       notifyListeners();
     });
+  }
+
+  void checkAndCancelSubscription() {
+    if (subscription?.endDate != null &&
+        DateTime.now().isAfter(subscription!.endDate!)) {
+      cancel();
+    }
   }
 }

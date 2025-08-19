@@ -1,42 +1,60 @@
+import 'dart:io';
+
+import 'package:myplug_ca/core/domain/repositories/image_upload_repo.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
 
 class ProfileService implements UserProfile {
-  final UserProfile _userProfileService;
+  final UserProfile userProfileService;
+  final ImageUploadRepo imageUploadService;
 
-  const ProfileService(this._userProfileService);
+  const ProfileService(
+      {required this.userProfileService, required this.imageUploadService});
   @override
   Future<MyplugUser?> loadUser(String userId) async {
-    return await _userProfileService.loadUser(userId);
+    return await userProfileService.loadUser(userId);
   }
 
   @override
   Future<List<MyplugUser>> loadAllUsers() async {
-    return await _userProfileService.loadAllUsers();
+    return await userProfileService.loadAllUsers();
   }
 
   @override
   Future<MyplugUser?> addUser(MyplugUser user) async {
-    return await _userProfileService.addUser(user);
+    return await userProfileService.addUser(user);
   }
 
   @override
   Future<void> deleteUser(String userId) async {
-    await _userProfileService.deleteUser(userId);
+    await userProfileService.deleteUser(userId);
   }
 
   @override
   Future<MyplugUser> updateProfile(MyplugUser user) async {
-    return await _userProfileService.updateProfile(user);
+    return await userProfileService.updateProfile(user);
   }
 
   @override
   Stream<MyplugUser> getUserStream(String userId) {
-    return _userProfileService.getUserStream(userId);
+    return userProfileService.getUserStream(userId);
   }
 
   @override
   Stream<List<MyplugUser>> getAllUsersStream() {
-    return _userProfileService.getAllUsersStream();
+    return userProfileService.getAllUsersStream();
+  }
+
+  Future<String?> uploadImage({
+    required File imageFile,
+    required String path,
+    required String userId,
+  }) async {
+    return await imageUploadService.uploadImage(
+        imageFile: imageFile, path: path, userId: userId);
+  }
+
+  Future<void> deleteImage(String url) async {
+    imageUploadService.deleteImage(url);
   }
 }

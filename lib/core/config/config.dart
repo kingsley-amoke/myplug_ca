@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:myplug_ca/core/models/toast.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/product/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
@@ -160,6 +161,28 @@ void showToast(
     borderRadius: BorderRadius.circular(8),
     showProgressBar: true,
   );
+}
+
+//pick image
+final ImagePicker _picker = ImagePicker();
+Future<File?> pickImage({ImageSource source = ImageSource.gallery}) async {
+  try {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: source,
+      maxWidth: 1080,
+      maxHeight: 1080,
+      imageQuality: 80, // Compress quality (0-100)
+    );
+
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      return null; // User cancelled
+    }
+  } catch (e) {
+    print("Error picking image: $e");
+    return null;
+  }
 }
 
 void openLink(String url) async {
