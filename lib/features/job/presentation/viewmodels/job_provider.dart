@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/core/constants/jobs.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
+import 'package:myplug_ca/features/job/domain/models/application.dart';
+import 'package:myplug_ca/features/job/domain/models/document_type.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
@@ -35,85 +39,6 @@ class JobProvider extends ChangeNotifier {
     filteredJobs = _jobs;
   }
 
-  // List<Job> filterByParams<T>(
-  //     {
-  //     // required List<T> items,
-  //     String? location,
-  //     String? jobType,
-  //     double? minSalary,
-  //     String? searchTerm}) {
-  //   List<Job> matches = [];
-  //   for (Job item in _jobs) {
-  //     if (minSalary == null && location == null && jobType == null) {
-  //       matches = _jobs;
-  //     }
-
-  //     if (location != null && jobType != null && minSalary != null) {
-  //       // matches.clear();
-  //       if (item.salary >= minSalary) {
-  //         matches.add(item);
-  //       }
-  //       if (jobType == item.type.name) {
-  //         matches.add(item);
-  //       }
-  //       if (location.toLowerCase() == item.location.toLowerCase()) {
-  //         matches.add(item);
-  //       }
-  //     }
-
-  //     if (location != null && jobType != null && minSalary == null) {
-  //       // matches.clear();
-  //       if (jobType == item.type.name) {
-  //         matches.add(item);
-  //       }
-  //       if (location.toLowerCase() == item.location.toLowerCase()) {
-  //         matches.add(item);
-  //       }
-  //     }
-
-  //     if (location != null && minSalary != null && jobType == null) {
-  //       // matches.clear();
-  //       if (item.salary >= minSalary) {
-  //         matches.add(item);
-  //       }
-  //       if (location.toLowerCase() == item.location.toLowerCase()) {
-  //         matches.add(item);
-  //       }
-  //     }
-  //     if (jobType != null && minSalary != null && location == null) {
-  //       // matches.clear();
-  //       if (item.salary >= minSalary) {
-  //         matches.add(item);
-  //       }
-  //       if (jobType == item.type.name) {
-  //         matches.add(item);
-  //       }
-  //     }
-
-  //     if (location != null) {
-  //       if (item.location.toLowerCase() == location.toLowerCase()) {
-  //         matches.add(item);
-  //       }
-  //     }
-
-  //     if (jobType != null) {
-  //       if (item.type.name.toLowerCase() == jobType.toLowerCase()) {
-  //         matches.add(item);
-  //       }
-  //     }
-  //     if (minSalary != null) {
-  //       if (item.salary >= minSalary) {
-  //         matches.add(item);
-  //       }
-  //     }
-  //   }
-
-  //   filteredJobs = matches;
-
-  //   notifyListeners();
-  //   return matches;
-  // }
-
   List<Job> filterByParams({
     String? location,
     String? jobType,
@@ -146,7 +71,7 @@ class JobProvider extends ChangeNotifier {
       if (searchTerm != null && searchTerm.trim().isNotEmpty) {
         final term = searchTerm.toLowerCase();
         final title = item.title.toLowerCase();
-        final description = item.description?.toLowerCase() ?? '';
+        final description = item.description.toLowerCase();
 
         if (!(title.contains(term) || description.contains(term))) {
           match = false;
@@ -161,6 +86,42 @@ class JobProvider extends ChangeNotifier {
     filteredJobs = matches;
     notifyListeners();
     return matches;
+  }
+
+  Future<void> applyJob({
+    required File resume,
+    required File coverLetter,
+    required String jobId,
+    required String firstname,
+    required String lastname,
+    required String phone,
+    required String email,
+    required String userId,
+  }) async {
+    final resumeDownloadUrl = await _jobRepoImpl.uploadFile(
+      file: resume,
+      path: JobApplicationDocumentType.resume.name,
+    );
+
+    final coverLetterDownloadUrl = await _jobRepoImpl.uploadFile(
+      file: coverLetter,
+      path: JobApplicationDocumentType.coverletter.name,
+    );
+
+    if (resumeDownloadUrl != null && coverLetterDownloadUrl != null) {
+      final application = JobApplication(
+        jobId: jobId,
+        userId: userId,
+        resumeUrl: resumeDownloadUrl,
+        coverLetterUrl: coverLetterDownloadUrl,
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        phone: phone,
+      );
+
+      await _jobRepoImpl.applyJob(application);
+    }
   }
 
   Future<void> deleteJob(MyplugUser user, String jobId) async {

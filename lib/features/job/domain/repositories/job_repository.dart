@@ -1,3 +1,4 @@
+import 'package:myplug_ca/features/job/domain/models/application.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
 
 abstract class JobRepository {
@@ -6,4 +7,5 @@ abstract class JobRepository {
   Future<Job> updateJob(Job job);
   Future<Job?> loadJob(String jobId);
   Future<List<Job>> loadAllJobs();
+  Future<JobApplication> applyJob(JobApplication application);
 }

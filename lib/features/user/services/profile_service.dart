@@ -7,7 +7,7 @@ import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
 
 class ProfileService implements UserProfile {
   final UserProfile userProfileService;
-  final ImageUploadRepo imageUploadService;
+  final FileUploadRepo imageUploadService;
 
   const ProfileService(
       {required this.userProfileService, required this.imageUploadService});

@@ -50,7 +50,10 @@ void main() async {
       ProductDatabaseService(ProductFirestoreService(firestore));
   final subscriptionDatabaseService =
       SubscriptionDatabaseService(FirestoreSubscriptionService(firestore));
-  final jobDatabaseService = JobDatabaseService(JobFirestoreService(firestore));
+  final jobDatabaseService = JobDatabaseService(
+    databaseService: JobFirestoreService(firestore),
+    fileUploadService: FirebaseImageUpload(storage),
+  );
   final chatDatabaseService = ChatDatabaseService(
     FirestoreChatService(firestore),
   );

@@ -1,0 +1,4 @@
+enum JobApplicationDocumentType {
+  resume,
+  coverletter,
+}

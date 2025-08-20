@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/constants/nigerian_states.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
@@ -37,24 +36,46 @@ class _JobPageState extends State<JobPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       const Text(
-            //           'Land your dream job with our professional cv review'),
-            //       const SizedBox(
-            //         height: 10,
-            //       ),
-            //       CustomButton(
-            //           text: 'Check it out Now!',
-            //           onPressed: () {
-            //             //TODO: implement cv review page
-            //           }),
-            //     ],
-            //   ),
-            // ),
+            // ---- CV Review Section ----
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Card(
+                elevation: 0,
+                color: Colors.grey.shade100,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  leading: Icon(
+                    Icons.article_outlined,
+                    color: Theme.of(context).primaryColor,
+                    size: 30,
+                  ),
+                  title: Text(
+                    "CV Review",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Stand out with a professionally reviewed CV.",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  trailing: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/cv-review");
+                    },
+                    child: const Text("Get Started"),
+                  ),
+                ),
+              ),
+            ),
+
+            // ---- Job Search Bar ----
             ModularSearchFilterBar(
               onSearch: (search, filters) {
                 context.read<JobProvider>().filterByParams(
@@ -67,16 +88,19 @@ class _JobPageState extends State<JobPage> {
               jobTypes: jobtypes,
               locations: nigerianStates,
             ),
+
+            // ---- Job List ----
             Consumer<JobProvider>(
               builder: (BuildContext context, JobProvider provider, _) {
                 return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: provider.filteredJobs.length,
-                    itemBuilder: (context, index) {
-                      final Job job = provider.filteredJobs[index];
-                      return JobItem(job: job);
-                    });
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: provider.filteredJobs.length,
+                  itemBuilder: (context, index) {
+                    final Job job = provider.filteredJobs[index];
+                    return JobItem(job: job);
+                  },
+                );
               },
             ),
           ],

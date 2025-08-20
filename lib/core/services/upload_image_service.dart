@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:myplug_ca/core/domain/repositories/image_upload_repo.dart';
 
-class FirebaseImageUpload extends ImageUploadRepo {
+class FirebaseImageUpload extends FileUploadRepo {
   final FirebaseStorage _storage;
 
   FirebaseImageUpload(this._storage);
@@ -28,6 +28,20 @@ class FirebaseImageUpload extends ImageUploadRepo {
       return downloadUrl;
     } catch (e) {
       print("Error uploading image: $e");
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> uploadFile({required File file, required String path}) async {
+    try {
+      final fileName = file.path.split('/').last;
+      final storageRef = _storage.ref().child("$path/$fileName");
+
+      final uploadTask = await storageRef.putFile(file);
+      return await uploadTask.ref.getDownloadURL();
+    } catch (e) {
+      print("Error uploading file: $e");
       return null;
     }
   }

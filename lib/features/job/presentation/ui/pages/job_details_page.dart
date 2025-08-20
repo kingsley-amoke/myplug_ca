@@ -22,7 +22,9 @@ class JobDetailsPage extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => ApplyJob(),
+                builder: (_) => ApplyJob(
+                  job: job,
+                ),
               ),
             );
           },

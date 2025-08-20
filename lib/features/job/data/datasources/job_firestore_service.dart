@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myplug_ca/features/job/domain/models/application.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
 import 'package:myplug_ca/features/job/domain/repositories/job_repository.dart';
 
@@ -11,7 +12,7 @@ class JobFirestoreService extends JobRepository {
 
   @override
   Future<Job?> createJob(Job job) async {
-    final jobRef = _firestore.collection(_collection).doc(job.id);
+    final jobRef = _firestore.collection(_collection).doc();
 
     await jobRef.set(job.copyWith(id: jobRef.id).toMap());
     return job.copyWith(id: jobRef.id);
@@ -51,5 +52,13 @@ class JobFirestoreService extends JobRepository {
         return Job.fromMap(e.data());
       }).toList();
     });
+  }
+
+  @override
+  Future<JobApplication> applyJob(JobApplication application) async {
+    final applicationRef = _firestore.collection('application').doc();
+
+    await applicationRef.set(application.copyWith(id: application.id).toMap());
+    return application.copyWith(id: application.id);
   }
 }

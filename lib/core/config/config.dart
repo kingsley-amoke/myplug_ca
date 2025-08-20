@@ -10,6 +10,7 @@ import 'package:myplug_ca/core/domain/models/rating.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:toastification/toastification.dart';
+import 'package:file_picker/file_picker.dart';
 
 double getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
@@ -39,6 +40,20 @@ String formatPrice({required double amount, String currency = 'NGN'}) {
     locale: Platform.localeName,
     name: currency,
   ).format(amount);
+}
+
+String formatLargeCurrency(num value) {
+  if (value >= 1e12) {
+    return "N${(value / 1e12).toStringAsFixed(2)}T";
+  } else if (value >= 1e9) {
+    return "N${(value / 1e9).toStringAsFixed(2)}B";
+  } else if (value >= 1e6) {
+    return "N${(value / 1e6).toStringAsFixed(2)}M";
+  } else if (value >= 1e3) {
+    return "N${(value / 1e3).toStringAsFixed(2)}K";
+  } else {
+    return 'N${value.toStringAsFixed(2)}';
+  }
 }
 
 String createConversationId(
@@ -216,6 +231,30 @@ Future<List<File>?> pickMultiImage(
     }
   } catch (e) {
     print("Error picking image: $e");
+    return null;
+  }
+}
+
+//pick file
+
+/// Picks a document (doc, docx, pdf, csv) and uploads to Firebase Storage.
+/// Returns the download URL if successful, otherwise null.
+Future<File?> pickFile({required String folder}) async {
+  try {
+    // Pick file
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'doc', 'docx', 'csv'],
+    );
+
+    if (result == null || result.files.single.path == null) {
+      return null;
+    }
+
+    final file = File(result.files.single.path!);
+    return file;
+  } catch (e) {
+    print("Error uploading file: $e");
     return null;
   }
 }

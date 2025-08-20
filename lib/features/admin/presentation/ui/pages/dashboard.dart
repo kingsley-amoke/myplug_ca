@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
+import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class DashboardItem {
   final String title;
@@ -90,7 +96,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: _buildContent(),
+              child: _buildContent(context),
             ),
           ),
         ],
@@ -98,12 +104,21 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
+    final int noOfUsers = context.watch<UserProvider>().allUsers.length;
+    final int noOfProducts = context.watch<ProductProvider>().products.length;
+    final int noOfJobs = context.watch<JobProvider>().jobs.length;
+
     switch (_sections[_selectedIndex].title) {
       case "Overview":
-        return _overviewSection();
+        return overviewSection(
+          noOfJobs: noOfJobs,
+          noOfProducts: noOfProducts,
+          noOfUsers: noOfUsers,
+          sumOfTransactions: 5090000000,
+        );
       case "Users":
-        return _usersSection();
+        return UsersSection();
       case "Jobs":
         return _jobsSection();
       case "Products":
@@ -124,24 +139,6 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
   }
 
   // ----------------- Section Widgets -----------------
-
-  Widget _overviewSection() {
-    return GridView.count(
-      crossAxisCount: 2,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      children: const [
-        _StatCard(title: "Total Users", value: "245"),
-        _StatCard(title: "Active Jobs", value: "32"),
-        _StatCard(title: "Products", value: "180"),
-        _StatCard(title: "Transactions", value: "₦1.2M"),
-      ],
-    );
-  }
-
-  Widget _usersSection() {
-    return const Center(child: Text("Manage Users 👤"));
-  }
 
   Widget _jobsSection() {
     return const Center(child: Text("Manage Jobs 💼"));
@@ -169,37 +166,5 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
 
   Widget _settingsSection() {
     return const Center(child: Text("App Settings ⚙️"));
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  final String title;
-  final String value;
-
-  const _StatCard({required this.title, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    )),
-            const SizedBox(height: 8),
-            Text(value,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                    )),
-          ],
-        ),
-      ),
-    );
   }
 }
