@@ -4,6 +4,7 @@ import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/features/product/presentation/ui/pages/my_products.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/widgets/cancel_sub.dart';
 import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
@@ -27,7 +28,25 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppbar(context, title: 'Professional Profile'),
+      appBar: myAppbar(
+        context,
+        title: 'Professional Profile',
+        actions: [
+          IconButton(
+            tooltip: "My Products",
+            icon: const Icon(Icons.shopping_bag_outlined),
+            color: const Color(0xFFDAA579),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const MyProductsPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

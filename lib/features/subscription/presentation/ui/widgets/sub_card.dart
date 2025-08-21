@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/constants/demoSubPlans.dart';
+import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
 
 class SubCard extends StatelessWidget {
-  const SubCard({super.key});
+  SubCard({super.key});
+
+  final SubscriptionPlan displaySub = demoSubPlans[0];
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +42,11 @@ class SubCard extends StatelessWidget {
               const Icon(Icons.workspace_premium,
                   size: 36, color: Colors.white),
               const SizedBox(width: 16),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Best Value Plan",
                       style: TextStyle(
                         color: Colors.white,
@@ -49,16 +54,19 @@ class SubCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
-                      "Get 1 Month Premium for just \$60",
-                      style: TextStyle(
+                      "Get ${formatPlanDuration(displaySub.duration)} Premium for just ${formatPrice(amount: displaySub.price)}",
+                      style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 14,
                       ),
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(
+                width: 6,
               ),
               Container(
                 padding: const EdgeInsets.symmetric(

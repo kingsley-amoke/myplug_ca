@@ -1,81 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-// import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
-// import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-
-// class MessagePage extends StatelessWidget {
-//   final String currentUserId;
-//   final MyplugUser otherUser;
-//   final List<ChatMessage> messages;
-
-//   const MessagePage(
-//       {super.key,
-//       required this.currentUserId,
-//       required this.otherUser,
-//       required this.messages});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: myAppbar(context, title: otherUser.fullname ?? 'Chat'),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               reverse: false,
-//               itemCount: messages.length,
-//               itemBuilder: (context, index) {
-//                 final msg = messages[messages.length - 1 - index];
-//                 final isMine = msg.senderId == currentUserId;
-
-//                 return Align(
-//                   alignment:
-//                       isMine ? Alignment.centerRight : Alignment.centerLeft,
-//                   child: Container(
-//                     margin:
-//                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-//                     padding: const EdgeInsets.all(10),
-//                     decoration: BoxDecoration(
-//                       color: isMine ? Colors.blueAccent : Colors.grey[700],
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     child: Text(
-//                       msg.content,
-//                       style: const TextStyle(
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8),
-//             child: Row(
-//               children: [
-//                 const Expanded(
-//                   child: TextField(
-//                     decoration: InputDecoration(
-//                       hintText: 'Type a message',
-//                       border: OutlineInputBorder(),
-//                     ),
-//                   ),
-//                 ),
-//                 IconButton(
-//                   icon: const Icon(Icons.send),
-//                   onPressed: () {
-//                     // TODO: Send logic
-//                   },
-//                 )
-//               ],
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
@@ -119,7 +41,7 @@ class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppbar(context, title: widget.otherUser.fullname ?? 'Chat'),
+      appBar: myAppbar(context, title: widget.otherUser.fullname),
       body: Column(
         children: [
           /// MESSAGES
@@ -289,15 +211,15 @@ class _MessagePageState extends State<MessagePage> {
   }
 }
 
-Widget _buildStatusIcon(MessageStatus status) {
-  switch (status) {
-    case MessageStatus.sending:
-      return const Icon(Icons.access_time, size: 14, color: Colors.grey);
-    case MessageStatus.sent:
-      return const Icon(Icons.check, size: 14, color: Colors.grey);
-    case MessageStatus.delivered:
-      return const Icon(Icons.done_all, size: 14, color: Colors.grey);
-    case MessageStatus.seen:
-      return const Icon(Icons.done_all, size: 14, color: Colors.blueAccent);
-  }
-}
+// Widget _buildStatusIcon(MessageStatus status) {
+//   switch (status) {
+//     case MessageStatus.sending:
+//       return const Icon(Icons.access_time, size: 14, color: Colors.grey);
+//     case MessageStatus.sent:
+//       return const Icon(Icons.check, size: 14, color: Colors.grey);
+//     case MessageStatus.delivered:
+//       return const Icon(Icons.done_all, size: 14, color: Colors.grey);
+//     case MessageStatus.seen:
+//       return const Icon(Icons.done_all, size: 14, color: Colors.blueAccent);
+//   }
+// }

@@ -4,10 +4,12 @@ PreferredSizeWidget myAppbar(
   BuildContext context, {
   required String title,
   bool implyLeading = true,
+  List<Widget>? actions,
 }) {
   return AppBar(
     automaticallyImplyLeading: implyLeading,
     title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+    actions: actions,
     centerTitle: true,
     leading: implyLeading
         ? IconButton(

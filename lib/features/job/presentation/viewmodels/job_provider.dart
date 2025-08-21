@@ -17,6 +17,8 @@ class JobProvider extends ChangeNotifier {
   List<Job> get jobs => _jobs;
   List<Job> filteredJobs = [];
 
+  bool isLoading = false;
+
   Future<void> loadJobs() async {
     _jobs = await _jobRepoImpl.loadAllJobs();
     notifyListeners();
@@ -35,7 +37,9 @@ class JobProvider extends ChangeNotifier {
   }
 
   void initFilteredJobs() {
+    isLoading = true;
     filteredJobs = _jobs;
+    isLoading = false;
   }
 
   List<Job> filterByParams({

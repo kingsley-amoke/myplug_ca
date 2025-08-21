@@ -4,10 +4,21 @@ import 'package:myplug_ca/features/admin/presentation/ui/widgets/user_card.dart'
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class UsersSection extends StatelessWidget {
+class UsersSection extends StatefulWidget {
   const UsersSection({
     super.key,
   });
+
+  @override
+  State<UsersSection> createState() => _UsersSectionState();
+}
+
+class _UsersSectionState extends State<UsersSection> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserProvider>().initFilteredUsers();
+  }
 
   @override
   Widget build(BuildContext context) {

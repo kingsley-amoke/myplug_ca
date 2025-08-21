@@ -110,21 +110,25 @@ class Settings extends StatelessWidget {
                     ),
                     title: "Change Password",
                   ),
-                  SettingsItem(
-                    onTap: () {
-                      navigator.push(
-                        MaterialPageRoute(
-                          builder: (_) => const AdminDashboardPage(),
-                        ),
-                      );
-                    },
-                    icons: Icons.dashboard,
-                    iconStyle: IconStyle(
-                      backgroundColor: Colors.grey[200],
-                      iconsColor: Colors.black,
+
+                  // ✅ Only show Admin Dashboard if user is admin
+                  if (provider.myplugUser != null &&
+                      provider.myplugUser!.isAdmin)
+                    SettingsItem(
+                      onTap: () {
+                        navigator.push(
+                          MaterialPageRoute(
+                            builder: (_) => const AdminDashboardPage(),
+                          ),
+                        );
+                      },
+                      icons: Icons.dashboard,
+                      iconStyle: IconStyle(
+                        backgroundColor: Colors.grey[200],
+                        iconsColor: Colors.black,
+                      ),
+                      title: "Admin Dashboard",
                     ),
-                    title: "Admin Dashboard",
-                  ),
                 ],
               ),
 

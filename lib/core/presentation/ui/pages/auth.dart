@@ -13,7 +13,7 @@ class Auth extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser != null) {
       context
           .read<SubscriptionProvider>()
-          .loadUserSubscription(FirebaseAuth.instance.currentUser!.uid!);
+          .loadUserSubscription(FirebaseAuth.instance.currentUser!.uid);
 
       return const BottomNav();
     } else {

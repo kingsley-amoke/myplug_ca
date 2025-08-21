@@ -16,6 +16,7 @@ class ProductProvider extends ChangeNotifier {
   List<Product> _products = [];
   List<Product> _productsByCategory = [];
   List<Product> filteredProducts = [];
+  List<Product> filteredMyProducts = [];
   bool productsByCategoryLoading = true;
   Product? _currentProduct;
   List<Product> _myProducts = [];
@@ -39,6 +40,7 @@ class ProductProvider extends ChangeNotifier {
 
   void getMyProducts(String userId) {
     _myProducts = _products.where((p) => p.seller.id == userId).toList();
+    filteredMyProducts = _myProducts;
     notifyListeners();
   }
 
@@ -133,6 +135,41 @@ class ProductProvider extends ChangeNotifier {
     return filteredProducts;
   }
 
+  List<Product> searchMyProducts({
+    required String search,
+  }) {
+    // If search is empty, restore all products
+    if (search.trim().isEmpty) {
+      filteredMyProducts = List<Product>.from(_myProducts);
+      notifyListeners();
+      return filteredMyProducts;
+    }
+
+    List<Product> matches = [];
+
+    for (Product product in _myProducts) {
+      final term = search.toLowerCase();
+
+      final title = product.title.toLowerCase();
+      final description = product.description.toLowerCase();
+      final location = product.location.toLowerCase();
+      final shop = product.shop.name.toLowerCase();
+      final seller = product.seller.fullname.toLowerCase();
+
+      if (title.contains(term) ||
+          description.contains(term) ||
+          location.contains(term) ||
+          shop.contains(term) ||
+          seller.contains(term)) {
+        matches.add(product);
+      }
+    }
+
+    filteredMyProducts = matches;
+    notifyListeners();
+    return filteredMyProducts;
+  }
+
   //assign Current product
 
   void assignCurrentProduct(String productId) {
@@ -206,6 +243,7 @@ class ProductProvider extends ChangeNotifier {
     )
         .then((_) {
       _products.add(addedProduct);
+      _myProducts.add(addedProduct);
     });
 
     notifyListeners();

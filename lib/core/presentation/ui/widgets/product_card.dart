@@ -84,8 +84,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class ProductCardState extends State<ProductCard> {
-  final bool _isAdded = false;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

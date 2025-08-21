@@ -13,7 +13,7 @@ class SubscriptionSection extends StatelessWidget {
     return Consumer<SubscriptionProvider>(builder:
         (BuildContext context, SubscriptionProvider provider, Widget? child) {
       if (provider.subscription == null) {
-        return const SubCard();
+        return SubCard();
       } else {
         return UserSubCard(subscription: provider.subscription!);
       }

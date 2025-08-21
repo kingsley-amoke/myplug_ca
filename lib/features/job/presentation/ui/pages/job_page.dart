@@ -36,6 +36,19 @@ class _JobPageState extends State<JobPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // ---- Job Search Bar ----
+            ModularSearchFilterBar(
+              onSearch: (search, filters) {
+                context.read<JobProvider>().filterByParams(
+                      location: filters['location'],
+                      jobType: filters['jobType'],
+                      minSalary: filters['salary'],
+                      searchTerm: search,
+                    );
+              },
+              jobTypes: jobtypes,
+              locations: nigerianStates,
+            ),
             // ---- CV Review Section ----
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -75,32 +88,22 @@ class _JobPageState extends State<JobPage> {
               ),
             ),
 
-            // ---- Job Search Bar ----
-            ModularSearchFilterBar(
-              onSearch: (search, filters) {
-                context.read<JobProvider>().filterByParams(
-                      location: filters['location'],
-                      jobType: filters['jobType'],
-                      minSalary: filters['salary'],
-                      searchTerm: search,
-                    );
-              },
-              jobTypes: jobtypes,
-              locations: nigerianStates,
-            ),
-
             // ---- Job List ----
             Consumer<JobProvider>(
               builder: (BuildContext context, JobProvider provider, _) {
-                return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: provider.filteredJobs.length,
-                  itemBuilder: (context, index) {
-                    final Job job = provider.filteredJobs[index];
-                    return JobItem(job: job);
-                  },
-                );
+                return provider.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: provider.filteredJobs.length,
+                        itemBuilder: (context, index) {
+                          final Job job = provider.filteredJobs[index];
+                          return JobItem(job: job);
+                        },
+                      );
               },
             ),
           ],

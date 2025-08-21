@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/constants/conversations.dart';
-import 'package:myplug_ca/core/constants/messages.dart';
-import 'package:myplug_ca/core/constants/users.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/core/presentation/viewmodels/myplug_provider.dart';
 import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
@@ -18,20 +16,6 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-void searchConversation(BuildContext context, {required String searchQuery}) {
-  final userProvider = context.read<UserProvider>();
-
-  if (searchQuery == '') {
-    context.read<ChatProvider>().resetFilteredConversatioins();
-  }
-
-  context.read<ChatProvider>().filterChat(
-        searchQuery: searchQuery,
-        allUsers: userProvider.allUsers,
-        userId: userProvider.myplugUser!.id!,
-      );
-}
-
 class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
@@ -43,7 +27,6 @@ class _ChatPageState extends State<ChatPage> {
           stream: context.watch<MyplugProvider>().getUserConversationStream(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              print(snapshot);
               return const Center(child: CircularProgressIndicator());
             }
 
@@ -51,24 +34,18 @@ class _ChatPageState extends State<ChatPage> {
 
             return Column(
               children: [
-                // 🔎 Search bar
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search chats...',
-                      prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                      filled: true,
-                      fillColor: Colors.grey.shade100,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    onChanged: (value) => setState(
-                        () => searchConversation(context, searchQuery: value)),
+                  padding: const EdgeInsets.all(8.0),
+                  child: ModularSearchFilterBar(
+                    showFilterIcon: false,
+                    onSearch: (search, _) {
+                      final userProvider = context.read<UserProvider>();
+                      context.read<ChatProvider>().searchConversations(
+                            search: search,
+                            allUsers: userProvider.allUsers,
+                            userId: userProvider.myplugUser!.id!,
+                          );
+                    },
                   ),
                 ),
 
@@ -95,40 +72,41 @@ class _ChatPageState extends State<ChatPage> {
                             ],
                           ),
                         )
-                      : ListView.separated(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          itemCount: context
-                              .read<ChatProvider>()
-                              .filteredConversations
-                              .length,
-                          separatorBuilder: (_, __) =>
-                              const Divider(height: 1, thickness: 0.3),
-                          itemBuilder: (context, index) {
-                            final convo = context
-                                .read<ChatProvider>()
-                                .filteredConversations[index];
-                            final otherId = convo.participants
-                                .firstWhere((id) => id != currentUserId);
-                            final otherUser = context
-                                .read<UserProvider>()
-                                .allUsers
-                                .firstWhere((u) => u.id == otherId);
+                      : Consumer<ChatProvider>(
+                          builder: (context, provider, _) {
+                            return ListView.separated(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              itemCount: provider.filteredConversations.length,
+                              separatorBuilder: (_, __) =>
+                                  const Divider(height: 1, thickness: 0.3),
+                              itemBuilder: (context, index) {
+                                final convo =
+                                    provider.filteredConversations[index];
 
-                            return ChatItem(
-                              conversation: convo,
-                              otherUser: otherUser,
-                              onTap: () {
-                                context
-                                    .read<ChatProvider>()
-                                    .onOpenConversation(convo);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => MessagePage(
-                                    currentUserId: currentUserId,
-                                    otherUser: otherUser,
-                                    conversationId: convo.id!,
-                                  ),
-                                ));
+                                final otherId = convo.participants
+                                    .firstWhere((id) => id != currentUserId);
+
+                                final otherUser = context
+                                    .read<UserProvider>()
+                                    .allUsers
+                                    .firstWhere((u) => u.id == otherId);
+
+                                return ChatItem(
+                                  conversation: convo,
+                                  otherUser: otherUser,
+                                  onTap: () {
+                                    provider.onOpenConversation(convo);
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (_) => MessagePage(
+                                        currentUserId: currentUserId,
+                                        otherUser: otherUser,
+                                        conversationId: convo.id!,
+                                      ),
+                                    ));
+                                  },
+                                );
                               },
                             );
                           },

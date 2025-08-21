@@ -93,19 +93,24 @@ class _ModularSearchFilterBarState extends State<ModularSearchFilterBar> {
             widget.showFilterIcon) // ✅ filters depend on icon toggle
           _buildFilters(),
         if (widget.showFilterIcon)
-          TextButton(
-            child: const Text('Clear Filters'),
-            onPressed: () {
-              setState(() {
-                _selectedLocation = null;
-                _salaryValue = null;
-                _priceValue = null;
-                _selectedCategory = null;
-                _searchController.text = '';
-                _selectedJobType = null;
-                _ratingValue = null;
-              });
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                child: const Text('Clear Filters'),
+                onPressed: () {
+                  setState(() {
+                    _selectedLocation = null;
+                    _salaryValue = null;
+                    _priceValue = null;
+                    _selectedCategory = null;
+                    _searchController.text = '';
+                    _selectedJobType = null;
+                    _ratingValue = null;
+                  });
+                },
+              ),
+            ],
           ),
       ],
     );

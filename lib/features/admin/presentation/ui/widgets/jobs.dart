@@ -1,39 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/job_card.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/job/presentation/ui/pages/add_job.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:provider/provider.dart';
 
-class Job {
-  final String? id;
-  final String title;
-  final String description;
-  final JobType type;
-  final double salary;
-  final String company;
-  final String companyLogo;
-  final String location;
-  final DateTime date;
-  final List<String> requirements;
+class JobsSection extends StatefulWidget {
+  const JobsSection({super.key});
 
-  const Job({
-    this.id,
-    required this.title,
-    required this.description,
-    required this.type,
-    required this.location,
-    required this.company,
-    required this.companyLogo,
-    required this.salary,
-    required this.requirements,
-    required this.date,
-  });
+  @override
+  State<JobsSection> createState() => _JobsSectionState();
 }
 
-class JobsSection extends StatelessWidget {
-  const JobsSection({super.key});
+class _JobsSectionState extends State<JobsSection> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<JobProvider>().initFilteredJobs();
+  }
 
   @override
   Widget build(BuildContext context) {

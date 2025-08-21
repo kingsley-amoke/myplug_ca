@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/constants/nigerian_states.dart';
 import 'package:myplug_ca/core/constants/shops.dart';
 import 'package:myplug_ca/core/constants/validators.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/custom_dropdown.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
 import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
@@ -28,8 +31,9 @@ class _AddProductPageState extends State<AddProductPage> {
   final _priceController = TextEditingController();
   final _locationController = TextEditingController();
 
-  final List<File> _images = []; // TODO: image picker integration
-  MyplugShop? _selectedShop; // TODO: connect to MyplugShop list
+  final List<File> _images = [];
+  MyplugShop? _selectedShop;
+  String? _location;
 
   bool _isLoading = false;
 
@@ -115,32 +119,33 @@ class _AddProductPageState extends State<AddProductPage> {
                     val == null || val.isEmpty ? "Enter price" : null,
               ),
               const SizedBox(height: 16),
-
-              // Location
-              MyInput(
-                controller: _locationController,
-                labelText: "Location",
-                prefixIcon: const Icon(Icons.location_city),
-                validator: (val) =>
-                    val == null || val.isEmpty ? "Enter location" : null,
+              //location
+              CustomDropdown<String>(
+                items: nigerianStates,
+                itemLabelBuilder: (state) => state.toSentenceCase(),
+                value: _location,
+                labelText: "Product Location",
+                hintText: "Select product location",
+                prefixIcon: Icons.category_outlined,
+                validator: (v) => v == null ? "Select product location" : null,
+                onChanged: (val) => setState(
+                  () => _location = val ?? _location,
+                ),
               ),
               const SizedBox(height: 16),
 
               // Shop Dropdown
-              DropdownButtonFormField<MyplugShop>(
-                decoration: const InputDecoration(
-                  labelText: "Shop",
-                  border: OutlineInputBorder(),
-                ),
+              CustomDropdown<MyplugShop>(
+                items: shops,
+                itemLabelBuilder: (shop) => shop.name.toSentenceCase(),
                 value: _selectedShop,
-                items: shops.map((MyplugShop shop) {
-                  return DropdownMenuItem(
-                    value: shop,
-                    child: Text(shop.name),
-                  );
-                }).toList(),
-                onChanged: (val) => setState(() => _selectedShop = val),
-                validator: (val) => val == null ? "Select a shop" : null,
+                labelText: "Product Shop",
+                hintText: "Select product shop",
+                prefixIcon: Icons.category_outlined,
+                validator: (v) => v == null ? "Select product shop" : null,
+                onChanged: (val) => setState(
+                  () => _selectedShop = val ?? _selectedShop,
+                ),
               ),
               const SizedBox(height: 16),
 

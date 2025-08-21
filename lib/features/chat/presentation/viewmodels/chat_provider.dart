@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/conversations.dart';
 import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
 import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
@@ -24,31 +23,36 @@ class ChatProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  void resetFilteredConversatioins() {
-    filteredConversations = _userChats;
-  }
+  List<Conversation> searchConversations({
+    required String search,
+    required List<MyplugUser> allUsers,
+    required String userId,
+  }) {
+    // ✅ Restore all conversations if search is empty
+    if (search.trim().isEmpty) {
+      filteredConversations = List<Conversation>.from(_userChats);
+      notifyListeners();
+      return filteredConversations;
+    }
 
-  void filterChat(
-      {required String userId,
-      required List<MyplugUser> allUsers,
-      required String searchQuery}) {
-    // print(searchQuery);
+    final term = search.toLowerCase();
+    List<Conversation> matches = [];
 
-    filteredConversations = filteredConversations.where((convo) {
+    for (Conversation convo in _userChats) {
       final otherId = convo.participants.firstWhere((id) => id != userId);
       final user = allUsers.firstWhere((u) => u.id == otherId);
-      final name = '${user.firstName} ${user.lastName}'.toLowerCase();
+      final name = user.fullname.toLowerCase();
+      final lastMessage = convo.lastMessage?.toLowerCase() ?? '';
 
-      final filtered = name.contains(searchQuery.toLowerCase()) ||
-          (convo.lastMessage
-                  ?.toLowerCase()
-                  .contains(searchQuery.toLowerCase()) ??
-              false);
+      if (lastMessage.contains(term) || name.contains(term)) {
+        matches.add(convo);
+      }
+    }
 
-      return filtered;
-    }).toList();
-
+    filteredConversations = matches;
+    print(filteredConversations.length);
     notifyListeners();
+    return filteredConversations;
   }
 
   void onOpenConversation(Conversation conversation) {

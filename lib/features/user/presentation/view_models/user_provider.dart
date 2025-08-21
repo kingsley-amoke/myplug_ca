@@ -103,6 +103,11 @@ class UserProvider extends ChangeNotifier {
     return matches;
   }
 
+  void initFilteredUsers() {
+    filteredUsers = allUsers;
+    notifyListeners();
+  }
+
   List<MyplugUser> searchAllUsers({
     required String search,
   }) {
@@ -138,7 +143,6 @@ class UserProvider extends ChangeNotifier {
 
   void getUsersByService(Skill service) async {
     usersByServiceLoading = true;
-    await _userRepo.loadAllUsers();
 
     usersByService = allUsers.where((item) {
       final hasSkill = item.skills
