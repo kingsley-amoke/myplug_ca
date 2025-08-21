@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/job_card.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
+import 'package:myplug_ca/features/job/presentation/ui/pages/add_job.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -35,17 +36,35 @@ class JobsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<JobProvider>(
-      builder: (context, provider, _) {
-        return ListView.builder(
-          padding: const EdgeInsets.all(5),
-          itemCount: provider.jobs.length,
-          itemBuilder: (context, index) {
-            final job = provider.jobs[index];
-            return JobCard(job: job);
-          },
-        );
-      },
+    return Scaffold(
+      body: Consumer<JobProvider>(
+        builder: (context, provider, _) {
+          return ListView.builder(
+            padding: const EdgeInsets.all(5),
+            itemCount: provider.jobs.length,
+            itemBuilder: (context, index) {
+              final job = provider.jobs[index];
+              return JobCard(job: job);
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AddJobPage()),
+          );
+        },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        elevation: 2,
+        child: const Icon(
+          Icons.add_rounded,
+          size: 28,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

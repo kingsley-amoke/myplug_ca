@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/core/constants/jobs.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/job/domain/models/application.dart';
 import 'package:myplug_ca/features/job/domain/models/document_type.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
+import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class JobProvider extends ChangeNotifier {
@@ -13,7 +13,7 @@ class JobProvider extends ChangeNotifier {
 
   JobProvider(this._jobRepoImpl);
 
-  List<Job> _jobs = demoJobs;
+  List<Job> _jobs = [];
   List<Job> get jobs => _jobs;
   List<Job> filteredJobs = [];
 
@@ -26,13 +26,33 @@ class JobProvider extends ChangeNotifier {
     return await _jobRepoImpl.loadJob(jobId);
   }
 
-  Future<void> updateJob(Job job) async {
-    final updatedJob = await _jobRepoImpl.updateJob(job);
+  Future<void> updateJob({
+    required MyplugUser user,
+    required Job job,
+    required String title,
+    required String description,
+    required JobType type,
+    required double salary,
+    required String location,
+    required String company,
+    required List<String> requirements,
+  }) async {
+    if (user.isAdmin) {
+      final updatedJob = await _jobRepoImpl.updateJob(job.copyWith(
+        title: title,
+        description: description,
+        type: type,
+        salary: salary,
+        location: location,
+        company: company,
+        requirements: requirements,
+      ));
 
-    _jobs.remove(job);
-    _jobs.add(updatedJob);
+      _jobs.remove(job);
+      _jobs.add(updatedJob);
 
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   void initFilteredJobs() {
@@ -124,7 +144,41 @@ class JobProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteJob(MyplugUser user, String jobId) async {
+  Future<void> addJob({
+    required File compantLogo,
+    required String title,
+    required String description,
+    required String companyName,
+    required double salary,
+    required String location,
+    required List<String> requirements,
+    required JobType type,
+  }) async {
+    final url =
+        await _jobRepoImpl.uploadFile(file: compantLogo, path: 'company_logos');
+    if (url != null) {
+      final job = Job(
+        title: title,
+        description: description,
+        type: type,
+        location: location,
+        company: companyName,
+        companyLogo: url,
+        salary: salary,
+        requirements: requirements,
+        date: DateTime.now(),
+      );
+
+      await _jobRepoImpl.createJob(job);
+      _jobs.add(job);
+      notifyListeners();
+    }
+  }
+
+  Future<void> editJob() async {}
+
+  Future<void> deleteJob(
+      {required MyplugUser user, required String jobId}) async {
     if (user.isAdmin) {
       await _jobRepoImpl.deleteJob(jobId);
 

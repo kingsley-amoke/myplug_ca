@@ -64,19 +64,19 @@ class Job {
     String? location,
     String? company,
     String? companyLogo,
-    String? requirement,
+    List<String>? requirements,
     double? salary,
   }) {
     return Job(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        type: type ?? this.type,
-        location: location ?? this.location,
-        company: company ?? this.company,
-        companyLogo: companyLogo ?? this.companyLogo,
-        salary: salary ?? this.salary,
-        requirements:
-            requirement != null ? [...requirements, requirement] : requirements,
-        date: date);
+      title: title ?? this.title,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      location: location ?? this.location,
+      company: company ?? this.company,
+      companyLogo: companyLogo ?? this.companyLogo,
+      salary: salary ?? this.salary,
+      requirements: requirements ?? this.requirements,
+      date: date,
+    );
   }
 }

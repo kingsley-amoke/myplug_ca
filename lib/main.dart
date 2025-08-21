@@ -83,7 +83,7 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => JobProvider(
           JobRepoImpl(jobDatabaseService),
-        ),
+        )..loadJobs(),
       ),
       ChangeNotifierProvider(
         create: (_) => ChatProvider(

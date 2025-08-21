@@ -1,23 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
+import 'package:myplug_ca/features/job/presentation/ui/pages/edit_job.dart';
+import 'package:myplug_ca/features/job/presentation/ui/pages/job_details_page.dart';
+import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class JobCard extends StatelessWidget {
   const JobCard({super.key, required this.job});
 
   final Job job;
 
-  String _formatJobType(JobType type) {
-    switch (type) {
-      case JobType.fulltime:
-        return "Full-time";
-      case JobType.parttime:
-        return "Part-time";
-      case JobType.remote:
-        return "Remote";
-      case JobType.internship:
-        return "Internship";
+  void _viewJob(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => JobDetailsPage(job: job),
+      ),
+    );
+  }
+
+  void _editJob(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => EditJobPage(job: job),
+      ),
+    );
+  }
+
+  void _deleteJob(BuildContext context) {
+    final user = context.read<UserProvider>();
+
+    if (user.isLoggedIn) {
+      context
+          .read<JobProvider>()
+          .deleteJob(user: user.myplugUser!, jobId: job.id!);
     }
   }
 
@@ -88,7 +105,7 @@ class JobCard extends StatelessWidget {
                           size: 14, color: Colors.grey[600]),
                       const SizedBox(width: 4),
                       Text(
-                        _formatJobType(job.type),
+                        formatJobType(job.type),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -130,29 +147,29 @@ class JobCard extends StatelessWidget {
               child: PopupMenuButton<String>(
                 onSelected: (value) {
                   switch (value) {
-                    case "add":
-                      // TODO: Add Job
+                    case "view":
+                      _viewJob(context);
                       break;
                     case "edit":
-                      // TODO: Edit Job
+                      _editJob(context);
                       break;
                     case "delete":
-                      // TODO: Delete Job
+                      _deleteJob(context);
                       break;
                   }
                 },
                 itemBuilder: (context) => [
                   const PopupMenuItem(
-                    value: "add",
-                    child: Text("Add Job"),
+                    value: "edit",
+                    child: Text("View"),
                   ),
                   const PopupMenuItem(
                     value: "edit",
-                    child: Text("Edit Job"),
+                    child: Text("Edit"),
                   ),
                   const PopupMenuItem(
                     value: "delete",
-                    child: Text("Delete Job"),
+                    child: Text("Delete"),
                   ),
                 ],
               ),

@@ -31,6 +31,19 @@ double getAverageRating({required List<Rating> ratings}) {
   return total / ratings.length;
 }
 
+String formatJobType(JobType type) {
+  switch (type) {
+    case JobType.fulltime:
+      return "Full-time";
+    case JobType.parttime:
+      return "Part-time";
+    case JobType.remote:
+      return "Remote";
+    case JobType.internship:
+      return "Internship";
+  }
+}
+
 String formatDate({required DateTime date}) {
   return DateFormat('EEE, d MMM yy').format(date);
 }
