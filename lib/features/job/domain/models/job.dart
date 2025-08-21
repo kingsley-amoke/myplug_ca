@@ -35,7 +35,7 @@ class Job {
       salary: (map['salary'] as num).toDouble(),
       location: map['location'] ?? '',
       company: map['company'] ?? '',
-      companyLogo: map['companyLogo'] ?? '',
+      companyLogo: map['company_logo'] ?? '',
       date: DateTime.parse(map['date']),
       requirements: List<String>.from(map['requirements'] ?? []),
     );
@@ -68,6 +68,7 @@ class Job {
     double? salary,
   }) {
     return Job(
+      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       type: type ?? this.type,

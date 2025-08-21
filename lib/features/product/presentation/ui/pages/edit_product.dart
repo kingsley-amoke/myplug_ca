@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/constants/nigerian_states.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/custom_dropdown.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
@@ -22,11 +25,12 @@ class _EditProductPageState extends State<EditProductPage> {
 
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
-  late TextEditingController _locationController;
   late TextEditingController _priceController;
 
-  List<File> _newImages = [];
+  final List<File> _newImages = [];
   late List<String> _existingImages;
+  late String _location;
+  bool saving = false;
 
   @override
   void initState() {
@@ -34,11 +38,12 @@ class _EditProductPageState extends State<EditProductPage> {
     _titleController = TextEditingController(text: widget.product.title);
     _descriptionController =
         TextEditingController(text: widget.product.description);
-    _locationController = TextEditingController(text: widget.product.location);
     _priceController =
         TextEditingController(text: widget.product.price.toString());
 
     _existingImages = List<String>.from(widget.product.images);
+
+    _location = widget.product.location;
   }
 
   Future<void> _pickImage() async {
@@ -62,21 +67,25 @@ class _EditProductPageState extends State<EditProductPage> {
     });
   }
 
-  void _saveProduct() {
+  void _saveProduct() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        saving = true;
+      });
       final double price = double.tryParse(_priceController.text.trim()) ?? 0.0;
 
-      context.read<ProductProvider>().editProduct(
+      await context.read<ProductProvider>().editProduct(
             product: widget.product,
             title: _titleController.text.trim(),
             description: _descriptionController.text.trim(),
-            location: _locationController.text.trim(),
+            location: _location,
             price: price,
             existingImages: _existingImages,
             newImages: _newImages,
           );
       showToast(context, message: 'Success', type: ToastType.success);
       Navigator.pop(context);
+      saving = false;
     }
   }
 
@@ -115,15 +124,20 @@ class _EditProductPageState extends State<EditProductPage> {
               ),
               const SizedBox(height: 16),
 
-              // Location
-              MyInput(
-                controller: _locationController,
-                labelText: "Location",
-                validator: (value) =>
-                    value == null || value.isEmpty ? "Enter location" : null,
+              //location
+              CustomDropdown<String>(
+                items: nigerianStates,
+                itemLabelBuilder: (state) => state.toSentenceCase(),
+                value: widget.product.location,
+                labelText: "Product Location",
+                hintText: "Select product location",
+                prefixIcon: Icons.category_outlined,
+                validator: (v) => v == null ? "Select product type" : null,
+                onChanged: (val) => setState(
+                  () => _location = val ?? _location,
+                ),
               ),
-              const SizedBox(height: 16),
-
+              const SizedBox(height: 20),
               // Price
               MyInput(
                 controller: _priceController,
@@ -244,10 +258,12 @@ class _EditProductPageState extends State<EditProductPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    "Save Changes",
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  child: saving
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          "Save Changes",
+                          style: TextStyle(fontSize: 16),
+                        ),
                 ),
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/job_card.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/features/job/presentation/ui/pages/add_job.dart';
@@ -39,13 +40,26 @@ class JobsSection extends StatelessWidget {
     return Scaffold(
       body: Consumer<JobProvider>(
         builder: (context, provider, _) {
-          return ListView.builder(
-            padding: const EdgeInsets.all(5),
-            itemCount: provider.jobs.length,
-            itemBuilder: (context, index) {
-              final job = provider.jobs[index];
-              return JobCard(job: job);
-            },
+          return Column(
+            children: [
+              ModularSearchFilterBar(
+                  showFilterIcon: false,
+                  onSearch: (search, _) {
+                    context
+                        .read<JobProvider>()
+                        .filterByParams(searchTerm: search);
+                  }),
+              Flexible(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(5),
+                  itemCount: provider.filteredJobs.length,
+                  itemBuilder: (context, index) {
+                    final job = provider.filteredJobs[index];
+                    return JobCard(job: job);
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

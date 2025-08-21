@@ -1,10 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({super.key, required this.user});
 
   final MyplugUser user;
+
+  void _viewProfile(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProfilePage(user: user),
+      ),
+    );
+  }
+
+  void _suspendUser(BuildContext context) {
+    context.read<UserProvider>().suspendUser(user);
+  }
+
+  void _makeUserAdmin(BuildContext context) {
+    context.read<UserProvider>().makeUserAdmin(user);
+  }
+
+  void _deleteUser(BuildContext context) {
+    // context.read<UserProvider>().deleteUser();
+  }
+
+  void _chatUser(BuildContext context) {
+    final userProvider = context.read<UserProvider>();
+
+    if (userProvider.isLoggedIn) {
+      context.read<ChatProvider>().createConversation(
+          senderId: userProvider.myplugUser!.id!, receiverId: user.id!);
+    }
+  }
+
+  void _restoreUser(BuildContext context) {
+    context.read<UserProvider>().restoreUser(user);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +103,7 @@ class UserCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Chip(
-                        label: Text(user.isSuspended ? "Suspended" : "Active"),
+                        label: Text(user.isSuspended ? "Suspe..." : "Active"),
                         backgroundColor: user.isSuspended
                             ? Colors.red.withOpacity(0.1)
                             : Colors.green.withOpacity(0.1),
@@ -83,29 +120,65 @@ class UserCard extends StatelessWidget {
               ),
             ),
             PopupMenuButton<String>(
-              onSelected: (value) {
-                switch (value) {
-                  case "suspend":
-                    // TODO: suspend logic
-                    break;
-                  case "delete":
-                    // TODO: delete logic
-                    break;
-                  case "make_admin":
-                    // TODO: make admin logic
-                    break;
-                  case "chat":
-                    // TODO: chat user logic
-                    break;
-                }
-              },
-              itemBuilder: (context) => const [
-                PopupMenuItem(value: "suspend", child: Text("Suspend User")),
-                PopupMenuItem(value: "delete", child: Text("Delete User")),
-                PopupMenuItem(value: "make_admin", child: Text("Make Admin")),
-                PopupMenuItem(value: "chat", child: Text("Chat User")),
-              ],
-            ),
+                onSelected: (value) {
+                  switch (value) {
+                    case "profile":
+                      _viewProfile(context);
+                      break;
+                    case "suspend":
+                      _suspendUser(context);
+                      break;
+                    case "restore":
+                      _restoreUser(context);
+                      break;
+                    case "delete":
+                      _deleteUser(context);
+                      break;
+                    case "make_admin":
+                      _makeUserAdmin(context);
+                      break;
+                    case "chat":
+                      _chatUser(context);
+                      break;
+                  }
+                },
+                itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: "profile",
+                        child: Text("Profile"),
+                      ),
+
+                      // Show suspend/restore only if not admin
+                      if (!user.isAdmin)
+                        !user.isSuspended
+                            ? const PopupMenuItem(
+                                value: "suspend",
+                                child: Text("Suspend"),
+                              )
+                            : const PopupMenuItem(
+                                value: "restore",
+                                child: Text("Restore"),
+                              ),
+
+                      // Show "Make Admin" only if not already admin
+                      if (!user.isAdmin)
+                        const PopupMenuItem(
+                          value: "make_admin",
+                          child: Text("Make Admin"),
+                        ),
+
+                      const PopupMenuItem(
+                        value: "chat",
+                        child: Text("Chat User"),
+                      ),
+
+                      // Show delete only if not admin
+                      if (!user.isAdmin)
+                        const PopupMenuItem(
+                          value: "delete",
+                          child: Text("Delete"),
+                        ),
+                    ]),
           ],
         ),
       ),

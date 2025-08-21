@@ -64,7 +64,7 @@ class _EditJobPageState extends State<EditJobPage> {
       final userProvider = context.read<UserProvider>();
       final jobProvider = context.read<JobProvider>();
 
-      await jobProvider.updateJob(
+      await jobProvider.editJob(
         user: userProvider.myplugUser!,
         job: widget.job,
         title: _titleController.text.trim(),

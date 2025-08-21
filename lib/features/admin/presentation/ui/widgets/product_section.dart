@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_card.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/features/product/presentation/ui/pages/add_product.dart';
@@ -15,13 +16,24 @@ class ProductsSection extends StatelessWidget {
         builder: (context, provider, _) {
           return provider.products.isEmpty
               ? const Center(child: Text("No products available"))
-              : ListView.builder(
-                  padding: const EdgeInsets.all(12),
-                  itemCount: provider.products.length,
-                  itemBuilder: (context, index) {
-                    Product product = provider.products[index];
-                    return ProductCard(product: product);
-                  },
+              : Column(
+                  children: [
+                    ModularSearchFilterBar(
+                        showFilterIcon: false,
+                        onSearch: (search, _) {
+                          provider.searchAllProducts(search: search);
+                        }),
+                    Flexible(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(12),
+                        itemCount: provider.filteredProducts.length,
+                        itemBuilder: (context, index) {
+                          Product product = provider.filteredProducts[index];
+                          return ProductCard(product: product);
+                        },
+                      ),
+                    ),
+                  ],
                 );
         },
       ),

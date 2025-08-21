@@ -32,9 +32,7 @@ class JobCard extends StatelessWidget {
     final user = context.read<UserProvider>();
 
     if (user.isLoggedIn) {
-      context
-          .read<JobProvider>()
-          .deleteJob(user: user.myplugUser!, jobId: job.id!);
+      context.read<JobProvider>().deleteJob(user: user.myplugUser!, job: job);
     }
   }
 
@@ -160,7 +158,7 @@ class JobCard extends StatelessWidget {
                 },
                 itemBuilder: (context) => [
                   const PopupMenuItem(
-                    value: "edit",
+                    value: "view",
                     child: Text("View"),
                   ),
                   const PopupMenuItem(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/features/product/presentation/ui/pages/edit_product.dart';
+import 'package:myplug_ca/features/product/presentation/ui/pages/product_details.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +13,30 @@ class ProductCard extends StatelessWidget {
 
   final Product product;
 
+  void _viewProduct(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProductDetails(product: product),
+      ),
+    );
+  }
+
   void _editProduct(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => EditProductPage(product: product),
       ),
     );
+  }
+
+  void _promoteProduct(BuildContext context) {
+    // final user = context.read<UserProvider>();
+
+    // if (user.isLoggedIn) {
+    //   context
+    //       .read<ProductProvider>()
+    //       .deleteProduct(user: user.myplugUser!, product: product);
+    // }
   }
 
   void _deleteProduct(BuildContext context) {
@@ -104,8 +123,14 @@ class ProductCard extends StatelessWidget {
             PopupMenuButton<String>(
               onSelected: (value) {
                 switch (value) {
+                  case "view":
+                    _viewProduct(context);
+                    break;
                   case "edit":
                     _editProduct(context);
+                    break;
+                  case "promote":
+                    _promoteProduct(context);
                     break;
                   case "delete":
                     _deleteProduct(context);
@@ -114,12 +139,20 @@ class ProductCard extends StatelessWidget {
               },
               itemBuilder: (context) => [
                 const PopupMenuItem(
+                  value: "view",
+                  child: Text("View"),
+                ),
+                const PopupMenuItem(
                   value: "edit",
-                  child: Text("Edit Product"),
+                  child: Text("Edit"),
+                ),
+                const PopupMenuItem(
+                  value: "promote",
+                  child: Text("Promote"),
                 ),
                 const PopupMenuItem(
                   value: "delete",
-                  child: Text("Delete Product"),
+                  child: Text("Delete"),
                 ),
               ],
             ),

@@ -18,6 +18,7 @@ class UserProvider extends ChangeNotifier {
   final UserRepoImpl _userRepo;
 
   List<MyplugUser> allUsers = [];
+  List<MyplugUser> filteredUsers = [];
   List<MyplugUser> usersByService = [];
   MyplugUser? _user;
   bool usersByServiceLoading = true;
@@ -102,6 +103,39 @@ class UserProvider extends ChangeNotifier {
     return matches;
   }
 
+  List<MyplugUser> searchAllUsers({
+    required String search,
+  }) {
+    // If search is empty, restore all users
+    if (search.trim().isEmpty) {
+      filteredUsers = List<MyplugUser>.from(allUsers); // restore all
+      notifyListeners();
+      return filteredUsers;
+    }
+
+    List<MyplugUser> matches = [];
+
+    for (MyplugUser user in allUsers) {
+      final term = search.toLowerCase();
+
+      final firstName = user.firstName?.toLowerCase() ?? '';
+      final lastName = user.lastName?.toLowerCase() ?? '';
+      final email = user.email.toLowerCase();
+      final skills = user.skills.map((s) => s.name.toLowerCase()).join(" ");
+
+      if (firstName.contains(term) ||
+          lastName.contains(term) ||
+          email.contains(term) ||
+          skills.contains(term)) {
+        matches.add(user);
+      }
+    }
+
+    filteredUsers = matches;
+    notifyListeners();
+    return filteredUsers;
+  }
+
   void getUsersByService(Skill service) async {
     usersByServiceLoading = true;
     await _userRepo.loadAllUsers();
@@ -119,6 +153,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> getLocation() async {
     allUsers = await _userRepo.loadAllUsers();
+    filteredUsers = allUsers;
     final locationData = await LocationService.getUserLocationInfo();
     if (locationData != null) {
       userLocation = UserLocation(
@@ -267,5 +302,44 @@ class UserProvider extends ChangeNotifier {
     updateProfile(portfolios: newPortfolios);
 
     notifyListeners();
+  }
+
+  Future<void> makeUserAdmin(MyplugUser user) async {
+    if (isLoggedIn && myplugUser!.isAdmin) {
+      final updatedUser = user.copyWith(isAdmin: true);
+
+      await _userRepo.updateProfile(updatedUser);
+
+      allUsers.remove(user);
+      allUsers.add(updatedUser);
+
+      notifyListeners();
+    }
+  }
+
+  Future<void> suspendUser(MyplugUser user) async {
+    if (isLoggedIn && myplugUser!.isAdmin) {
+      final updatedUser = user.copyWith(isSuspended: true);
+
+      await _userRepo.updateProfile(updatedUser);
+
+      allUsers.remove(user);
+      allUsers.add(updatedUser);
+
+      notifyListeners();
+    }
+  }
+
+  Future<void> restoreUser(MyplugUser user) async {
+    if (isLoggedIn && myplugUser!.isAdmin) {
+      final updatedUser = user.copyWith(isSuspended: false);
+
+      await _userRepo.updateProfile(updatedUser);
+
+      allUsers.remove(user);
+      allUsers.add(updatedUser);
+
+      notifyListeners();
+    }
   }
 }

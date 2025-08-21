@@ -1,7 +1,6 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
@@ -21,7 +20,7 @@ class ProductDetails extends StatefulWidget {
   State<ProductDetails> createState() => _ProductDetailsState();
 }
 
-String currentImage = noProductImage;
+late String currentImage;
 bool showContact = false;
 
 class _ProductDetailsState extends State<ProductDetails> {
@@ -49,6 +48,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    currentImage = widget.product.images[0];
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -63,7 +69,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
               ),
-              child: Image.asset(
+              child: Image.network(
                 currentImage,
                 fit: BoxFit.cover,
                 height: 280,
@@ -98,7 +104,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(item, width: 70, height: 70),
+                          child: Image.network(item, width: 70, height: 70),
                         ),
                       ),
                     );

@@ -27,32 +27,11 @@ class JobProvider extends ChangeNotifier {
   }
 
   Future<void> updateJob({
-    required MyplugUser user,
     required Job job,
-    required String title,
-    required String description,
-    required JobType type,
-    required double salary,
-    required String location,
-    required String company,
-    required List<String> requirements,
   }) async {
-    if (user.isAdmin) {
-      final updatedJob = await _jobRepoImpl.updateJob(job.copyWith(
-        title: title,
-        description: description,
-        type: type,
-        salary: salary,
-        location: location,
-        company: company,
-        requirements: requirements,
-      ));
+    await _jobRepoImpl.updateJob(job);
 
-      _jobs.remove(job);
-      _jobs.add(updatedJob);
-
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
   void initFilteredJobs() {
@@ -175,14 +154,41 @@ class JobProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> editJob() async {}
-
-  Future<void> deleteJob(
-      {required MyplugUser user, required String jobId}) async {
+  Future<void> editJob({
+    required MyplugUser user,
+    required Job job,
+    required String title,
+    required String description,
+    required JobType type,
+    required double salary,
+    required String location,
+    required String company,
+    required List<String> requirements,
+  }) async {
     if (user.isAdmin) {
-      await _jobRepoImpl.deleteJob(jobId);
+      final updatedJob = job.copyWith(
+        title: title,
+        description: description,
+        type: type,
+        salary: salary,
+        location: location,
+        company: company,
+        requirements: requirements,
+      );
 
-      _jobs.removeWhere((job) => job.id == jobId);
+      await updateJob(job: updatedJob);
+
+      _jobs.remove(job);
+      _jobs.add(updatedJob);
+    }
+  }
+
+  Future<void> deleteJob({required MyplugUser user, required Job job}) async {
+    if (user.isAdmin) {
+      await _jobRepoImpl.deleteJob(job.id!);
+      _jobRepoImpl.deleteImage(job.companyLogo);
+
+      _jobs.remove(job);
       notifyListeners();
     }
   }

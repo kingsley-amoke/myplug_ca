@@ -147,7 +147,7 @@ class JobDetailsPage extends StatelessWidget {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          requirement,
+                          requirement.toSentenceCase(),
                           style: const TextStyle(
                               color: Colors.black87, fontSize: 15),
                         ),
@@ -170,7 +170,7 @@ class JobDetailsPage extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       avatar: Icon(icon, color: Colors.black, size: 18),
       label: Text(
-        text,
+        text.toSentenceCase(),
         style: const TextStyle(color: Colors.black, fontSize: 13),
       ),
     );

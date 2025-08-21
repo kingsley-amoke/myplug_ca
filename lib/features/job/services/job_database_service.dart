@@ -41,6 +41,10 @@ class JobDatabaseService extends JobRepository {
     return await fileUploadService.uploadFile(file: file, path: path);
   }
 
+  Future<void> deleteImage(String url) async {
+    await fileUploadService.deleteImage(url);
+  }
+
   @override
   Future<JobApplication> applyJob(JobApplication application) async {
     return await databaseService.applyJob(application);

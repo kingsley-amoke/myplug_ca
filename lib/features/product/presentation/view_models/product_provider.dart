@@ -15,6 +15,7 @@ class ProductProvider extends ChangeNotifier {
 
   List<Product> _products = [];
   List<Product> _productsByCategory = [];
+  List<Product> filteredProducts = [];
   bool productsByCategoryLoading = true;
   Product? _currentProduct;
   List<Product> _myProducts = [];
@@ -31,6 +32,7 @@ class ProductProvider extends ChangeNotifier {
 
   Future<void> loadProducts() async {
     _products = await _productRepoImpl.loadAllProducts();
+    filteredProducts = _products;
 
     notifyListeners();
   }
@@ -94,6 +96,41 @@ class ProductProvider extends ChangeNotifier {
     _productsByCategory = matches;
     notifyListeners();
     return matches;
+  }
+
+  List<Product> searchAllProducts({
+    required String search,
+  }) {
+    // If search is empty, restore all products
+    if (search.trim().isEmpty) {
+      filteredProducts = List<Product>.from(_products); // restore all
+      notifyListeners();
+      return filteredProducts;
+    }
+
+    List<Product> matches = [];
+
+    for (Product product in _products) {
+      final term = search.toLowerCase();
+
+      final title = product.title.toLowerCase();
+      final description = product.description.toLowerCase();
+      final location = product.location.toLowerCase();
+      final shop = product.shop.name.toLowerCase();
+      final seller = product.seller.fullname.toLowerCase();
+
+      if (title.contains(term) ||
+          description.contains(term) ||
+          location.contains(term) ||
+          shop.contains(term) ||
+          seller.contains(term)) {
+        matches.add(product);
+      }
+    }
+
+    filteredProducts = matches;
+    notifyListeners();
+    return filteredProducts;
   }
 
   //assign Current product
@@ -185,18 +222,22 @@ class ProductProvider extends ChangeNotifier {
   }) async {
     List<String> newUrs = [];
 
-    for (File i in newImages) {
-      final url = await _productRepoImpl.uploadImage(
-        imageFile: i,
-        path: 'products',
-        productId: product.id!,
-      );
-      if (url != null) {
-        newUrs.add(url);
+    if (newImages.isNotEmpty) {
+      for (File i in newImages) {
+        final url = await _productRepoImpl.uploadImage(
+          imageFile: i,
+          path: 'products',
+          productId: product.id!,
+        );
+        if (url != null) {
+          newUrs.add(url);
+        }
       }
     }
 
-    existingImages.addAll(newUrs);
+    if (newUrs.isNotEmpty) {
+      existingImages.addAll(newUrs);
+    }
 
     final updatedProduct = product.copyWith(
       title: title,
@@ -209,6 +250,9 @@ class ProductProvider extends ChangeNotifier {
     _productRepoImpl.updateProduct(updatedProduct).then(((_) {
       _products.remove(product);
       _products.add(updatedProduct);
+
+      filteredProducts = _products;
+
       notifyListeners();
     }));
 
