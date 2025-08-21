@@ -52,7 +52,7 @@ class ProfileService implements UserProfile {
     required String userId,
   }) async {
     return await imageUploadService.uploadImage(
-        imageFile: imageFile, path: path, userId: userId);
+        imageFile: imageFile, path: path, id: userId);
   }
 
   Future<void> deleteImage(String url) async {

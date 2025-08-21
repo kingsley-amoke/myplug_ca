@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/products.dart';
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
@@ -29,8 +30,8 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<void> loadProducts() async {
-    // _products = await _productRepoImpl.loadAllProducts();
-    _products = demoProducts;
+    _products = await _productRepoImpl.loadAllProducts();
+
     notifyListeners();
   }
 
@@ -41,7 +42,8 @@ class ProductProvider extends ChangeNotifier {
 
   void getProductsByCategory(MyplugShop shop) {
     productsByCategoryLoading = true;
-    _productsByCategory = _products.where((item) => item.shop == shop).toList();
+    _productsByCategory =
+        _products.where((item) => item.shop.id == shop.id).toList();
     productsByCategoryLoading = false;
     notifyListeners();
   }
@@ -128,6 +130,91 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addProduct({
+    required String title,
+    required String description,
+    required double price,
+    required String location,
+    required MyplugShop shop,
+    required MyplugUser seller,
+    required List<File> images,
+  }) async {
+    final product = Product(
+      description: description,
+      images: [],
+      seller: seller,
+      title: title,
+      location: location,
+      price: price,
+      shop: shop,
+    );
+
+    List<String> newUrs = [];
+    for (File i in images) {
+      final url = await _productRepoImpl.uploadImage(
+        imageFile: i,
+        path: 'products',
+        productId: 'new',
+      );
+      if (url != null) {
+        newUrs.add(url);
+      }
+    }
+
+    final addedProduct = product.copyWith(images: newUrs);
+
+    await _productRepoImpl
+        .addProduct(
+      addedProduct,
+    )
+        .then((_) {
+      _products.add(addedProduct);
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> editProduct({
+    required Product product,
+    required String title,
+    required String description,
+    required String location,
+    required double price,
+    required List<String> existingImages,
+    required List<File> newImages,
+  }) async {
+    List<String> newUrs = [];
+
+    for (File i in newImages) {
+      final url = await _productRepoImpl.uploadImage(
+        imageFile: i,
+        path: 'products',
+        productId: product.id!,
+      );
+      if (url != null) {
+        newUrs.add(url);
+      }
+    }
+
+    existingImages.addAll(newUrs);
+
+    final updatedProduct = product.copyWith(
+      title: title,
+      description: description,
+      location: location,
+      price: price,
+      images: existingImages,
+    );
+
+    _productRepoImpl.updateProduct(updatedProduct).then(((_) {
+      _products.remove(product);
+      _products.add(updatedProduct);
+      notifyListeners();
+    }));
+
+    notifyListeners();
+  }
+
   //add review
   Future<void> addReview(Product product) async {
     _productRepoImpl.updateProduct(product);
@@ -138,6 +225,10 @@ class ProductProvider extends ChangeNotifier {
       {required MyplugUser user, required Product product}) async {
     if (user.isAdmin || user.id == product.seller.id) {
       await _productRepoImpl.deleteProduct(product.id!);
+
+      for (String i in product.images) {
+        _productRepoImpl.deleteProductImage(i);
+      }
 
       _products.remove(product);
       notifyListeners();

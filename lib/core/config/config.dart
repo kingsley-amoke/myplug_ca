@@ -42,17 +42,25 @@ String formatPrice({required double amount, String currency = 'NGN'}) {
   ).format(amount);
 }
 
-String formatLargeCurrency(num value) {
+String formatLargeNumber(num value) {
+  String format(num val, String suffix) {
+    String str =
+        (val % 1 == 0) ? val.toInt().toString() : val.toStringAsFixed(2);
+    return "$str$suffix";
+  }
+
   if (value >= 1e12) {
-    return "N${(value / 1e12).toStringAsFixed(2)}T";
+    return format(value / 1e12, "T");
   } else if (value >= 1e9) {
-    return "N${(value / 1e9).toStringAsFixed(2)}B";
+    return format(value / 1e9, "B");
   } else if (value >= 1e6) {
-    return "N${(value / 1e6).toStringAsFixed(2)}M";
+    return format(value / 1e6, "M");
   } else if (value >= 1e3) {
-    return "N${(value / 1e3).toStringAsFixed(2)}K";
+    return format(value / 1e3, "K");
   } else {
-    return 'N${value.toStringAsFixed(2)}';
+    return (value % 1 == 0)
+        ? value.toInt().toString()
+        : value.toStringAsFixed(2);
   }
 }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:myplug_ca/features/product/domain/models/product.dart';
 import 'package:myplug_ca/features/product/domain/repositories/product_repository.dart';
 import 'package:myplug_ca/features/product/services/database_service.dart';
@@ -30,5 +32,21 @@ class ProductRepoImpl extends ProductRepository {
   @override
   Future<void> deleteProduct(String productId) async {
     return await _databaseService.deleteProduct(productId);
+  }
+
+  Future<String?> uploadImage({
+    required File imageFile,
+    required String path,
+    required String productId,
+  }) async {
+    return await _databaseService.uploadImage(
+      imageFile: imageFile,
+      path: path,
+      productId: productId,
+    );
+  }
+
+  Future<void> deleteProductImage(String url) async {
+    await _databaseService.deleteProductImage(url);
   }
 }

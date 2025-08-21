@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/jobs.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
@@ -60,12 +62,6 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     // TODO: implement notifications
-          //   },
-          //   icon: const Icon(Icons.notifications),
-          // ),
           IconButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -95,7 +91,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           // Main Content Area
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(10),
               child: _buildContent(context),
             ),
           ),
@@ -118,11 +114,11 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           sumOfTransactions: 5090000000,
         );
       case "Users":
-        return UsersSection();
+        return const UsersSection();
       case "Jobs":
-        return _jobsSection();
+        return const JobsSection();
       case "Products":
-        return _productsSection();
+        return const ProductsSection();
       case "Portfolios":
         return _portfoliosSection();
       case "Chats":
@@ -139,14 +135,6 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
   }
 
   // ----------------- Section Widgets -----------------
-
-  Widget _jobsSection() {
-    return const Center(child: Text("Manage Jobs 💼"));
-  }
-
-  Widget _productsSection() {
-    return const Center(child: Text("Manage Products 🛒"));
-  }
 
   Widget _portfoliosSection() {
     return const Center(child: Text("Manage Portfolios 📂"));

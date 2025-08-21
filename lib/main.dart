@@ -46,8 +46,10 @@ void main() async {
     imageUploadService: FirebaseImageUpload(storage),
   );
 
-  final productDatabaseService =
-      ProductDatabaseService(ProductFirestoreService(firestore));
+  final productDatabaseService = ProductDatabaseService(
+    databaseService: ProductFirestoreService(firestore),
+    fileUploadService: FirebaseImageUpload(storage),
+  );
   final subscriptionDatabaseService =
       SubscriptionDatabaseService(FirestoreSubscriptionService(firestore));
   final jobDatabaseService = JobDatabaseService(

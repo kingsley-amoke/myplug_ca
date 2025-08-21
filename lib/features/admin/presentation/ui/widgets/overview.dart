@@ -13,28 +13,28 @@ Widget overviewSection({
     children: [
       StatCard(
         title: "Users",
-        value: noOfUsers.toString(),
+        value: formatLargeNumber(noOfUsers),
         icon: Icons.people,
         color: Colors.blue,
       ),
       const SizedBox(height: 12),
       StatCard(
         title: "Jobs",
-        value: noOfJobs.toString(),
+        value: formatLargeNumber(noOfJobs),
         icon: Icons.work,
         color: Colors.green,
       ),
       const SizedBox(height: 12),
       StatCard(
         title: "Products",
-        value: noOfProducts.toString(),
+        value: formatLargeNumber(noOfProducts),
         icon: Icons.shopping_bag,
         color: Colors.orange,
       ),
       const SizedBox(height: 12),
       StatCard(
         title: "Transactions",
-        value: formatLargeCurrency(sumOfTransactions),
+        value: 'N${formatLargeNumber(sumOfTransactions)}',
         icon: Icons.attach_money,
         color: Colors.purple,
       ),

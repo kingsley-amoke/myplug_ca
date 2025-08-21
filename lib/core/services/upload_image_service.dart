@@ -12,12 +12,12 @@ class FirebaseImageUpload extends FileUploadRepo {
   Future<String?> uploadImage({
     required File imageFile,
     required String path,
-    required String userId,
+    required String id,
   }) async {
     print('here');
     try {
       final fileName = "profile_${DateTime.now().millisecondsSinceEpoch}.jpg";
-      final ref = _storage.ref().child("$path/$userId/$fileName");
+      final ref = _storage.ref().child("$path/$id/$fileName");
 
       // Upload file
       final uploadTask = await ref.putFile(imageFile);
