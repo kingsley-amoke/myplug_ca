@@ -7,6 +7,8 @@ import 'package:myplug_ca/features/subscription/data/repositories/subscription_r
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
 import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:uuid/uuid.dart';
 
 class MyplugProvider extends ChangeNotifier {
   final ChatRepoImpl chatRepoImpl;
@@ -41,11 +43,24 @@ class MyplugProvider extends ChangeNotifier {
       return false;
     }
 
+    //create transaction
+    final Transaction transaction = Transaction(
+      id: Uuid().v4(),
+      type: TransactionType.debit,
+      description: 'Subscription charges',
+      amount: subscription.plan.price,
+      date: DateTime.now(),
+    );
+
+    updatedUser.transactions.add(transaction);
+
+    final trnx = updatedUser.transactions;
+
     //save subscription
     subscriptionRepoImpl.createSubscription(subscription);
 
     //update user
-    userRepoImpl.updateProfile(user);
+    userRepoImpl.updateProfile(updatedUser.copyWith(transactions: trnx));
 
     return true;
   }

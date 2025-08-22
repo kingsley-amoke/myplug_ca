@@ -19,6 +19,11 @@ class UserAuthService implements UserAuth {
   }
 
   @override
+  Future<void> changePassword(String email) async {
+    return await userAuthService.changePassword(email);
+  }
+
+  @override
   Future<void> logout() async {
     userAuthService.logout();
   }

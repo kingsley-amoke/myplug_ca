@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/jobs.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_section.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/transaction_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
@@ -51,6 +52,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
       title: "Subscriptions",
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<UserProvider>().initAllTrns();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +112,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     final int noOfUsers = context.watch<UserProvider>().allUsers.length;
     final int noOfProducts = context.watch<ProductProvider>().products.length;
     final int noOfJobs = context.watch<JobProvider>().jobs.length;
+    final double sumOfTransactions = context.watch<UserProvider>().totalRevenue;
 
     switch (_sections[_selectedIndex].title) {
       case "Overview":
@@ -111,7 +120,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           noOfJobs: noOfJobs,
           noOfProducts: noOfProducts,
           noOfUsers: noOfUsers,
-          sumOfTransactions: 5090000000,
+          sumOfTransactions: sumOfTransactions,
         );
       case "Users":
         return const UsersSection();
@@ -121,14 +130,10 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         return const ProductsSection();
       case "Portfolios":
         return _portfoliosSection();
-      case "Chats":
-        return _chatsSection();
       case "Transactions":
-        return _transactionsSection();
+        return const TransactionsSection();
       case "Subscriptions":
         return _subscriptionsSection();
-      case "Settings":
-        return _settingsSection();
       default:
         return const Center(child: Text("Section not implemented yet"));
     }
@@ -140,19 +145,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     return const Center(child: Text("Manage Portfolios 📂"));
   }
 
-  Widget _chatsSection() {
-    return const Center(child: Text("Monitor Chats 💬"));
-  }
-
-  Widget _transactionsSection() {
-    return const Center(child: Text("View Transactions 💳"));
-  }
-
   Widget _subscriptionsSection() {
     return const Center(child: Text("Manage Subscriptions 🔑"));
-  }
-
-  Widget _settingsSection() {
-    return const Center(child: Text("App Settings ⚙️"));
   }
 }

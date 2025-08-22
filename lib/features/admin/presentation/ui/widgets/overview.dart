@@ -6,7 +6,7 @@ Widget overviewSection({
   required int noOfUsers,
   required int noOfJobs,
   required int noOfProducts,
-  required int sumOfTransactions,
+  required num sumOfTransactions,
 }) {
   return ListView(
     padding: const EdgeInsets.all(16),
@@ -33,8 +33,8 @@ Widget overviewSection({
       ),
       const SizedBox(height: 12),
       StatCard(
-        title: "Transactions",
-        value: 'N${formatLargeNumber(sumOfTransactions)}',
+        title: "Revenue",
+        value: '₦${formatLargeNumber(sumOfTransactions)}',
         icon: Icons.attach_money,
         color: Colors.purple,
       ),

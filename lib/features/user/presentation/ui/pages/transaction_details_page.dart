@@ -1,10 +1,8 @@
-// lib/features/wallet/views/transaction_details_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
-
 
 class TransactionDetailsPage extends StatelessWidget {
   final Transaction transaction;
@@ -17,9 +15,9 @@ class TransactionDetailsPage extends StatelessWidget {
     final dateFormatted = DateFormat.yMMMMd().add_jm().format(transaction.date);
 
     return Scaffold(
-      appBar: myAppbar(context,
-        title:  'Transaction Details',
-      
+      appBar: myAppbar(
+        context,
+        title: 'Transaction Details',
       ),
       body: Padding(
         padding: const EdgeInsets.all(24),
@@ -28,7 +26,7 @@ class TransactionDetailsPage extends StatelessWidget {
           children: [
             _buildIconSection(isCredit),
             const SizedBox(height: 24),
-            _buildDetailRow('Amount', '₦${transaction.amount.toStringAsFixed(2)}',
+            _buildDetailRow('Amount', formatPrice(amount: transaction.amount),
                 isPrimary: true),
             _buildDetailRow('Type', isCredit ? 'Credit' : 'Debit'),
             _buildDetailRow('Description', transaction.description),
@@ -45,7 +43,9 @@ class TransactionDetailsPage extends StatelessWidget {
       child: Column(
         children: [
           Icon(
-            isCredit ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
+            isCredit
+                ? Icons.arrow_downward_rounded
+                : Icons.arrow_upward_rounded,
             size: 48,
             color: isCredit ? Colors.green : Colors.red,
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/images.dart';
 import 'package:myplug_ca/core/constants/urls.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/about.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/discaimer_page.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/policy.dart';
@@ -10,7 +11,6 @@ import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:babstrap_settings_screen_updated/babstrap_settings_screen_updated.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/settings_user_card.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/pages/dashboard.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/change_password.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/edit_profile.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
@@ -19,6 +19,21 @@ import 'package:social_media_buttons/social_media_buttons.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
+
+  Future<void> _changePassword(BuildContext context) async {
+    try {
+      await context.read<UserProvider>().changePassword();
+
+      showToast(context,
+          message: "Password reset email sent successfully",
+          type: ToastType.success);
+
+      Navigator.pop(context);
+    } catch (e) {
+      showToast(context,
+          message: 'Something went wrong', type: ToastType.error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +112,7 @@ class Settings extends StatelessWidget {
                   ),
                   SettingsItem(
                     onTap: () {
-                      navigator.push(
-                        MaterialPageRoute(
-                          builder: (_) => const ChangePasswordPage(),
-                        ),
-                      );
+                      _changePassword(context);
                     },
                     icons: Icons.password,
                     iconStyle: IconStyle(

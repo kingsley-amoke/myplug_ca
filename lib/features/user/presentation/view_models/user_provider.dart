@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +12,20 @@ import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
 import 'package:myplug_ca/features/user/domain/models/referee.dart';
 import 'package:myplug_ca/features/user/domain/models/skill.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:uuid/uuid.dart';
 
 class UserProvider extends ChangeNotifier {
   final UserRepoImpl _userRepo;
 
   List<MyplugUser> allUsers = [];
+  List<Transaction> allTransactions = [];
+  List<Transaction> filteredTransactions = [];
   List<MyplugUser> filteredUsers = [];
   List<MyplugUser> usersByService = [];
   MyplugUser? _user;
   bool usersByServiceLoading = true;
+
+  double totalRevenue = 0;
 
   UserLocation? userLocation;
 
@@ -108,6 +112,22 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void initAllTrns() {
+    allTransactions = [];
+    filteredTransactions = [];
+    totalRevenue = 0;
+    for (MyplugUser user in allUsers) {
+      allTransactions.addAll(user.transactions);
+      filteredTransactions.addAll(user.transactions);
+
+      for (Transaction txn in user.transactions) {
+        totalRevenue += txn.amount;
+      }
+    }
+
+    notifyListeners();
+  }
+
   List<MyplugUser> searchAllUsers({
     required String search,
   }) {
@@ -141,6 +161,32 @@ class UserProvider extends ChangeNotifier {
     return filteredUsers;
   }
 
+  List<Transaction> searchAllTransactions({
+    required String search,
+  }) {
+    if (search.trim().isEmpty) {
+      filteredTransactions = List<Transaction>.from(allTransactions);
+      notifyListeners();
+      return filteredTransactions;
+    }
+
+    List<Transaction> matches = [];
+
+    for (Transaction trn in allTransactions) {
+      final term = search.toLowerCase();
+
+      if (trn.id.contains(term) ||
+          trn.type.name.contains(term) ||
+          trn.description.contains(term)) {
+        matches.add(trn);
+      }
+    }
+
+    filteredTransactions = matches;
+    notifyListeners();
+    return filteredTransactions;
+  }
+
   void getUsersByService(Skill service) async {
     usersByServiceLoading = true;
 
@@ -157,6 +203,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> getLocation() async {
     allUsers = await _userRepo.loadAllUsers();
+
     filteredUsers = allUsers;
     final locationData = await LocationService.getUserLocationInfo();
     if (locationData != null) {
@@ -345,5 +392,38 @@ class UserProvider extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  Future<void> changePassword() async {
+    if (isLoggedIn) {
+      return await _userRepo.changePassword(myplugUser!.email);
+    }
+  }
+
+  Future<void> fundWallet(double amount) async {
+    if (isLoggedIn) {
+      final Transaction transaction = Transaction(
+        id: const Uuid().v4(),
+        type: TransactionType.credit,
+        description: 'Fund wallet',
+        amount: amount,
+        date: DateTime.now(),
+      );
+
+      myplugUser!.transactions.add(transaction);
+      final allTxns = myplugUser!.transactions;
+      final total = myplugUser!.balance + amount;
+
+      final updatedUser =
+          myplugUser!.copyWith(balance: total, transactions: allTxns);
+
+      await _userRepo.updateProfile(updatedUser);
+
+      _user = updatedUser;
+      allUsers.remove(_user);
+      allUsers.add(updatedUser);
+    }
+
+    notifyListeners();
   }
 }

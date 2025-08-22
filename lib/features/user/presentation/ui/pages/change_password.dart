@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -36,13 +40,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     setState(() => _isLoading = true);
 
     try {
-      // 🔑 TODO: Connect this to your UserRepository / Firebase Auth
-      await Future.delayed(const Duration(seconds: 2)); // simulate network call
+      await context.read<UserProvider>().changePassword();
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password changed successfully ✅")),
-      );
+      showToast(context,
+          message: "Password reset email sent successfully",
+          type: ToastType.success);
+
       Navigator.pop(context);
     } catch (e) {
       if (!mounted) return;

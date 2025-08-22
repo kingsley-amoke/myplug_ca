@@ -77,6 +77,10 @@ class UserRepoImpl implements UserRepo {
     return userProfile.getAllUsersStream();
   }
 
+  Future<void> changePassword(String email) async {
+    await userAuth.changePassword(email);
+  }
+
   MyplugUser? deductUserBalance(
       {required MyplugUser user, required double amount}) {
     if (user.balance < amount) {

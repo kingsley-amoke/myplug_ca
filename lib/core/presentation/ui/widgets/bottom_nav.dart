@@ -3,7 +3,10 @@ import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/settings.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
 import 'package:myplug_ca/features/job/presentation/ui/pages/job_page.dart';
+import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/wallet.dart';
+import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -18,12 +21,23 @@ final List<Widget> _screens = [
   const HomePage(),
   const WalletPage(),
   const Settings(),
-
 ];
 
 int _currentIndex = 2;
 
 class _BottomNavState extends State<BottomNav> {
+  @override
+  void initState() {
+    final user = context.read<UserProvider>();
+    if (user.isLoggedIn) {
+      context
+          .read<SubscriptionProvider>()
+          .loadUserSubscription(user.myplugUser!.id!);
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
