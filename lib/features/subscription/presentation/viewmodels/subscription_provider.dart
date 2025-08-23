@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class SubscriptionProvider extends ChangeNotifier {
   final SubscriptionRepoImpl _subscriptionRepoImpl;
@@ -8,6 +9,8 @@ class SubscriptionProvider extends ChangeNotifier {
   SubscriptionProvider(this._subscriptionRepoImpl);
 
   Subscription? _subscription;
+  List<Subscription> allSubscriptions = [];
+  List<Subscription> filteredSubscriptions = [];
   Subscription? get subscription => _subscription;
 
   bool get isExpired =>
@@ -25,9 +28,20 @@ class SubscriptionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadAllSubscriptions() async {
+    final subs = await _subscriptionRepoImpl.loadAllSubscriptions();
+    if (subs != null && subs.isNotEmpty) {
+      allSubscriptions = subs;
+      filteredSubscriptions = subs;
+      notifyListeners();
+    }
+  }
+
   Future<void> create(Subscription subscription) async {
     await _subscriptionRepoImpl.createSubscription(subscription);
     _subscription = subscription;
+    allSubscriptions.insert(0, subscription);
+    filteredSubscriptions.insert(0, subscription);
     notifyListeners();
   }
 
@@ -39,6 +53,12 @@ class SubscriptionProvider extends ChangeNotifier {
       _subscription = null;
       notifyListeners();
     }
+  }
+
+  Future<void> cancelUserSubscription(Subscription sub) async {
+    await _subscriptionRepoImpl.cancelSubscription(sub.id!);
+    allSubscriptions.remove(sub);
+    notifyListeners();
   }
 
   void listenToSubscription(String userId) {
@@ -53,5 +73,33 @@ class SubscriptionProvider extends ChangeNotifier {
         DateTime.now().isAfter(subscription!.endDate!)) {
       cancel();
     }
+  }
+
+  List<Subscription> searchAllSubscriptions({
+    required String search,
+    required List<MyplugUser> allUsers,
+  }) {
+    // If search is empty, restore all users
+    if (search.trim().isEmpty) {
+      filteredSubscriptions = List<Subscription>.from(allSubscriptions);
+      notifyListeners();
+      return filteredSubscriptions;
+    }
+
+    List<Subscription> matches = [];
+
+    for (Subscription sub in allSubscriptions) {
+      final term = search.toLowerCase();
+      final username =
+          allUsers.firstWhere((u) => u.id == sub.userId).fullname.toLowerCase();
+
+      if (username.contains(term)) {
+        matches.add(sub);
+      }
+    }
+
+    filteredSubscriptions = matches;
+    notifyListeners();
+    return filteredSubscriptions;
   }
 }

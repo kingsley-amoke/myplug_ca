@@ -35,6 +35,7 @@ class ProductProvider extends ChangeNotifier {
 
   Future<void> loadProducts() async {
     _products = await _productRepoImpl.loadAllProducts();
+    _sortProducts();
     filteredProducts = _products;
     promotedProducts = _products.where((p) => p.isPromoted).toList();
     notifyListeners();
@@ -53,6 +54,15 @@ class ProductProvider extends ChangeNotifier {
         _products.where((item) => item.shop.id == shop.id).toList();
     productsByCategoryLoading = false;
     notifyListeners();
+  }
+
+//sort products by promotions
+  void _sortProducts() {
+    _products.sort((a, b) {
+      if (a.isPromoted && !b.isPromoted) return -1; // Promoted comes first
+      if (!a.isPromoted && b.isPromoted) return 1;
+      return 0; // Keep original order otherwise
+    });
   }
 
   List<Product> filterByParams({

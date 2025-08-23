@@ -49,4 +49,19 @@ class FirestoreSubscriptionService implements SubscriptionRepository {
       return Subscription.fromMap({...doc.data(), 'id': doc.id});
     });
   }
+
+  @override
+  Future<List<Subscription>?> loadAllSubscriptions() async {
+    List<Subscription> subscriptions = [];
+    final snapshot = await _firestore.collection(_collection).get();
+
+    if (snapshot.docs.isEmpty) return null;
+    final docs = snapshot.docs;
+
+    for (final doc in docs) {
+      subscriptions.add(Subscription.fromMap({...doc.data(), 'id': doc.id}));
+    }
+
+    return subscriptions;
+  }
 }

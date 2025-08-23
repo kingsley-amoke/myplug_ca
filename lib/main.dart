@@ -20,7 +20,6 @@ import 'package:myplug_ca/features/product/presentation/view_models/product_prov
 import 'package:myplug_ca/features/product/services/database_service.dart';
 import 'package:myplug_ca/features/promotion/data/datasources/promotion_firestore.dart';
 import 'package:myplug_ca/features/promotion/data/repositories/promotion_repo_impl.dart';
-import 'package:myplug_ca/features/promotion/domain/repositories/promotion_database_service.dart';
 import 'package:myplug_ca/features/promotion/presentation/viewmodels/promotion_provider.dart';
 import 'package:myplug_ca/features/subscription/data/datasources/firestore_subscription_service.dart';
 import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
@@ -83,7 +82,7 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => SubscriptionProvider(
           SubscriptionRepoImpl(subscriptionDatabaseService),
-        ),
+        )..loadAllSubscriptions(),
       ),
       ChangeNotifierProvider(
         create: (_) => JobProvider(

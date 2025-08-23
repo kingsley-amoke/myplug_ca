@@ -25,4 +25,9 @@ class SubscriptionDatabaseService extends SubscriptionRepository {
   Stream<Subscription?> listenToUserSubscription(String userId) {
     return _databaseService.listenToUserSubscription(userId);
   }
+
+  @override
+  Future<List<Subscription>?> loadAllSubscriptions() async {
+    return await _databaseService.loadAllSubscriptions();
+  }
 }

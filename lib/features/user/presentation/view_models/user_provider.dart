@@ -121,11 +121,13 @@ class UserProvider extends ChangeNotifier {
       filteredTransactions.addAll(user.transactions);
 
       for (Transaction txn in user.transactions) {
-        totalRevenue += txn.amount;
+        if (txn.type == TransactionType.credit) {
+          totalRevenue += txn.amount;
+        }
       }
     }
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   List<MyplugUser> searchAllUsers({

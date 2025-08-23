@@ -3,6 +3,7 @@ import 'package:myplug_ca/features/admin/presentation/ui/widgets/jobs.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/promotions_section.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/subscription_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/transaction_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
@@ -138,7 +139,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
       case "Transactions":
         return const TransactionsSection();
       case "Subscriptions":
-        return _subscriptionsSection();
+        return const SubscriptionSection();
       case "Promotions":
         return const PromotionsSection();
       default:
@@ -150,9 +151,5 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
 
   Widget _portfoliosSection() {
     return const Center(child: Text("Manage Portfolios 📂"));
-  }
-
-  Widget _subscriptionsSection() {
-    return const Center(child: Text("Manage Subscriptions 🔑"));
   }
 }

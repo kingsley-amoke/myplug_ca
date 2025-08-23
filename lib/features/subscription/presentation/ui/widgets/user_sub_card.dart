@@ -7,8 +7,17 @@ import 'package:myplug_ca/features/subscription/domain/models/subscription.dart'
 
 class UserSubCard extends StatefulWidget {
   final Subscription subscription;
+  final String? username;
+  bool? isAdmin = false;
+  Function()? onCancel;
 
-  const UserSubCard({super.key, required this.subscription});
+  UserSubCard({
+    super.key,
+    required this.subscription,
+    this.username,
+    this.isAdmin,
+    this.onCancel,
+  });
 
   @override
   State<UserSubCard> createState() => _SubscriptionCardState();
@@ -80,31 +89,61 @@ class _SubscriptionCardState extends State<UserSubCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ✅ Username (display only if provided)
+            if (widget.username != null && widget.username!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  widget.username!.toCapitalCase(),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[800],
+                      ),
+                ),
+              ),
+
             // Plan name & status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  plan.title
-                      .toCapitalCase(), // Assuming SubscriptionPlan has name
+                  plan.title.toCapitalCase(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                 ),
-                Chip(
-                  label: Text(
-                    widget.subscription.isActive ? "Active" : "Expired",
-                    style: TextStyle(
-                      color: widget.subscription.isActive
-                          ? Colors.green[800]
-                          : Colors.red[800],
-                    ),
-                  ),
-                  backgroundColor: widget.subscription.isActive
-                      ? Colors.green[100]
-                      : Colors.red[100],
-                ),
+                widget.isAdmin != null && widget.isAdmin!
+                    ? ElevatedButton(
+                        onPressed: widget.onCancel,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red[100],
+                          foregroundColor: Colors.red[800],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          elevation: 0,
+                        ),
+                        child: const Text(
+                          "Cancel",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    : Chip(
+                        label: Text(
+                          widget.subscription.isActive ? "Active" : "Expired",
+                          style: TextStyle(
+                            color: widget.subscription.isActive
+                                ? Colors.green[800]
+                                : Colors.red[800],
+                          ),
+                        ),
+                        backgroundColor: widget.subscription.isActive
+                            ? Colors.green[100]
+                            : Colors.red[100],
+                      ),
               ],
             ),
             const SizedBox(height: 8),

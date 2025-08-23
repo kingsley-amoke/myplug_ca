@@ -41,4 +41,9 @@ class SubscriptionRepoImpl extends SubscriptionRepository {
     if (sub.endDate == null) return 999;
     return sub.endDate!.difference(DateTime.now()).inDays;
   }
+
+  @override
+  Future<List<Subscription>?> loadAllSubscriptions() async {
+    return await _databaseService.loadAllSubscriptions();
+  }
 }
