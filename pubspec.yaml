@@ -18,7 +18,6 @@ dependencies:
   intl:
   url_launcher:
   change_case:
-  flutter_product_card:
   star_rating:
   toastification:
   firebase_storage:

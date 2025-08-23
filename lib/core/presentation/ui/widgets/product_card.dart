@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// A customizable card widget for displaying product information.
-class ProductCard extends StatefulWidget {
+class CustomProductCard extends StatefulWidget {
   /// The unique identifier of the product.
   final String? id;
 
@@ -32,6 +32,9 @@ class ProductCard extends StatefulWidget {
   /// Indicates whether the product is available.
   final bool? isAvailable;
 
+  /// Indicates if the product is promoted.
+  final bool isPromoted;
+
   /// The background color of the card.
   final Color cardColor;
 
@@ -47,7 +50,7 @@ class ProductCard extends StatefulWidget {
   /// The discount percentage of the product (optional).
   final double? discountPercentage;
 
-  ///The location
+  /// The location
   final String location;
 
   /// The width of the card
@@ -56,8 +59,8 @@ class ProductCard extends StatefulWidget {
   /// The height of the card
   final double? height;
 
-  /// Creates a [ProductCard] widget.
-  const ProductCard({
+  /// Creates a [CustomProductCard] widget.
+  const CustomProductCard({
     super.key,
     required this.image,
     required this.categoryName,
@@ -70,6 +73,7 @@ class ProductCard extends StatefulWidget {
     this.shortDescription = '',
     this.id,
     this.isAvailable = true,
+    this.isPromoted = false,
     this.cardColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
     this.borderRadius = 12.0,
@@ -80,18 +84,14 @@ class ProductCard extends StatefulWidget {
   });
 
   @override
-  ProductCardState createState() => ProductCardState();
+  CustomProductCardState createState() => CustomProductCardState();
 }
 
-class ProductCardState extends State<ProductCard> {
+class CustomProductCardState extends State<CustomProductCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (widget.onTap != null) {
-          widget.onTap!();
-        }
-      },
+      onTap: widget.onTap,
       child: SizedBox(
         width: widget.width,
         height: widget.height,
@@ -104,7 +104,7 @@ class ProductCardState extends State<ProductCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Product image and favorite button
+              // Product image and promoted badge
               Stack(
                 children: [
                   ClipRRect(
@@ -114,7 +114,6 @@ class ProductCardState extends State<ProductCard> {
                         try {
                           return widget.image;
                         } catch (e) {
-                          // Handle error
                           return const Center(
                             child: Text('Failed to load image'),
                           );
@@ -122,6 +121,28 @@ class ProductCardState extends State<ProductCard> {
                       },
                     ),
                   ),
+                  if (widget.isPromoted)
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          'PROMOTED',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
               // Product details
@@ -151,7 +172,6 @@ class ProductCardState extends State<ProductCard> {
                         color: widget.textColor,
                       ),
                     ),
-                    // Short description (if provided)
                     if (widget.shortDescription!.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
@@ -163,7 +183,6 @@ class ProductCardState extends State<ProductCard> {
                           ),
                         ),
                       ),
-                    // Product rating (if available)
                     if (widget.rating != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -181,14 +200,12 @@ class ProductCardState extends State<ProductCard> {
                         ),
                       ),
                     const SizedBox(height: 5),
-                    // Product availability and price
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Product discount percentage (if available)
                             if (widget.discountPercentage != null)
                               Text(
                                 '${widget.discountPercentage?.toStringAsFixed(0)}% OFF',
@@ -198,7 +215,6 @@ class ProductCardState extends State<ProductCard> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            // Product price
                             Text(
                               widget.price,
                               style: TextStyle(
@@ -207,9 +223,7 @@ class ProductCardState extends State<ProductCard> {
                                 fontSize: 18,
                               ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                            const SizedBox(height: 5),
                             Text(
                               widget.location,
                               style: TextStyle(

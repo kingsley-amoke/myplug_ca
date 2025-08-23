@@ -44,4 +44,9 @@ class PromotionRepoImpl implements PromotionRepository {
     final diff = promotion.endDate!.difference(DateTime.now()).inDays;
     return diff <= 3 && diff > 0;
   }
+
+  @override
+  Future<List<Promotion>?> loadAllPromotions() async {
+    return await _databaseService.loadAllPromotions();
+  }
 }

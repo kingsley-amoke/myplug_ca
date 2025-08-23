@@ -49,4 +49,19 @@ class PromotionFirestore implements PromotionDatabaseService {
       return Promotion.fromMap({...doc.data(), 'id': doc.id});
     });
   }
+
+  @override
+  Future<List<Promotion>?> loadAllPromotions() async {
+    List<Promotion> promotions = [];
+    final snapshot = await _firestore.collection(_collection).get();
+
+    if (snapshot.docs.isEmpty) return null;
+    final docs = snapshot.docs;
+
+    for (final doc in docs) {
+      promotions.add(Promotion.fromMap({...doc.data(), 'id': doc.id}));
+    }
+
+    return promotions;
+  }
 }

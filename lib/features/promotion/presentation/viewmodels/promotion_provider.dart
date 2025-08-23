@@ -25,14 +25,17 @@ class PromotionProvider extends ChangeNotifier {
 
   Future<void> create(Promotion promotion) async {
     await _promotionRepoImpl.createPromotion(promotion);
+    _promotionRepoImpl.cancelPromotion(promotion.id!);
+
     _promotion = promotion;
     notifyListeners();
   }
 
   Future<void> deletePromotion(String productId) async {
     final promotion = await _promotionRepoImpl.getProductPromotion(productId);
-
-    _promotionRepoImpl.cancelPromotion(promotion!.id!);
+    if (promotion != null) {
+      _promotionRepoImpl.cancelPromotion(promotion.id!);
+    }
   }
 
   Future<void> cancel() async {
@@ -52,10 +55,19 @@ class PromotionProvider extends ChangeNotifier {
     });
   }
 
-  // void checkAndCancelPromotion() {
-  //   if (promotion?.endDate != null &&
-  //       DateTime.now().isAfter(promotion!.endDate!)) {
-  //     cancel();
-  //   }
-  // }
+  Future<List<String>> checkAndCancelPromotions() async {
+    List<String> productIds = [];
+    final promotions = await _promotionRepoImpl.loadAllPromotions();
+
+    if (promotions == null || promotions.isEmpty) return productIds;
+
+    for (Promotion promo in promotions) {
+      if (promo.endDate != null && DateTime.now().isAfter(promo.endDate!)) {
+        productIds.add(promo.productId);
+        _promotionRepoImpl.cancelPromotion(promo.id!);
+      }
+    }
+
+    return productIds;
+  }
 }

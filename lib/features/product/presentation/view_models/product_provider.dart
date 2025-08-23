@@ -333,6 +333,15 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //auto cancel promotions
+  Future<void> checkAndCancelPromotions(List<String> productIds) async {
+    await loadProducts();
+    for (String id in productIds) {
+      final productToCancel = _products.firstWhere((p) => p.id == id);
+      cancelPromotion(productToCancel);
+    }
+  }
+
 //delete product
   Future<void> deleteProduct(
       {required MyplugUser user, required Product product}) async {
