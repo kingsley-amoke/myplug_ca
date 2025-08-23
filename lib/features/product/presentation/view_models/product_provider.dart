@@ -17,6 +17,8 @@ class ProductProvider extends ChangeNotifier {
   List<Product> _productsByCategory = [];
   List<Product> filteredProducts = [];
   List<Product> filteredMyProducts = [];
+  List<Product> promotedProducts = [];
+
   bool productsByCategoryLoading = true;
   Product? _currentProduct;
   List<Product> _myProducts = [];
@@ -34,14 +36,15 @@ class ProductProvider extends ChangeNotifier {
   Future<void> loadProducts() async {
     _products = await _productRepoImpl.loadAllProducts();
     filteredProducts = _products;
-
+    promotedProducts = _products.where((p) => p.isPromoted).toList();
     notifyListeners();
   }
 
   void getMyProducts(String userId) {
     _myProducts = _products.where((p) => p.seller.id == userId).toList();
     filteredMyProducts = _myProducts;
-    notifyListeners();
+
+    // notifyListeners();
   }
 
   void getProductsByCategory(MyplugShop shop) {
@@ -300,6 +303,34 @@ class ProductProvider extends ChangeNotifier {
   //add review
   Future<void> addReview(Product product) async {
     _productRepoImpl.updateProduct(product);
+  }
+
+  //promote product
+  Future<void> promoteProduct(Product product) async {
+    final updatedProduct = product.copyWith(isPromoted: true);
+
+    _products.remove(product);
+    _products.insert(0, updatedProduct);
+
+    _myProducts.remove(product);
+    _myProducts.insert(0, updatedProduct);
+    promotedProducts.insert(0, updatedProduct);
+
+    notifyListeners();
+  }
+
+  //cancel product promotion
+  Future<void> cancelPromotion(Product product) async {
+    final updatedProduct = product.copyWith(isPromoted: false);
+
+    await _productRepoImpl.updateProduct(updatedProduct);
+
+    _products.remove(product);
+    _products.insert(0, updatedProduct);
+    _myProducts.remove(product);
+    _myProducts.insert(0, updatedProduct);
+    promotedProducts.remove(product);
+    notifyListeners();
   }
 
 //delete product

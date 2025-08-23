@@ -12,6 +12,7 @@ class Product {
   final String location;
   final double price;
   final MyplugShop shop;
+  final bool isPromoted;
 
   Product({
     this.id,
@@ -22,6 +23,7 @@ class Product {
     required this.title,
     required this.location,
     required this.price,
+    this.isPromoted = false,
     required this.shop,
   });
 
@@ -36,8 +38,11 @@ class Product {
       seller: MyplugUser.fromMap(map['seller']),
       title: map['title'],
       location: map['location'],
+      isPromoted: map['is_promoted'],
       price: map['price'],
-      shop: MyplugShop.fromMap(map['shop']),
+      shop: MyplugShop.fromMap(
+        map['shop'],
+      ),
     );
   }
 
@@ -49,6 +54,7 @@ class Product {
       'images': images,
       'price': price,
       'location': location,
+      'is_promoted': isPromoted,
       'shop': shop.toMap(),
       'seller': seller.toMap(),
       'ratings': ratings.map((e) => e.toMap()).toList(),
@@ -61,6 +67,7 @@ class Product {
     String? description,
     String? location,
     double? price,
+    bool? isPromoted,
     Rating? rating,
     List<String>? images,
   }) {
@@ -70,6 +77,7 @@ class Product {
       description: description ?? this.description,
       location: location ?? this.location,
       price: price ?? this.price,
+      isPromoted: isPromoted ?? this.isPromoted,
       shop: shop,
       seller: seller,
       ratings: rating != null ? [...ratings, rating] : ratings,

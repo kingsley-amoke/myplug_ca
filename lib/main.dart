@@ -18,6 +18,10 @@ import 'package:myplug_ca/features/product/data/datasources/product_firestore_se
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
 import 'package:myplug_ca/features/product/services/database_service.dart';
+import 'package:myplug_ca/features/promotion/data/datasources/promotion_firestore.dart';
+import 'package:myplug_ca/features/promotion/data/repositories/promotion_repo_impl.dart';
+import 'package:myplug_ca/features/promotion/domain/repositories/promotion_database_service.dart';
+import 'package:myplug_ca/features/promotion/presentation/viewmodels/promotion_provider.dart';
 import 'package:myplug_ca/features/subscription/data/datasources/firestore_subscription_service.dart';
 import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
 import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
@@ -52,6 +56,7 @@ void main() async {
   );
   final subscriptionDatabaseService =
       SubscriptionDatabaseService(FirestoreSubscriptionService(firestore));
+  final promotionDatabaseService = PromotionFirestore(firestore);
   final jobDatabaseService = JobDatabaseService(
     databaseService: JobFirestoreService(firestore),
     fileUploadService: FirebaseImageUpload(storage),
@@ -91,6 +96,11 @@ void main() async {
         ),
       ),
       ChangeNotifierProvider(
+        create: (_) => PromotionProvider(
+          PromotionRepoImpl(promotionDatabaseService),
+        ),
+      ),
+      ChangeNotifierProvider(
         create: (_) => MyplugProvider(
           userRepoImpl: UserRepoImpl(
               userAuth: userAuthService, userProfile: userProfileService),
@@ -98,6 +108,7 @@ void main() async {
           jobRepoImpl: JobRepoImpl(jobDatabaseService),
           subscriptionRepoImpl:
               SubscriptionRepoImpl(subscriptionDatabaseService),
+          promotionRepoImpl: PromotionRepoImpl(promotionDatabaseService),
           productRepoImpl: ProductRepoImpl(productDatabaseService),
         ),
       ),

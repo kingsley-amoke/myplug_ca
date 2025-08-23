@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/jobs.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_section.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/promotions_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/transaction_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
 import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
@@ -50,6 +51,10 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     DashboardItem(
       icon: Icons.card_membership,
       title: "Subscriptions",
+    ),
+    DashboardItem(
+      icon: Icons.card_membership,
+      title: "Promotions",
     ),
   ];
 
@@ -134,6 +139,8 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         return const TransactionsSection();
       case "Subscriptions":
         return _subscriptionsSection();
+      case "Promotions":
+        return const PromotionsSection();
       default:
         return const Center(child: Text("Section not implemented yet"));
     }
