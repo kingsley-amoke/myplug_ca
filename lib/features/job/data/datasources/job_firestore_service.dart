@@ -61,4 +61,13 @@ class JobFirestoreService extends JobRepository {
     await applicationRef.set(application.copyWith(id: application.id).toMap());
     return application.copyWith(id: application.id);
   }
+
+  @override
+  Future<List<JobApplication>> loadApplications() async {
+    return await _firestore.collection('application').get().then((doc) {
+      return doc.docs.map((e) {
+        return JobApplication.fromMap(e.data());
+      }).toList();
+    });
+  }
 }

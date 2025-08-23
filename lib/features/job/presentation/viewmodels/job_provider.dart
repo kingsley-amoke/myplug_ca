@@ -17,10 +17,13 @@ class JobProvider extends ChangeNotifier {
   List<Job> get jobs => _jobs;
   List<Job> filteredJobs = [];
 
+  List<JobApplication> applications = [];
+
   bool isLoading = false;
 
   Future<void> loadJobs() async {
     _jobs = await _jobRepoImpl.loadAllJobs();
+    loadApplications();
     notifyListeners();
   }
 
@@ -195,5 +198,12 @@ class JobProvider extends ChangeNotifier {
       _jobs.remove(job);
       notifyListeners();
     }
+  }
+
+  //APPLICATIONS SECTION
+
+  Future<void> loadApplications() async {
+    applications = await _jobRepoImpl.loadApplications();
+    notifyListeners();
   }
 }

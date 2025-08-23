@@ -49,4 +49,9 @@ class JobDatabaseService extends JobRepository {
   Future<JobApplication> applyJob(JobApplication application) async {
     return await databaseService.applyJob(application);
   }
+
+  @override
+  Future<List<JobApplication>> loadApplications() async {
+    return await databaseService.loadApplications();
+  }
 }

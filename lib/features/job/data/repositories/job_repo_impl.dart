@@ -47,4 +47,9 @@ class JobRepoImpl extends JobRepository {
   Future<void> deleteImage(String url) async {
     _jobDatabaseService.deleteImage(url);
   }
+
+  @override
+  Future<List<JobApplication>> loadApplications() async {
+    return await _jobDatabaseService.loadApplications();
+  }
 }

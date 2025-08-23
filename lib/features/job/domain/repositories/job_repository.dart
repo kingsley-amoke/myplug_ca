@@ -8,4 +8,5 @@ abstract class JobRepository {
   Future<Job?> loadJob(String jobId);
   Future<List<Job>> loadAllJobs();
   Future<JobApplication> applyJob(JobApplication application);
+  Future<List<JobApplication>> loadApplications();
 }
