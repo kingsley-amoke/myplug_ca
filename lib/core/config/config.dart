@@ -7,10 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/features/job/domain/models/job_type.dart';
 import 'package:myplug_ca/core/domain/models/rating.dart';
+import 'package:myplug_ca/features/subscription/domain/models/highlight.dart';
 import 'package:myplug_ca/features/user/domain/models/transaction.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:toastification/toastification.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
 
 double getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
@@ -41,6 +43,21 @@ String formatJobType(JobType type) {
       return "Remote";
     case JobType.internship:
       return "Internship";
+  }
+}
+
+String formatPlanHighlight(Highlight highlight) {
+  switch (highlight) {
+    case Highlight.lite:
+      return "Lite";
+    case Highlight.bestValue:
+      return "Best Value";
+    case Highlight.mostAffordable:
+      return "Most Affordable";
+    case Highlight.recommended:
+      return "Recommended";
+    case Highlight.none:
+      return 'Recommended';
   }
 }
 
@@ -85,11 +102,22 @@ String createConversationId(
 
 Map<String, List<Transaction>> groupTransactionsByDate(List<Transaction> txns) {
   final Map<String, List<Transaction>> grouped = {};
+  txns.sort((a, b) => b.date.compareTo(a.date));
   for (var txn in txns) {
     final dateStr = DateFormat.yMMMd().format(txn.date);
     grouped.putIfAbsent(dateStr, () => []).add(txn);
   }
   return grouped;
+}
+
+Future<bool> doesDomainExist(String email) async {
+  final domain = email.split('@').last;
+  try {
+    final response = await http.head(Uri.parse('https://$domain'));
+    return response.statusCode < 500; // Some response means domain exists
+  } catch (_) {
+    return false;
+  }
 }
 
 JobType jobTypeFromString(String? type) {

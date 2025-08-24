@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/application_section.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/jobs.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_section.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/promo_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/promotions_section.dart';
+import 'package:myplug_ca/features/admin/presentation/ui/widgets/sub_plans.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/subscription_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/transaction_section.dart';
 import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
@@ -38,10 +38,10 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
       icon: Icons.group,
       title: "Users",
     ),
-    DashboardItem(
-      icon: Icons.work,
-      title: "Jobs",
-    ),
+    // DashboardItem(
+    //   icon: Icons.work,
+    //   title: "Jobs",
+    // ),
     DashboardItem(
       icon: Icons.shop,
       title: "Products",
@@ -59,9 +59,17 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
       title: "Promotions",
     ),
     DashboardItem(
-      icon: Icons.assignment,
-      title: "Applications",
+      icon: Icons.workspace_premium,
+      title: "Subscription Plans",
     ),
+    DashboardItem(
+      icon: Icons.campaign,
+      title: "Promotion Plans",
+    ),
+    // DashboardItem(
+    //   icon: Icons.assignment,
+    //   title: "Applications",
+    // ),
   ];
 
   @override
@@ -111,7 +119,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           // Main Content Area
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               child: _buildContent(context),
             ),
           ),
@@ -136,28 +144,24 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         );
       case "Users":
         return const UsersSection();
-      case "Jobs":
-        return const JobsSection();
+      // case "Jobs":
+      //   return const JobsSection();
       case "Products":
         return const ProductsSection();
-      case "Portfolios":
-        return _portfoliosSection();
       case "Transactions":
         return const TransactionsSection();
       case "Subscriptions":
         return const SubscriptionSection();
       case "Promotions":
         return const PromotionsSection();
-      case "Applications":
-        return const ApplicationSection();
+      case "Subscription Plans":
+        return const SubscriptionAdminPage();
+      case "Promotion Plans":
+        return const PromotionAdminPage();
+      // case "Applications":
+      //   return const ApplicationSection();
       default:
         return const Center(child: Text("Section not implemented yet"));
     }
-  }
-
-  // ----------------- Section Widgets -----------------
-
-  Widget _portfoliosSection() {
-    return const Center(child: Text("Manage Portfolios 📂"));
   }
 }

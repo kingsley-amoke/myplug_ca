@@ -1,20 +1,21 @@
 import 'package:myplug_ca/features/subscription/domain/models/highlight.dart';
 
 class SubscriptionPlan {
-  final String id;
+  final String? id;
   final String title;
   final List<String> features;
   final double price;
   final Duration duration;
   final Highlight highlight;
 
-  SubscriptionPlan(
-      {required this.id,
-      required this.title,
-      required this.price,
-      required this.duration,
-      required this.features,
-      required this.highlight});
+  SubscriptionPlan({
+    this.id,
+    required this.title,
+    required this.price,
+    required this.duration,
+    required this.features,
+    required this.highlight,
+  });
 
   factory SubscriptionPlan.fromMap(Map<String, dynamic> map) =>
       SubscriptionPlan(
@@ -38,6 +39,7 @@ class SubscriptionPlan {
       };
 
   SubscriptionPlan copyWith({
+    String? id,
     String? title,
     double? price,
     List<String>? features,
@@ -45,7 +47,7 @@ class SubscriptionPlan {
     Highlight? highlight,
   }) {
     return SubscriptionPlan(
-      id: id,
+      id: id ?? this.id,
       title: title ?? this.title,
       features: features ?? this.features,
       price: price ?? this.price,

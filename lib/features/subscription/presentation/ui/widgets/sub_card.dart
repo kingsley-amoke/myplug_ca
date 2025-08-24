@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/demoSubPlans.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
+import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:provider/provider.dart';
 
 class SubCard extends StatelessWidget {
-  SubCard({super.key});
-
-  final SubscriptionPlan displaySub = demoSubPlans[0];
+  const SubCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +53,18 @@ class SubCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      "Get ${formatPlanDuration(displaySub.duration)} Premium for just ${formatPrice(amount: displaySub.price)}",
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
-                      ),
+                    Consumer<SubscriptionProvider>(
+                      builder: (context, provider, _) {
+                        return provider.plans.isNotEmpty
+                            ? Text(
+                                "Get ${formatPlanDuration(provider.plans[0].duration)} Premium for just ${formatPrice(amount: provider.plans[0].price)}",
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              )
+                            : Container();
+                      },
                     ),
                   ],
                 ),

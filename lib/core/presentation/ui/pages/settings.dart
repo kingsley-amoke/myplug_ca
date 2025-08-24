@@ -95,6 +95,8 @@ class Settings extends StatelessWidget {
                     onTap: () {
                       provider.myplugUser != null
                           ? provider.logout().then((v) {
+                              showToast(context,
+                                  message: 'Success', type: ToastType.success);
                               navigator.popAndPushNamed('login');
                             })
                           : navigator.push(

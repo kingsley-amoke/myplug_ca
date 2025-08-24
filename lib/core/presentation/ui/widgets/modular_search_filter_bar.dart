@@ -145,7 +145,7 @@ class _ModularSearchFilterBarState extends State<ModularSearchFilterBar> {
                 Slider(
                   value: _priceValue ?? 1000,
                   min: 0,
-                  max: 1000000,
+                  max: 500000,
                   divisions: 1000,
                   label: formatPrice(amount: _priceValue ?? 1000.00),
                   onChanged: (value) => setState(() => _priceValue = value),

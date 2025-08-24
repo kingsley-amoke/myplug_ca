@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
+import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class SubscriptionProvider extends ChangeNotifier {
@@ -13,6 +14,8 @@ class SubscriptionProvider extends ChangeNotifier {
   List<Subscription> filteredSubscriptions = [];
   Subscription? get subscription => _subscription;
 
+  List<SubscriptionPlan> plans = [];
+
   bool get isExpired =>
       _subscription != null && _subscriptionRepoImpl.isExpired(_subscription!);
   bool get isExpiringSoon =>
@@ -22,6 +25,27 @@ class SubscriptionProvider extends ChangeNotifier {
       ? _subscriptionRepoImpl.daysLeft(_subscription!)
       : 999;
 
+  Future<void> loadAllPlans() async {
+    plans = await _subscriptionRepoImpl.getAllSubscriptionPlans();
+    sortPlans();
+  }
+
+  Future<void> updatePlan(
+      {required SubscriptionPlan plan, required double price}) async {
+    final updatedPlan = plan.copyWith(price: price);
+
+    await _subscriptionRepoImpl.updateSubscriptionPlan(updatedPlan);
+    final index = plans.indexOf(plan);
+    plans.remove(plan);
+    plans.insert(index, updatedPlan);
+    sortPlans();
+  }
+
+  void sortPlans() {
+    plans.sort((a, b) => a.price.compareTo(b.price));
+    notifyListeners();
+  }
+
   Future<void> loadUserSubscription(String userId) async {
     _subscription = await _subscriptionRepoImpl.getUserSubscription(userId);
     checkAndCancelSubscription();
@@ -29,6 +53,7 @@ class SubscriptionProvider extends ChangeNotifier {
   }
 
   Future<void> loadAllSubscriptions() async {
+    loadAllPlans();
     final subs = await _subscriptionRepoImpl.loadAllSubscriptions();
     if (subs != null && subs.isNotEmpty) {
       allSubscriptions = subs;

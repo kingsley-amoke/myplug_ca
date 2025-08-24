@@ -37,7 +37,7 @@ class _UsersSectionState extends State<UsersSection> {
               ),
               Flexible(
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(8),
                   separatorBuilder: (_, __) => const SizedBox(height: 12),
                   itemCount: provider.filteredUsers.length,
                   itemBuilder: (context, index) {

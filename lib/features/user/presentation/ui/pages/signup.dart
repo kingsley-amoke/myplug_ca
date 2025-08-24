@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/skills.dart';
 import 'package:myplug_ca/core/constants/validators.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/bottom_nav.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/domain/models/skill.dart';
@@ -27,36 +27,56 @@ class _SignupPageState extends State<SignupPage> {
   final addressController = TextEditingController();
 
   bool isLoading = false;
+  bool isVisible = false;
+  bool isVisible2 = false;
   Skill? selectedSkill;
 
   List<DropdownMenuEntry<Skill>> dropDownSkills = services.map((e) {
     return DropdownMenuEntry<Skill>(value: e, label: e.name);
   }).toList();
 
-  void _signup() {
-    if (_formKey.currentState!.validate()) {
-      setState(() => isLoading = true);
+  Future<void> _signup() async {
+    setState(() => isLoading = true);
+    if (await doesDomainExist(emailController.text)) {
+      if (_formKey.currentState!.validate() && selectedSkill != null) {
+        if (passwordController.text == confirmPasswordController.text) {
+          final user = MyplugUser(
+              email: emailController.text,
+              firstName: firstNameController.text,
+              lastName: lastNameController.text,
+              phone: phoneController.text,
+              skills: [selectedSkill!]);
 
-      if (passwordController.text == confirmPasswordController.text) {
-        final user = MyplugUser(
-            email: emailController.text,
-            firstName: firstNameController.text,
-            lastName: lastNameController.text,
-            phone: phoneController.text,
-            skills: [selectedSkill!]);
-
-        context.read<UserProvider>().signUp(
-            user: user,
-            address: addressController.text,
-            password: passwordController.text);
-      }
-
-      Future.delayed(const Duration(seconds: 2), () {
+          context.read<UserProvider>().signUp(
+              user: user,
+              address: addressController.text,
+              password: passwordController.text);
+        }
         setState(() => isLoading = false);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => const BottomNav()));
-      });
+        showToast(context, message: 'Success', type: ToastType.success);
+        Navigator.of(context).popAndPushNamed('/');
+      } else {
+        setState(() => isLoading = false);
+        showToast(context,
+            message: 'Complete all fields', type: ToastType.error);
+      }
+    } else {
+      setState(() => isLoading = false);
+      showToast(context,
+          message: 'Please use a valid email address', type: ToastType.error);
     }
+  }
+
+  void toggleIsVisible() {
+    setState(() {
+      isVisible = !isVisible;
+    });
+  }
+
+  void toggleIsVisible2() {
+    setState(() {
+      isVisible2 = !isVisible2;
+    });
   }
 
   @override
@@ -98,7 +118,6 @@ class _SignupPageState extends State<SignupPage> {
                     prefixIcon: const Icon(Icons.person_outline),
                     validator: (v) => textValidator(v)),
                 const SizedBox(height: 16),
-                const SizedBox(height: 16),
 
                 // Email
                 MyInput(
@@ -117,18 +136,38 @@ class _SignupPageState extends State<SignupPage> {
 
                 const SizedBox(height: 16),
 
-                // Password
+                // Password Field
                 MyInput(
-                    controller: passwordController,
-                    hintText: "Password",
-                    prefixIcon: const Icon(Icons.password_rounded),
-                    validator: (v) => textValidator(v)),
+                  controller: passwordController,
+                  obscureText: isVisible,
+                  hintText: "Password",
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  suffixIcon: isVisible
+                      ? IconButton(
+                          onPressed: toggleIsVisible,
+                          icon: const Icon(Icons.visibility))
+                      : IconButton(
+                          onPressed: toggleIsVisible,
+                          icon: const Icon(Icons.visibility_off),
+                        ),
+                  validator: (v) => textValidator(v),
+                ),
                 const SizedBox(height: 16),
                 MyInput(
-                    controller: confirmPasswordController,
-                    hintText: "Confirm Password",
-                    prefixIcon: const Icon(Icons.password_rounded),
-                    validator: (v) => textValidator(v)),
+                  controller: confirmPasswordController,
+                  obscureText: isVisible2,
+                  hintText: "Password",
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  suffixIcon: isVisible2
+                      ? IconButton(
+                          onPressed: toggleIsVisible2,
+                          icon: const Icon(Icons.visibility))
+                      : IconButton(
+                          onPressed: toggleIsVisible2,
+                          icon: const Icon(Icons.visibility_off),
+                        ),
+                  validator: (v) => textValidator(v),
+                ),
                 const SizedBox(height: 16),
 
                 MyInput(

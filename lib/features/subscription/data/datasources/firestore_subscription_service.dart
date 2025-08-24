@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
+import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
 import 'package:myplug_ca/features/subscription/domain/repositories/subscription_repo.dart';
 
 class FirestoreSubscriptionService implements SubscriptionRepository {
@@ -63,5 +64,29 @@ class FirestoreSubscriptionService implements SubscriptionRepository {
     }
 
     return subscriptions;
+  }
+
+  @override
+  Future<List<SubscriptionPlan>> getAllSubscriptionPlans() async {
+    List<SubscriptionPlan> subPlans = [];
+    final snapshot = await _firestore.collection('subscriptionplans').get();
+
+    if (snapshot.docs.isEmpty) return [];
+    final docs = snapshot.docs;
+
+    for (final doc in docs) {
+      subPlans.add(SubscriptionPlan.fromMap({...doc.data(), 'id': doc.id}));
+    }
+
+    return subPlans;
+  }
+
+  @override
+  Future<SubscriptionPlan> updateSubscriptionPlan(SubscriptionPlan plan) async {
+    await _firestore
+        .collection('subscriptionplans')
+        .doc(plan.id)
+        .update(plan.toMap());
+    return plan;
   }
 }

@@ -83,6 +83,7 @@ class MyInput extends StatelessWidget {
     this.onEditingComplete,
     this.onChanged,
     this.validator,
+    this.prefixText,
   });
 
   final TextEditingController controller;
@@ -92,6 +93,7 @@ class MyInput extends StatelessWidget {
   final String? labelText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final String? prefixText;
   final bool readOnly;
   final int? maxLines;
   final void Function()? onEditingComplete;
@@ -127,6 +129,7 @@ class MyInput extends StatelessWidget {
           ),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
+          prefixText: prefixText,
           hintText: hintText,
           hintStyle: TextStyle(
             color: theme.colorScheme.onSurface.withOpacity(0.6),

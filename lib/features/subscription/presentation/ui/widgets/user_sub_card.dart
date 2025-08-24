@@ -167,7 +167,7 @@ class _SubscriptionCardState extends State<UserSubCard> {
                       size: 18, color: Colors.grey),
                   const SizedBox(width: 6),
                   Text(
-                    "Expires on ${DateFormat.yMMMd().format(widget.subscription.endDate!)}",
+                    "Expires: ${DateFormat.yMMMd().format(widget.subscription.endDate!)}",
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                 ],

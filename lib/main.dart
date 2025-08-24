@@ -97,7 +97,7 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => PromotionProvider(
           PromotionRepoImpl(promotionDatabaseService),
-        ),
+        )..loadAllPlans(),
       ),
       ChangeNotifierProvider(
         create: (_) => MyplugProvider(

@@ -1,4 +1,5 @@
 import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
+import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
 import 'package:myplug_ca/features/promotion/domain/repositories/promotion_database_service.dart';
 import 'package:myplug_ca/features/promotion/domain/repositories/promotion_repo.dart';
 
@@ -48,5 +49,15 @@ class PromotionRepoImpl implements PromotionRepository {
   @override
   Future<List<Promotion>?> loadAllPromotions() async {
     return await _databaseService.loadAllPromotions();
+  }
+
+  @override
+  Future<List<PromotionPlan>> getAllPromotionPlans() async {
+    return await _databaseService.getAllPromotionPlans();
+  }
+
+  @override
+  Future<PromotionPlan> updatePromotionPlan(PromotionPlan plan) async {
+    return await _databaseService.updatePromotionPlan(plan);
   }
 }

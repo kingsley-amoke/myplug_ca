@@ -77,6 +77,7 @@ class WalletPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final date = groupedTxns.keys.elementAt(index);
                             final txns = groupedTxns[date]!;
+                            txns.sort((a, b) => b.date.compareTo(a.date));
                             return transactionGroup(context,
                                 date: date, txns: txns);
                           },

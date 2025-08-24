@@ -1,3 +1,4 @@
+import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
 import 'package:myplug_ca/features/subscription/domain/repositories/subscription_repo.dart';
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
 import 'package:myplug_ca/features/subscription/services/database_service.dart';
@@ -45,5 +46,15 @@ class SubscriptionRepoImpl extends SubscriptionRepository {
   @override
   Future<List<Subscription>?> loadAllSubscriptions() async {
     return await _databaseService.loadAllSubscriptions();
+  }
+
+  @override
+  Future<List<SubscriptionPlan>> getAllSubscriptionPlans() async {
+    return await _databaseService.getAllSubscriptionPlans();
+  }
+
+  @override
+  Future<SubscriptionPlan> updateSubscriptionPlan(SubscriptionPlan plan) async {
+    return await _databaseService.updateSubscriptionPlan(plan);
   }
 }

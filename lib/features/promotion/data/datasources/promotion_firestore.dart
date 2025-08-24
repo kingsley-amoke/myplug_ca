@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
+import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
 import 'package:myplug_ca/features/promotion/domain/repositories/promotion_database_service.dart';
 
 class PromotionFirestore implements PromotionDatabaseService {
@@ -63,5 +64,29 @@ class PromotionFirestore implements PromotionDatabaseService {
     }
 
     return promotions;
+  }
+
+  @override
+  Future<List<PromotionPlan>> getAllPromotionPlans() async {
+    List<PromotionPlan> promotionPlans = [];
+    final snapshot = await _firestore.collection('promotionplans').get();
+
+    if (snapshot.docs.isEmpty) return [];
+    final docs = snapshot.docs;
+
+    for (final doc in docs) {
+      promotionPlans.add(PromotionPlan.fromMap({...doc.data(), 'id': doc.id}));
+    }
+
+    return promotionPlans;
+  }
+
+  @override
+  Future<PromotionPlan> updatePromotionPlan(PromotionPlan plan) async {
+    await _firestore
+        .collection('promotionplans')
+        .doc(plan.id)
+        .update(plan.toMap());
+    return plan;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:myplug_ca/features/promotion/data/repositories/promotion_repo_impl.dart';
 import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
+import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
 
 class PromotionProvider extends ChangeNotifier {
   final PromotionRepoImpl _promotionRepoImpl;
@@ -10,12 +11,36 @@ class PromotionProvider extends ChangeNotifier {
   Promotion? _promotion;
   Promotion? get promotion => _promotion;
 
+  List<PromotionPlan> plans = [];
+
   bool get isExpired =>
       _promotion != null && _promotionRepoImpl.isExpired(_promotion!);
   bool get isExpiringSoon =>
       _promotion != null && _promotionRepoImpl.isExpiringSoon(_promotion!);
   int get daysLeft =>
       _promotion != null ? _promotionRepoImpl.daysLeft(_promotion!) : 999;
+
+  Future<void> loadAllPlans() async {
+    plans = await _promotionRepoImpl.getAllPromotionPlans();
+    sortPlans();
+    notifyListeners();
+  }
+
+  Future<void> updatePlan(
+      {required PromotionPlan plan, required double price}) async {
+    final updatedPlan = plan.copyWith(price: price);
+
+    await _promotionRepoImpl.updatePromotionPlan(updatedPlan);
+    final index = plans.indexOf(plan);
+    plans.remove(plan);
+    plans.insert(index, updatedPlan);
+    sortPlans();
+  }
+
+  void sortPlans() {
+    plans.sort((a, b) => a.price.compareTo(b.price));
+    notifyListeners();
+  }
 
   Future<void> loadProductPromotion(String productId) async {
     _promotion = await _promotionRepoImpl.getProductPromotion(productId);

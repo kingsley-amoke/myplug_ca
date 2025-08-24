@@ -33,6 +33,8 @@ class UserProvider extends ChangeNotifier {
 
   bool get isLoggedIn => _user != null;
 
+  bool isUploading = false;
+
   UserProvider(this._userRepo);
 
   Future<void> signIn({required String email, required String password}) async {
@@ -287,28 +289,28 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<bool> uploadProfilePic(File imageFile) async {
-    if (isLoggedIn) {
-      if (myplugUser!.image != null) {
-        _userRepo.deleteImage(myplugUser!.image!);
-      }
-      _userRepo
-          .uploadImage(
-        imageFile: imageFile,
-        path: 'users',
-        userId: myplugUser!.id!,
-      )
-          .then((url) {
-        if (url != null) {
-          updateProfile(image: url);
-          return true;
-        } else {
-          return false;
-        }
-      });
-      notifyListeners();
-    }
+    isUploading = true;
+    if (!isLoggedIn) return false;
 
-    return false;
+    if (myplugUser!.image != null) {
+      _userRepo.deleteImage(myplugUser!.image!);
+    }
+    final url = await _userRepo.uploadImage(
+      imageFile: imageFile,
+      path: 'users',
+      userId: myplugUser!.id!,
+    );
+
+    if (url != null) {
+      updateProfile(image: url);
+      isUploading = false;
+      notifyListeners();
+      return true;
+    } else {
+      isUploading = false;
+      notifyListeners();
+      return false;
+    }
   }
 
   Future<void> addTestimonial(

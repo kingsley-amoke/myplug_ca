@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 10),
                   Consumer<ProductProvider>(
                     builder: (context, provider, _) {
-                      return ProductGrid(products: provider.products);
+                      return ProductGrid(products: provider.promotedProducts);
                     },
                   ),
                   const SizedBox(height: 30),

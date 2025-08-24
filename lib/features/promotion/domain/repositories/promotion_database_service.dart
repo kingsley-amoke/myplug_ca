@@ -1,4 +1,5 @@
 import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
+import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
 
 abstract class PromotionDatabaseService {
   Future<void> createPromotion(Promotion promotion);
@@ -6,4 +7,6 @@ abstract class PromotionDatabaseService {
   Future<List<Promotion>?> loadAllPromotions();
   Future<void> cancelPromotion(String promotionId);
   Stream<Promotion?> listenToProductPromotion(String productId);
+  Future<List<PromotionPlan>> getAllPromotionPlans();
+  Future<PromotionPlan> updatePromotionPlan(PromotionPlan plan);
 }

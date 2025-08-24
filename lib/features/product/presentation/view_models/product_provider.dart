@@ -14,6 +14,7 @@ class ProductProvider extends ChangeNotifier {
   ProductProvider(this._productRepoImpl);
 
   List<Product> _products = [];
+  List<Product> allProducts = [];
   List<Product> _productsByCategory = [];
   List<Product> filteredProducts = [];
   List<Product> filteredMyProducts = [];
@@ -37,6 +38,7 @@ class ProductProvider extends ChangeNotifier {
     _products = await _productRepoImpl.loadAllProducts();
     _sortProducts();
     filteredProducts = _products;
+    allProducts = _products;
     promotedProducts = _products.where((p) => p.isPromoted).toList();
     notifyListeners();
   }
@@ -109,6 +111,54 @@ class ProductProvider extends ChangeNotifier {
     }
 
     _productsByCategory = matches;
+    notifyListeners();
+    return matches;
+  }
+
+  List<Product> filterAllProductsByParams({
+    String? location,
+    double? rating,
+    double? minPrice,
+    String? searchTerm,
+  }) {
+    List<Product> matches = [];
+
+    for (Product item in _products) {
+      bool match = true;
+
+      // Location filter
+      if (location != null &&
+          item.location.toLowerCase() != location.toLowerCase()) {
+        match = false;
+      }
+
+      // Rating filter
+      if (rating != null && getAverageRating(ratings: item.ratings) < rating) {
+        match = false;
+      }
+
+      // Price filter
+      if (minPrice != null && item.price < minPrice) {
+        match = false;
+      }
+
+      // Search term filter (ignore if null or empty)
+      if (searchTerm != null && searchTerm.trim().isNotEmpty) {
+        final term = searchTerm.toLowerCase();
+        final name = item.title.toLowerCase();
+        final description = item.description.toLowerCase();
+
+        if (!(name.contains(term) || description.contains(term))) {
+          match = false;
+        }
+      }
+
+      if (match) {
+        matches.add(item);
+      }
+    }
+
+    allProducts = matches;
     notifyListeners();
     return matches;
   }

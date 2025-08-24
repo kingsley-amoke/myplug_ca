@@ -1,7 +1,7 @@
 import 'package:myplug_ca/features/subscription/domain/models/highlight.dart';
 
 class PromotionPlan {
-  final String id;
+  final String? id;
   final String title;
   final List<String> features;
   final double price;
@@ -9,7 +9,7 @@ class PromotionPlan {
   final Highlight highlight;
 
   PromotionPlan(
-      {required this.id,
+      {this.id,
       required this.title,
       required this.price,
       required this.duration,
@@ -37,6 +37,7 @@ class PromotionPlan {
       };
 
   PromotionPlan copyWith({
+    String? id,
     String? title,
     double? price,
     List<String>? features,
@@ -44,7 +45,7 @@ class PromotionPlan {
     Highlight? highlight,
   }) {
     return PromotionPlan(
-      id: id,
+      id: id ?? this.id,
       title: title ?? this.title,
       features: features ?? this.features,
       price: price ?? this.price,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
+import 'package:myplug_ca/core/constants/validators.dart';
 import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
@@ -91,45 +92,11 @@ class _FundWalletPageState extends State<FundWalletPage> {
               controller: _amountController,
               keyboardType: TextInputType.number,
               labelText: "Enter Amount",
-              prefixIcon: const Icon(Icons.attach_money),
+              prefixText: "₦ ",
+              validator: (v) => textValidator(v),
             ),
             const SizedBox(height: 24),
 
-            // // Payment Method
-            // const Text(
-            //   "Payment Method",
-            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            // ),
-            // const SizedBox(height: 8),
-            // Row(
-            //   children: ['Card', 'Bank', 'USSD'].map((method) {
-            //     final isSelected = _selectedPaymentMethod == method;
-            //     return Expanded(
-            //       child: GestureDetector(
-            //         onTap: () =>
-            //             setState(() => _selectedPaymentMethod = method),
-            //         child: Container(
-            //           margin: const EdgeInsets.symmetric(horizontal: 4),
-            //           padding: const EdgeInsets.symmetric(vertical: 14),
-            //           decoration: BoxDecoration(
-            //             color: isSelected
-            //                 ? theme.primaryColor
-            //                 : theme.colorScheme.surfaceVariant.withOpacity(0.2),
-            //             borderRadius: BorderRadius.circular(12),
-            //           ),
-            //           alignment: Alignment.center,
-            //           child: Text(
-            //             method,
-            //             style: TextStyle(
-            //               color: isSelected ? Colors.white : Colors.black87,
-            //               fontWeight: FontWeight.w600,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   }).toList(),
-            // ),
             const SizedBox(height: 32),
 
             // Fund Wallet Button

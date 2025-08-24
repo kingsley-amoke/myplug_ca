@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   MyplugUser? user;
 
+  bool isUploading = false;
+
   void _pickImage() async {
+    setState(() {
+      isUploading = true;
+    });
     final userProvider = context.read<UserProvider>();
     File? imageFile = await pickImage();
 
@@ -40,11 +46,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
         if (res) {
           showToast(context, message: 'Success', type: ToastType.success);
         } else {
-          // showToast(context,
-          //     message: 'Something went wrong', type: ToastType.error);
+          showToast(context,
+              message: 'Something went wrong', type: ToastType.error);
         }
       });
     }
+    setState(() {
+      isUploading = false;
+    });
   }
 
   void _saveProfile() {
@@ -81,51 +90,38 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profile Image
-                GestureDetector(
-                  onTap: _pickImage,
-                  child: Center(
-                    child: Consumer<UserProvider>(
-                      builder: (context, provider, child) {
-                        return CircleAvatar(
-                          radius: 50,
-                          backgroundImage: provider.myplugUser!.image != null
-                              ? NetworkImage(provider.myplugUser!.image!)
-                              : const AssetImage(noUserImage),
-                          child: user!.image == null
-                              ? const Icon(Icons.camera_alt, size: 40)
-                              : null,
-                        );
-                      },
-                    ),
-                  ),
+                ProfileImageSection(
+                  onPickImage: () {
+                    _pickImage();
+                  },
                 ),
-                const SizedBox(height: 20),
+
+                const SizedBox(height: 40),
 
                 // Text Fields
-                const Text('First Name'),
+                // const Text('First Name'),
                 MyInput(
                   controller: _firstNameController,
-                  hintText: user?.firstName ?? 'First Name',
-                  validator: (v) => emailValidator(v),
+                  hintText: 'First Name',
+                  validator: (v) => textValidator(v),
                 ),
 
                 const SizedBox(
                   height: 10,
                 ),
-                const Text('First Name'),
+                // const Text('First Name'),
                 MyInput(
                   controller: _lastNameController,
-                  hintText: user?.lastName ?? 'Last Name',
+                  hintText: 'Last Name',
                   validator: (v) => textValidator(v),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text('Phone Number'),
+                // const Text('Phone Number'),
                 MyInput(
                   controller: _phoneController,
-                  hintText: user?.phone ?? 'Phone Number',
+                  hintText: 'Phone Number',
                   keyboardType: TextInputType.phone,
                   validator: (v) => textValidator(v),
                 ),
@@ -137,6 +133,91 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           );
         }),
+      ),
+    );
+  }
+}
+
+class ProfileImageSection extends StatelessWidget {
+  final VoidCallback onPickImage;
+
+  const ProfileImageSection({super.key, required this.onPickImage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Consumer<UserProvider>(
+        builder: (context, provider, child) {
+          final imageUrl = provider.myplugUser?.image;
+          final isUploading = provider.isUploading;
+
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Profile Image
+              CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.grey[300],
+                backgroundImage: imageUrl != null
+                    ? NetworkImage(imageUrl)
+                    : const AssetImage(noUserImage) as ImageProvider,
+              ),
+
+              // Loading Overlay
+              if (isUploading)
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(60),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.3),
+                        child: const Center(
+                          child: SizedBox(
+                            height: 28,
+                            width: 28,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+              // Camera Button
+              Positioned(
+                bottom: 4,
+                right: 4,
+                child: GestureDetector(
+                  onTap: isUploading ? null : onPickImage,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 4,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt_rounded,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
