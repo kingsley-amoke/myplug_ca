@@ -77,8 +77,7 @@ class _EditableSubscriptionPlanCardState
   void saveChanges() {
     final price = double.tryParse(_priceController.text.trim());
     if (price == null || price <= 0) {
-      showToast(context,
-          message: "Please enter a valid price", type: ToastType.error);
+      showToast(message: "Please enter a valid price", type: ToastType.error);
       return;
     }
 
@@ -86,7 +85,7 @@ class _EditableSubscriptionPlanCardState
         .read<SubscriptionProvider>()
         .updatePlan(plan: widget.plan, price: price)
         .then((_) {
-      showToast(context, message: 'Success', type: ToastType.success);
+      showToast(message: 'Success', type: ToastType.success);
     });
   }
 

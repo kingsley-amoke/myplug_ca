@@ -153,11 +153,10 @@ class SubscriptionCard extends StatelessWidget {
                             subscription: subscription)
                         .then((res) {
                       if (res) {
-                        showToast(context,
-                            message: 'Success', type: ToastType.success);
+                        showToast(message: 'Success', type: ToastType.success);
                         navigator.popAndPushNamed('/');
                       } else {
-                        showToast(context,
+                        showToast(
                             message: 'Something went wrong',
                             type: ToastType.error);
                       }

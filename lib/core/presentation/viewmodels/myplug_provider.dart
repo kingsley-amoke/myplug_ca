@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
-import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
 import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
 import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
 import 'package:myplug_ca/features/product/domain/models/product.dart';
@@ -50,7 +49,7 @@ class MyplugProvider extends ChangeNotifier {
 
     //create transaction
     final Transaction transaction = Transaction(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       type: TransactionType.debit,
       description: 'Subscription charges',
       amount: subscription.plan.price,
@@ -65,7 +64,10 @@ class MyplugProvider extends ChangeNotifier {
     subscriptionRepoImpl.createSubscription(subscription);
 
     //update user
-    userRepoImpl.updateProfile(updatedUser.copyWith(transactions: trnx));
+    userRepoImpl.updateProfile(updatedUser.copyWith(
+      transactions: trnx,
+      isSubscribed: true,
+    ));
 
     return true;
   }
@@ -89,7 +91,7 @@ class MyplugProvider extends ChangeNotifier {
 
     //create transaction
     final Transaction transaction = Transaction(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       type: TransactionType.debit,
       description: 'Product promotion',
       amount: promotion.plan.price,

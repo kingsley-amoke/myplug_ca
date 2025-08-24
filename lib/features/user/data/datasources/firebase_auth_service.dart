@@ -10,11 +10,16 @@ class FirebaseAuthService implements UserAuth {
   @override
   Future<MyplugUser?> signIn(
       {required String email, required String password}) async {
-    final UserCredential res = await _authInstance.signInWithEmailAndPassword(
-        email: email, password: password);
-    if (res.user != null) {
-      return MyplugUser(id: res.user!.uid, email: res.user!.email!);
-    } else {
+    try {
+      final UserCredential res = await _authInstance.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      if (res.user != null) {
+        return MyplugUser(id: res.user!.uid, email: res.user!.email!);
+      } else {
+        return null;
+      }
+    } catch (e) {
       return null;
     }
   }

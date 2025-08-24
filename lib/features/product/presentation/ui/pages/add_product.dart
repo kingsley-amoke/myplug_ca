@@ -56,6 +56,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
       final double price = double.tryParse(_priceController.text.trim()) ?? 0.0;
 
+      final navigator = Navigator.of(context);
+
       try {
         await context.read<ProductProvider>().addProduct(
               title: _titleController.text.trim(),
@@ -67,13 +69,11 @@ class _AddProductPageState extends State<AddProductPage> {
               images: _images,
             );
 
-        showToast(context, message: 'Success', type: ToastType.success);
-        Navigator.pop(context);
+        showToast(message: 'Success', type: ToastType.success);
+        navigator.pop();
       } catch (e) {
-        print(e.toString());
         setState(() => _isLoading = false);
-        showToast(context,
-            message: 'Something went wrong', type: ToastType.error);
+        showToast(message: 'Something went wrong', type: ToastType.error);
         return;
       }
     }

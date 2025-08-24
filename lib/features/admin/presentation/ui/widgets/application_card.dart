@@ -79,7 +79,8 @@ class JobApplicationCard extends StatelessWidget {
                   icon: const Icon(Icons.picture_as_pdf, size: 18),
                   label: const Text("Resume"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                    backgroundColor:
+                        theme.colorScheme.primary.withValues(alpha: 0.1),
                     foregroundColor: theme.colorScheme.primary,
                     elevation: 0,
                     padding:
@@ -91,7 +92,7 @@ class JobApplicationCard extends StatelessWidget {
                   icon: const Icon(Icons.description, size: 18),
                   label: const Text("Cover Letter"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange.withOpacity(0.1),
+                    backgroundColor: Colors.orange.withValues(alpha: 0.1),
                     foregroundColor: Colors.orange,
                     elevation: 0,
                     padding:

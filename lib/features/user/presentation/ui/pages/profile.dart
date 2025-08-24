@@ -27,6 +27,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.read<UserProvider>();
     return Scaffold(
       appBar: myAppbar(
         context,
@@ -72,9 +73,10 @@ class ProfilePage extends StatelessWidget {
                                 subscription: provider.subscription!,
                                 onCancel: () {
                                   provider.cancel().then((_) {
-                                    showToast(context,
+                                    showToast(
                                         message: 'Success',
                                         type: ToastType.success);
+                                    userProvider.updateUserSub(user);
                                   });
                                 });
                           } else {

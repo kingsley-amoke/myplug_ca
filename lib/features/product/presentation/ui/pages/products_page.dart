@@ -35,7 +35,6 @@ class ProductsPage extends StatelessWidget {
               showPrice: true,
             ),
             Consumer<ProductProvider>(builder: (context, provider, _) {
-              print(provider.products.length);
               return ProductGrid(products: provider.allProducts);
             }),
           ],

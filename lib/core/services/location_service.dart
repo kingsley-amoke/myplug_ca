@@ -10,7 +10,6 @@ class LocationService {
     // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      print("Location services are disabled.");
       return null;
     }
 
@@ -19,20 +18,16 @@ class LocationService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print("Location permission denied.");
         return null;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      print("Location permission permanently denied.");
       return null;
     }
 
     // Get position
-    return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    return await Geolocator.getCurrentPosition();
   }
 
   /// Get full location info from coordinates
@@ -54,7 +49,7 @@ class LocationService {
         };
       }
     } catch (e) {
-      print("Error fetching address: $e");
+      return null;
     }
     return null;
   }

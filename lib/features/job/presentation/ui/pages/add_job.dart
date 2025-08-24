@@ -60,6 +60,7 @@ class _AddJobPageState extends State<AddJobPage> {
   }
 
   void _saveJob() async {
+    final navigator = Navigator.of(context);
     if (_formKey.currentState!.validate() &&
         _selectedType != null &&
         _location != null &&
@@ -81,16 +82,14 @@ class _AddJobPageState extends State<AddJobPage> {
               type: _selectedType!,
             )
             .then((_) {
-          showToast(context, message: 'Success', type: ToastType.success);
-          Navigator.pop(context);
+          showToast(message: 'Success', type: ToastType.success);
+          navigator.pop();
           setState(() {
             submitting = false;
           });
         });
       } catch (e) {
-        print(e.toString());
-        showToast(context,
-            message: 'Something went wrong', type: ToastType.error);
+        showToast(message: 'Something went wrong', type: ToastType.error);
         setState(() {
           submitting = false;
         });

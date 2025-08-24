@@ -51,38 +51,33 @@ class _ApplyJobState extends State<ApplyJob> {
 
     // Validate inputs
     if (firstnameController.text.trim().isEmpty) {
-      showToast(context,
-          message: "First name is required", type: ToastType.error);
+      showToast(message: "First name is required", type: ToastType.error);
       return;
     }
     if (lastnameController.text.trim().isEmpty) {
-      showToast(context,
-          message: "Last name is required", type: ToastType.error);
+      showToast(message: "Last name is required", type: ToastType.error);
       return;
     }
     if (phoneController.text.trim().isEmpty) {
-      showToast(context,
-          message: "Phone number is required", type: ToastType.error);
+      showToast(message: "Phone number is required", type: ToastType.error);
       return;
     }
     if (emailController.text.trim().isEmpty ||
         !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(emailController.text.trim())) {
-      showToast(context,
-          message: "Enter a valid email address", type: ToastType.error);
+      showToast(message: "Enter a valid email address", type: ToastType.error);
       return;
     }
     if (resume == null) {
-      showToast(context,
-          message: "Please upload your resume", type: ToastType.error);
+      showToast(message: "Please upload your resume", type: ToastType.error);
       return;
     }
     if (coverLetter == null) {
-      showToast(context,
+      showToast(
           message: "Please upload your cover letter", type: ToastType.error);
       return;
     }
     if (!user.isLoggedIn) {
-      showToast(context,
+      showToast(
           message: "You must be logged in to apply", type: ToastType.error);
       return;
     }
@@ -104,7 +99,7 @@ class _ApplyJobState extends State<ApplyJob> {
           userId: user.myplugUser!.id!,
         )
         .then((_) {
-      showToast(context,
+      showToast(
           message: 'Application submitted successfully',
           type: ToastType.success);
       navigator.popAndPushNamed('/');

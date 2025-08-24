@@ -27,10 +27,11 @@ class CustomDropdown<T> extends StatelessWidget {
     final theme = Theme.of(context);
 
     return DropdownButtonFormField<T>(
-      value: value,
+      initialValue: value,
       decoration: InputDecoration(
         filled: true,
-        fillColor: theme.colorScheme.surfaceVariant.withOpacity(0.2),
+        fillColor:
+            theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 14,
           horizontal: 16,
@@ -38,12 +39,12 @@ class CustomDropdown<T> extends StatelessWidget {
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: theme.colorScheme.onSurface.withOpacity(0.6),
+          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           fontSize: 15,
         ),
         labelText: labelText,
         labelStyle: TextStyle(
-          color: theme.colorScheme.primary.withOpacity(0.8),
+          color: theme.colorScheme.primary.withValues(alpha: 0.8),
           fontWeight: FontWeight.w600,
         ),
         enabledBorder: OutlineInputBorder(

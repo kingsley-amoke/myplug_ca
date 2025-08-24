@@ -1,71 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class MyInput extends StatelessWidget {
-//   const MyInput({
-//     super.key,
-//     required this.controller,
-//     this.obscureText = false,
-//     this.keyboardType = TextInputType.text,
-//     this.hintText,
-//     this.prefixIcon,
-//     this.suffixIcon,
-//     this.readOnly = false,
-//     this.maxLines = 1,
-//     this.onEditingComplete,
-//     this.onChanged,
-//     this.validator,
-//   });
-
-//   final TextEditingController controller;
-//   final bool obscureText;
-//   final TextInputType keyboardType;
-//   final String? hintText;
-//   final Widget? prefixIcon;
-//   final Widget? suffixIcon;
-//   final bool readOnly;
-//   final int? maxLines;
-//   final void Function()? onEditingComplete;
-//   final void Function(String)? onChanged;
-//   final String? Function(String?)? validator;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: controller,
-//       validator: validator,
-//       obscureText: obscureText,
-//       keyboardType: keyboardType,
-//       readOnly: readOnly,
-//       maxLines: maxLines,
-//       onEditingComplete: onEditingComplete,
-//       onChanged: onChanged,
-//       decoration: InputDecoration(
-//         prefixIcon: prefixIcon,
-//         suffixIcon: suffixIcon,
-//         hintText: hintText,
-//         hintStyle: TextStyle(
-//           color: Theme.of(context).colorScheme.onPrimary,
-//           fontSize: 16.0,
-//         ),
-//         border: const OutlineInputBorder(),
-//         enabledBorder: OutlineInputBorder(
-//           borderSide: BorderSide(
-//             color: Theme.of(context).colorScheme.onSurface,
-//             width: 2,
-//           ),
-//         ),
-//         focusedBorder: OutlineInputBorder(
-//           borderSide: BorderSide(
-//             color: Theme.of(context).colorScheme.onPrimary,
-//             width: 2,
-//           ),
-//           borderRadius: BorderRadius.circular(8.0),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 
 class MyInput extends StatelessWidget {
@@ -122,7 +54,8 @@ class MyInput extends StatelessWidget {
         ),
         decoration: InputDecoration(
           filled: true,
-          fillColor: theme.colorScheme.surfaceVariant.withOpacity(0.2),
+          fillColor:
+              theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
           contentPadding: const EdgeInsets.symmetric(
             vertical: 14,
             horizontal: 16,
@@ -132,12 +65,12 @@ class MyInput extends StatelessWidget {
           prefixText: prefixText,
           hintText: hintText,
           hintStyle: TextStyle(
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
             fontSize: 15,
           ),
           labelText: labelText,
           labelStyle: TextStyle(
-            color: theme.colorScheme.primary.withOpacity(0.8),
+            color: theme.colorScheme.primary.withValues(alpha: 0.8),
             fontWeight: FontWeight.w600,
           ),
           enabledBorder: OutlineInputBorder(

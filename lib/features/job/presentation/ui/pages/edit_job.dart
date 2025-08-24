@@ -81,13 +81,11 @@ class _EditJobPageState extends State<EditJobPage> {
 
       if (mounted) {
         Navigator.pop(context);
-        showToast(context,
-            message: "Job updated successfully", type: ToastType.success);
+        showToast(message: "Job updated successfully", type: ToastType.success);
       }
     } catch (e) {
       if (mounted) {
-        showToast(context,
-            message: "Job updated successfully", type: ToastType.success);
+        showToast(message: "Job updated successfully", type: ToastType.success);
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);

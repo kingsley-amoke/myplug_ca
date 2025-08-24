@@ -37,6 +37,8 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> _signup() async {
     setState(() => isLoading = true);
+    final navigator = Navigator.of(context);
+    final userProvider = context.read<UserProvider>();
     if (await doesDomainExist(emailController.text)) {
       if (_formKey.currentState!.validate() && selectedSkill != null) {
         if (passwordController.text == confirmPasswordController.text) {
@@ -47,22 +49,21 @@ class _SignupPageState extends State<SignupPage> {
               phone: phoneController.text,
               skills: [selectedSkill!]);
 
-          context.read<UserProvider>().signUp(
+          userProvider.signUp(
               user: user,
               address: addressController.text,
               password: passwordController.text);
         }
         setState(() => isLoading = false);
-        showToast(context, message: 'Success', type: ToastType.success);
-        Navigator.of(context).popAndPushNamed('/');
+        showToast(message: 'Success', type: ToastType.success);
+        navigator.popAndPushNamed('/');
       } else {
         setState(() => isLoading = false);
-        showToast(context,
-            message: 'Complete all fields', type: ToastType.error);
+        showToast(message: 'Complete all fields', type: ToastType.error);
       }
     } else {
       setState(() => isLoading = false);
-      showToast(context,
+      showToast(
           message: 'Please use a valid email address', type: ToastType.error);
     }
   }

@@ -48,12 +48,11 @@ class _AddPortfolioPageState extends State<AddPortfolioPage> {
                 : _linkController.text.trim(),
           );
 
-      showToast(context, message: 'Success', type: ToastType.success);
+      showToast(message: 'Success', type: ToastType.success);
 
       navigator.pop();
     } catch (e) {
-      showToast(context,
-          message: 'Something went wrong', type: ToastType.error);
+      showToast(message: 'Something went wrong', type: ToastType.error);
     } finally {
       setState(() => _isSubmitting = false);
     }

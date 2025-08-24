@@ -43,7 +43,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       await context.read<UserProvider>().changePassword();
 
       if (!mounted) return;
-      showToast(context,
+      showToast(
           message: "Password reset email sent successfully",
           type: ToastType.success);
 

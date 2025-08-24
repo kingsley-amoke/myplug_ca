@@ -14,7 +14,6 @@ class FirebaseImageUpload extends FileUploadRepo {
     required String path,
     required String id,
   }) async {
-    print('here');
     try {
       final fileName = "profile_${DateTime.now().millisecondsSinceEpoch}.jpg";
       final ref = _storage.ref().child("$path/$id/$fileName");
@@ -27,7 +26,6 @@ class FirebaseImageUpload extends FileUploadRepo {
 
       return downloadUrl;
     } catch (e) {
-      print("Error uploading image: $e");
       return null;
     }
   }
@@ -41,7 +39,6 @@ class FirebaseImageUpload extends FileUploadRepo {
       final uploadTask = await storageRef.putFile(file);
       return await uploadTask.ref.getDownloadURL();
     } catch (e) {
-      print("Error uploading file: $e");
       return null;
     }
   }
@@ -52,9 +49,7 @@ class FirebaseImageUpload extends FileUploadRepo {
     try {
       final ref = _storage.refFromURL(downloadUrl);
       await ref.delete();
-      print("✅ Image deleted successfully");
     } catch (e) {
-      print("❌ Failed to delete image: $e");
       rethrow;
     }
   }

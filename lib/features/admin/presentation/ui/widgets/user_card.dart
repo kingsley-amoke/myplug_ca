@@ -93,8 +93,8 @@ class UserCard extends StatelessWidget {
                       Chip(
                         label: Text(user.isAdmin ? "Admin" : "User"),
                         backgroundColor: user.isAdmin
-                            ? Colors.blue.withOpacity(0.1)
-                            : Colors.grey.withOpacity(0.1),
+                            ? Colors.blue.withValues(alpha: 0.1)
+                            : Colors.grey.withValues(alpha: 0.1),
                         labelStyle: TextStyle(
                           fontSize: 12,
                           color: user.isAdmin ? Colors.blue : Colors.grey,
@@ -106,8 +106,8 @@ class UserCard extends StatelessWidget {
                       Chip(
                         label: Text(user.isSuspended ? "Suspe..." : "Active"),
                         backgroundColor: user.isSuspended
-                            ? Colors.red.withOpacity(0.1)
-                            : Colors.green.withOpacity(0.1),
+                            ? Colors.red.withValues(alpha: 0.1)
+                            : Colors.green.withValues(alpha: 0.1),
                         labelStyle: TextStyle(
                           fontSize: 12,
                           color: user.isSuspended ? Colors.red : Colors.green,

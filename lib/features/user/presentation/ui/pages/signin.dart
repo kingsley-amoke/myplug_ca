@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     if (_formKey.currentState!.validate()) {
       setState(() => isLoading = true);
+      final navigator = Navigator.of(context);
       context
           .read<UserProvider>()
           .signIn(
@@ -33,9 +34,15 @@ class _LoginPageState extends State<LoginPage> {
             password: passwordController.text,
           )
           .then((v) {
-        setState(() => isLoading = false);
-        showToast(context, message: 'Success', type: ToastType.success);
-        Navigator.of(context).popAndPushNamed('/');
+        if (v) {
+          setState(() => isLoading = false);
+          showToast(message: 'Success', type: ToastType.success);
+          navigator.popAndPushNamed('/');
+        } else {
+          setState(() => isLoading = false);
+          showToast(
+              message: 'Invalid email or password', type: ToastType.error);
+        }
       });
     }
   }

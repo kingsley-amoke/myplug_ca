@@ -73,6 +73,7 @@ class _EditProductPageState extends State<EditProductPage> {
         saving = true;
       });
       final double price = double.tryParse(_priceController.text.trim()) ?? 0.0;
+      final navigator = Navigator.of(context);
 
       await context.read<ProductProvider>().editProduct(
             product: widget.product,
@@ -83,8 +84,8 @@ class _EditProductPageState extends State<EditProductPage> {
             existingImages: _existingImages,
             newImages: _newImages,
           );
-      showToast(context, message: 'Success', type: ToastType.success);
-      Navigator.pop(context);
+      showToast(message: 'Success', type: ToastType.success);
+      navigator.pop();
       saving = false;
     }
   }

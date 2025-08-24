@@ -44,10 +44,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (imageFile != null) {
       userProvider.uploadProfilePic(imageFile).then((res) {
         if (res) {
-          showToast(context, message: 'Success', type: ToastType.success);
+          showToast(message: 'Success', type: ToastType.success);
         } else {
-          showToast(context,
-              message: 'Something went wrong', type: ToastType.error);
+          showToast(message: 'Something went wrong', type: ToastType.error);
         }
       });
     }
@@ -171,7 +170,7 @@ class ProfileImageSection extends StatelessWidget {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                       child: Container(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Colors.black.withValues(alpha: 0.3),
                         child: const Center(
                           child: SizedBox(
                             height: 28,

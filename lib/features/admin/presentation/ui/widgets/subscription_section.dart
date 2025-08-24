@@ -3,6 +3,7 @@ import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar
 import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
 import 'package:myplug_ca/features/subscription/presentation/ui/widgets/user_sub_card.dart';
 import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +17,11 @@ class SubscriptionSection extends StatefulWidget {
 }
 
 class _SubscriptionSectionState extends State<SubscriptionSection> {
-  void _onCancel(BuildContext context, {required Subscription sub}) {
-    context.read<SubscriptionProvider>().cancelUserSubscription(sub);
+  void _onCancel(BuildContext context,
+      {required Subscription sub, required MyplugUser user}) async {
+    final userProvider = context.read<UserProvider>();
+    await context.read<SubscriptionProvider>().cancelUserSubscription(sub);
+    userProvider.updateUserSub(user);
   }
 
   @override
@@ -43,16 +47,15 @@ class _SubscriptionSectionState extends State<SubscriptionSection> {
                   itemCount: provider.filteredSubscriptions.length,
                   itemBuilder: (context, index) {
                     final sub = provider.filteredSubscriptions[index];
-                    final name = context
+                    final user = context
                         .read<UserProvider>()
                         .allUsers
-                        .firstWhere((u) => u.id == sub.userId)
-                        .fullname;
+                        .firstWhere((u) => u.id == sub.userId);
                     return UserSubCard(
                       subscription: sub,
-                      username: name,
+                      username: user.fullname,
                       isAdmin: true,
-                      onCancel: () => _onCancel(context, sub: sub),
+                      onCancel: () => _onCancel(context, sub: sub, user: user),
                     );
                   },
                 ),

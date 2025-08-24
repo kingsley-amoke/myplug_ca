@@ -14,6 +14,8 @@ import 'package:toastification/toastification.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 double getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
 }
@@ -210,12 +212,15 @@ String formatPlanDuration(Duration duration) {
 
 //show toast
 
-void showToast(
-  BuildContext context, {
+void showToast({
   required String message,
   required ToastType type,
 }) {
   ToastificationType toastType;
+
+  final context = navigatorKey.currentContext;
+
+  if (context == null) return;
 
   switch (type) {
     case ToastType.success:
@@ -259,7 +264,6 @@ Future<File?> pickImage({ImageSource source = ImageSource.gallery}) async {
       return null; // User cancelled
     }
   } catch (e) {
-    print("Error picking image: $e");
     return null;
   }
 }
@@ -279,7 +283,6 @@ Future<List<File>?> pickMultiImage(
       return null; // User cancelled
     }
   } catch (e) {
-    print("Error picking image: $e");
     return null;
   }
 }
@@ -303,7 +306,6 @@ Future<File?> pickFile({required String folder}) async {
     final file = File(result.files.single.path!);
     return file;
   } catch (e) {
-    print("Error uploading file: $e");
     return null;
   }
 }
@@ -312,11 +314,9 @@ void openLink(String url) async {
   final Uri url0 = Uri.parse(url);
   try {
     launchUrl(url0).then((e) {
-      if (!e) {
-        print('cannot launch url');
-      }
+      if (!e) {}
     });
   } catch (e) {
-    print(e.toString());
+    return;
   }
 }

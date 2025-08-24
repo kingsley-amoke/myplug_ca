@@ -29,16 +29,15 @@ class _FundWalletPageState extends State<FundWalletPage> {
     }
 
     setState(() => _isSubmitting = true);
-
+    final navigator = Navigator.of(context);
     try {
       await context.read<UserProvider>().fundWallet(amount);
       showToast(
-        context,
         message: "Wallet funded with ${formatPrice(amount: amount)}",
         type: ToastType.success,
       );
       _amountController.clear();
-      Navigator.of(context).pop();
+      navigator.pop();
     } finally {
       setState(() => _isSubmitting = false);
     }
@@ -64,7 +63,8 @@ class _FundWalletPageState extends State<FundWalletPage> {
               width: double.infinity,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceVariant.withOpacity(0.2),
+                color: theme.colorScheme.surfaceContainerHighest
+                    .withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(

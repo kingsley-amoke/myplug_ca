@@ -37,10 +37,13 @@ class UserProvider extends ChangeNotifier {
 
   UserProvider(this._userRepo);
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<bool> signIn({required String email, required String password}) async {
     _user = await _userRepo.signIn(email: email, password: password);
+    if (_user == null) return false;
+
     getLocation();
     notifyListeners();
+    return true;
   }
 
   Future<void> signUp(
@@ -202,7 +205,7 @@ class UserProvider extends ChangeNotifier {
     }).toList();
 
     usersByServiceLoading = false;
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> getLocation() async {
@@ -395,6 +398,14 @@ class UserProvider extends ChangeNotifier {
       allUsers.add(updatedUser);
 
       notifyListeners();
+    }
+  }
+
+  Future<void> updateUserSub(MyplugUser user) async {
+    _userRepo.updateProfile(user.copyWith(isSubscribed: false));
+
+    if (user.id == _user!.id) {
+      _user = myplugUser?.copyWith(isSubscribed: false);
     }
   }
 

@@ -18,12 +18,12 @@ Widget overviewSection({
         color: Colors.blue,
       ),
       const SizedBox(height: 12),
-      StatCard(
-        title: "Jobs",
-        value: formatLargeNumber(noOfJobs),
-        icon: Icons.work,
-        color: Colors.green,
-      ),
+      // StatCard(
+      //   title: "Jobs",
+      //   value: formatLargeNumber(noOfJobs),
+      //   icon: Icons.work,
+      //   color: Colors.green,
+      // ),
       const SizedBox(height: 12),
       StatCard(
         title: "Products",

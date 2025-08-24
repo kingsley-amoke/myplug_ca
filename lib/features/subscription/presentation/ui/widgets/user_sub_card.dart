@@ -8,14 +8,14 @@ import 'package:myplug_ca/features/subscription/domain/models/subscription.dart'
 class UserSubCard extends StatefulWidget {
   final Subscription subscription;
   final String? username;
-  bool? isAdmin = false;
-  Function()? onCancel;
+  final bool isAdmin;
+  final Function()? onCancel;
 
-  UserSubCard({
+  const UserSubCard({
     super.key,
     required this.subscription,
     this.username,
-    this.isAdmin,
+    required this.isAdmin,
     this.onCancel,
   });
 
@@ -113,7 +113,7 @@ class _SubscriptionCardState extends State<UserSubCard> {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                 ),
-                widget.isAdmin != null && widget.isAdmin!
+                widget.isAdmin
                     ? ElevatedButton(
                         onPressed: widget.onCancel,
                         style: ElevatedButton.styleFrom(

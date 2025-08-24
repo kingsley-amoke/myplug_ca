@@ -19,6 +19,7 @@ class MyplugUser {
   double bonus;
   final bool isAdmin;
   final bool isSuspended;
+  final bool isSubscribed;
   final String? image;
   final UserLocation? location;
   final List<Skill> skills;
@@ -40,6 +41,7 @@ class MyplugUser {
     this.bonus = 0.0,
     this.isAdmin = false,
     this.isSuspended = false,
+    this.isSubscribed = false,
     this.image,
     this.location,
     this.skills = const [],
@@ -63,6 +65,7 @@ class MyplugUser {
       bonus: (map['bonus'] ?? 0).toDouble(),
       isAdmin: map['isAdmin'] ?? false,
       isSuspended: map['isSuspended'] ?? false,
+      isSubscribed: map['isSubscribed'] ?? false,
       image: map['image'],
       location: map['location'] != null
           ? UserLocation.fromMap(map['location'] as Map<String, dynamic>)
@@ -101,6 +104,7 @@ class MyplugUser {
       'bonus': bonus,
       'isAdmin': isAdmin,
       'isSuspended': isSuspended,
+      'isSubscribed': isSubscribed,
       'image': image,
       'location': location?.toMap(),
       'skills': skills.map((e) => e.toMap()).toList(),
@@ -124,6 +128,7 @@ class MyplugUser {
     double? bonus,
     bool? isAdmin,
     bool? isSuspended,
+    bool? isSubscribed,
     String? image,
     UserLocation? location,
     List<Skill>? skills,
@@ -145,6 +150,7 @@ class MyplugUser {
       bonus: bonus ?? this.bonus,
       isAdmin: isAdmin ?? this.isAdmin,
       isSuspended: isSuspended ?? this.isSuspended,
+      isSubscribed: isSubscribed ?? this.isSubscribed,
       image: image ?? this.image,
       location: location ?? this.location,
       skills: skills ?? this.skills,

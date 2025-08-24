@@ -21,17 +21,17 @@ class Settings extends StatelessWidget {
   const Settings({super.key});
 
   Future<void> _changePassword(BuildContext context) async {
+    final navigator = Navigator.of(context);
     try {
       await context.read<UserProvider>().changePassword();
 
-      showToast(context,
+      showToast(
           message: "Password reset email sent successfully",
           type: ToastType.success);
 
-      Navigator.pop(context);
+      navigator.pop();
     } catch (e) {
-      showToast(context,
-          message: 'Something went wrong', type: ToastType.error);
+      showToast(message: 'Something went wrong', type: ToastType.error);
     }
   }
 
@@ -95,7 +95,7 @@ class Settings extends StatelessWidget {
                     onTap: () {
                       provider.myplugUser != null
                           ? provider.logout().then((v) {
-                              showToast(context,
+                              showToast(
                                   message: 'Success', type: ToastType.success);
                               navigator.popAndPushNamed('login');
                             })

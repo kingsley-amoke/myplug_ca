@@ -61,8 +61,8 @@ class StatCard extends StatelessWidget {
           children: [
             if (icon != null)
               CircleAvatar(
-                backgroundColor:
-                    (color ?? Theme.of(context).primaryColor).withOpacity(0.1),
+                backgroundColor: (color ?? Theme.of(context).primaryColor)
+                    .withValues(alpha: 0.1),
                 child: Icon(
                   icon,
                   color: color ?? Theme.of(context).primaryColor,

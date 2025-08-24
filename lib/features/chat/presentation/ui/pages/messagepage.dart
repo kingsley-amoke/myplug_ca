@@ -55,6 +55,17 @@ class _ChatScreenState extends State<ChatScreen> {
           text: text,
         );
     _input.clear();
+    _scrollToBottom();
+  }
+
+  void _scrollToBottom() {
+    if (_scroll.hasClients) {
+      _scroll.animateTo(
+        _scroll.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   void _onTypingChanged(String v) {
@@ -81,7 +92,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _repo = context.read<ChatProvider>();
+    final repo = context.read<ChatProvider>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -108,7 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           )
                         : Text(widget.otherUser.fullname[0].toUpperCase()),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,14 +160,14 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           Expanded(
             child: StreamBuilder<List<ChatMessage>>(
-              stream: _repo.messages(widget.conversationId),
+              stream: repo.messages(widget.conversationId),
               builder: (context, snap) {
                 if (!snap.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final messages = snap.data!;
                 // auto-mark as read when viewing
-                _repo.markAsRead(
+                repo.markAsRead(
                   conversationId: widget.conversationId,
                   userId: context.read<UserProvider>().myplugUser!.id!,
                 );
@@ -197,7 +208,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.04),
+                                color: Colors.black.withValues(alpha: 0.04),
                                 blurRadius: 2,
                                 offset: const Offset(0, 1),
                               )
@@ -214,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 6, vertical: 2),
                                   decoration: BoxDecoration(
-                                    color: Colors.yellow.withOpacity(0.6),
+                                    color: Colors.yellow.withValues(alpha: 0.6),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: const Text(

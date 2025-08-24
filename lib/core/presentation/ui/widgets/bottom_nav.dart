@@ -17,6 +17,13 @@ class BottomNav extends StatefulWidget {
 }
 
 int _currentIndex = 2;
+final List<Widget> _screens = [
+  const ConversationListScreen(),
+  const ProductsPage(),
+  const HomePage(),
+  const WalletPage(),
+  const Settings(),
+];
 
 class _BottomNavState extends State<BottomNav> {
   @override
@@ -33,14 +40,6 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _screens = [
-      const ConversationListScreen(),
-      const ProductsPage(),
-      const HomePage(),
-      const WalletPage(),
-      const Settings(),
-    ];
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {

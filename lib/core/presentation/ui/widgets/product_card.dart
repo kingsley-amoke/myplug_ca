@@ -129,10 +129,10 @@ class CustomProductCardState extends State<CustomProductCard> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.orange.withOpacity(0.9),
+                          color: Colors.orange.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Text(
+                        child: const Text(
                           'PROMOTED',
                           style: TextStyle(
                             color: Colors.white,

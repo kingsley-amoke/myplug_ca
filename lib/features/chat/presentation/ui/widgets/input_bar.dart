@@ -21,10 +21,10 @@ class InputBar extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            IconButton(
-              icon: const Icon(Icons.attach_file),
-              onPressed: () {/* TODO: send attachments */},
-            ),
+            // IconButton(
+            //   icon: const Icon(Icons.attach_file),
+            //   onPressed: () {/* TODO: send attachments */},
+            // ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),

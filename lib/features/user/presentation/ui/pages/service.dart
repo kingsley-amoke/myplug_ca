@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/core/constants/nigerian_states.dart';
+import 'package:myplug_ca/core/domain/models/toast.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/messagepage.dart';
 import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
 import 'package:myplug_ca/features/user/domain/models/skill.dart';
 import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
@@ -83,20 +85,28 @@ class _ServiceState extends State<Service> {
                           user: item,
                           onBook: () {
                             if (provider.myplugUser != null) {
-                              context
-                                  .read<ChatProvider>()
-                                  .createOrGetConversation(
-                                      provider.myplugUser!.id!, item.id!)
-                                  .then((conversationId) {
-                                navigator.push(
-                                  MaterialPageRoute(
-                                    builder: (_) => ChatScreen(
-                                      otherUser: item,
-                                      conversationId: conversationId,
+                              if (provider.myplugUser!.isSubscribed) {
+                                context
+                                    .read<ChatProvider>()
+                                    .createOrGetConversation(
+                                        provider.myplugUser!.id!, item.id!)
+                                    .then((conversationId) {
+                                  navigator.push(
+                                    MaterialPageRoute(
+                                      builder: (_) => ChatScreen(
+                                        otherUser: item,
+                                        conversationId: conversationId,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              });
+                                  );
+                                });
+                              } else {
+                                showToast(
+                                    message: 'Please subscribe to continue',
+                                    type: ToastType.error);
+                                navigator.push(MaterialPageRoute(
+                                    builder: (_) => const SubscriptionPage()));
+                              }
                             }
                           },
                           onViewProfile: () {

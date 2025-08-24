@@ -146,7 +146,7 @@ class PromotionCard extends StatelessWidget {
 
                   if (userProvider.isLoggedIn) {
                     if (userProvider.myplugUser!.balance < plan.price) {
-                      showToast(context,
+                      showToast(
                           message: 'Insufficient balance',
                           type: ToastType.error);
                       return;
@@ -168,14 +168,13 @@ class PromotionCard extends StatelessWidget {
                         )
                         .then((res) {
                       if (res) {
-                        showToast(context,
-                            message: 'Success', type: ToastType.success);
+                        showToast(message: 'Success', type: ToastType.success);
 
                         productProvider.promoteProduct(product);
 
                         navigator.pop();
                       } else {
-                        showToast(context,
+                        showToast(
                             message: 'Something went wrong',
                             type: ToastType.error);
                       }
