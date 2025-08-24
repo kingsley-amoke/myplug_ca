@@ -108,16 +108,15 @@ class _GlobalSearchPageState extends State<GlobalSearchPage> {
                           if (provider.myplugUser != null) {
                             context
                                 .read<ChatProvider>()
-                                .createConversation(
-                                    senderId: provider.myplugUser!.id!,
-                                    receiverId: u.id!)
+                                .createOrGetConversation(
+                                    provider.myplugUser!.id!, u.id!)
                                 .then((conversationId) {
                               navigator.push(
                                 MaterialPageRoute(
-                                  builder: (_) => MessagePage(
-                                      currentUserId: provider.myplugUser!.id!,
-                                      otherUser: u,
-                                      conversationId: conversationId),
+                                  builder: (_) => ChatScreen(
+                                    otherUser: u,
+                                    conversationId: conversationId,
+                                  ),
                                 ),
                               );
                             });

@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/core/config/config.dart';
 import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
 import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
 import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
@@ -7,6 +7,7 @@ import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 
 class ChatProvider extends ChangeNotifier {
   final ChatRepoImpl _chatRepoImpl;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   ChatProvider(this._chatRepoImpl);
 
@@ -16,11 +17,26 @@ class ChatProvider extends ChangeNotifier {
 
   List<Conversation> filteredConversations = [];
 
+  int totalUnread = 0;
+
   void initUserConversations(List<Conversation> conversations) {
     _userChats = conversations;
     filteredConversations = conversations;
+    // calculateTotalUnread(userId);
 
     // notifyListeners();
+  }
+
+  int calculateTotalUnread(List<Conversation> conversations, String id) {
+    int total = 0;
+    for (final c in _userChats) {
+      final unread = c.unreadCounts[id] ?? 0;
+      total += unread;
+    }
+
+    totalUnread = total;
+    notifyListeners();
+    return total;
   }
 
   List<Conversation> searchConversations({
@@ -50,31 +66,9 @@ class ChatProvider extends ChangeNotifier {
     }
 
     filteredConversations = matches;
-    print(filteredConversations.length);
+
     notifyListeners();
     return filteredConversations;
-  }
-
-  void onOpenConversation(Conversation conversation) {
-    conversation.unreadCount = 0;
-    notifyListeners();
-  }
-
-  //load message
-  Stream<List<ChatMessage>> loadMessage(
-      {required String conversationId, required String currentUserId}) {
-    return _chatRepoImpl.getMessageStream(
-        conversationId: conversationId, currentUserId: currentUserId);
-  }
-
-  //send message
-
-  Future<void> sendMessage(
-      {required ChatMessage message, required String conversationId}) async {
-    await _chatRepoImpl.sendMessage(
-      message: message,
-      conversationId: conversationId,
-    );
   }
 
   Future<void> markMessagesAsSeen(
@@ -83,15 +77,73 @@ class ChatProvider extends ChangeNotifier {
         conversationId, currentUserId);
   }
 
-  //delete message
-
-  //create conversation
-  Future<String> createConversation(
-      {required String senderId, required String receiverId}) async {
-    final conversationId =
-        createConversationId(senderId: senderId, receiverId: receiverId);
-    await _chatRepoImpl.createConversation(conversationId);
-    return conversationId;
+  String conversationIdFor(String a, String b) {
+    final ids = [a, b]..sort();
+    return ids.join('_');
   }
-  //delete conversation
+
+  Future<String> createOrGetConversation(String me, String other) async {
+    final id = conversationIdFor(me, other);
+
+    _chatRepoImpl.createConversation(
+      conversationId: id,
+      myId: me,
+      otherId: other,
+    );
+
+    return id;
+  }
+
+  Stream<List<Conversation>> conversationsFor(String userId) {
+    return _chatRepoImpl.getUserConversationsStream(userId);
+  }
+
+  Stream<List<ChatMessage>> messages(String conversationId) {
+    return _chatRepoImpl.getMessageStream(conversationId: conversationId);
+  }
+
+  Future<void> sendText({
+    required String conversationId,
+    required String senderId,
+    required String receiverId,
+    required String text,
+  }) async {
+    await _chatRepoImpl.sendMessage(
+      conversationId: conversationId,
+      senderId: senderId,
+      receiverId: receiverId,
+      text: text,
+    );
+  }
+
+  Future<void> markAsRead({
+    required String conversationId,
+    required String userId,
+  }) async {
+    await _chatRepoImpl.markMessagesAsSeen(conversationId, userId);
+  }
+
+  Future<void> updateTyping({
+    required String conversationId,
+    required String userId,
+    required bool isTyping,
+  }) async {
+    await _db
+        .collection('conversations')
+        .doc(conversationId)
+        .update({'typing.$userId': isTyping});
+  }
+
+  /// Search messages by text (simple client-side contains after fetching).
+  /// For large chats, consider Firestore full-text via a search service.
+  Future<List<ChatMessage>> searchMessages({
+    required String conversationId,
+    required String query,
+    int limit = 200,
+  }) async {
+    return await _chatRepoImpl.searchMessages(
+      conversationId: conversationId,
+      query: query,
+    );
+  }
 }

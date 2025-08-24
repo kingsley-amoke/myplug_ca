@@ -1,209 +1,261 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
 import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
+import 'package:myplug_ca/features/chat/presentation/ui/widgets/input_bar.dart';
+import 'package:myplug_ca/features/chat/presentation/ui/widgets/typing_item.dart';
 import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
 import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
 import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class MessagePage extends StatefulWidget {
-  final String currentUserId;
-  final MyplugUser otherUser;
+class ChatScreen extends StatefulWidget {
   final String conversationId;
+  final MyplugUser otherUser;
 
-  const MessagePage({
+  const ChatScreen({
     super.key,
-    required this.currentUserId,
-    required this.otherUser,
     required this.conversationId,
+    required this.otherUser,
   });
 
   @override
-  State<MessagePage> createState() => _MessagePageState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-final messageController = TextEditingController();
+class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _input = TextEditingController();
+  final TextEditingController _search = TextEditingController();
+  bool _searchMode = false;
+  List<ChatMessage> _searchResults = [];
+  final ScrollController _scroll = ScrollController();
 
-class _MessagePageState extends State<MessagePage> {
   @override
   void initState() {
     super.initState();
+    context.read<ChatProvider>().markAsRead(
+          conversationId: widget.conversationId,
+          userId: context.read<UserProvider>().myplugUser!.id!,
+        );
+  }
 
-    // When user enters chat, mark all as seen
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context
-          .read<ChatProvider>()
-          .markMessagesAsSeen(widget.conversationId, widget.currentUserId);
-    });
+  @override
+  void dispose() {
+    _input.dispose();
+    _search.dispose();
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  Future<void> _doSend() async {
+    final text = _input.text.trim();
+    if (text.isEmpty) return;
+    await context.read<ChatProvider>().sendText(
+          conversationId: widget.conversationId,
+          senderId: context.read<UserProvider>().myplugUser!.id!,
+          receiverId: widget.otherUser.id!,
+          text: text,
+        );
+    _input.clear();
+  }
+
+  void _onTypingChanged(String v) {
+    context.read<ChatProvider>().updateTyping(
+          conversationId: widget.conversationId,
+          userId: context.read<UserProvider>().myplugUser!.id!,
+          isTyping: v.isNotEmpty,
+        );
+  }
+
+  Future<void> _runSearch() async {
+    final q = _search.text.trim();
+    if (q.isEmpty) {
+      setState(() => _searchResults = []);
+      return;
+    }
+    final r = await context.read<ChatProvider>().searchMessages(
+          conversationId: widget.conversationId,
+          query: q,
+          limit: 400,
+        );
+    setState(() => _searchResults = r);
   }
 
   @override
   Widget build(BuildContext context) {
+    final _repo = context.read<ChatProvider>();
     return Scaffold(
-      appBar: myAppbar(context, title: widget.otherUser.fullname),
-      body: Column(
-        children: [
-          /// MESSAGES
-          Expanded(
-            child: StreamBuilder<List<ChatMessage>>(
-                stream: context.watch<ChatProvider>().loadMessage(
-                    conversationId: widget.conversationId,
-                    currentUserId:
-                        context.read<UserProvider>().myplugUser!.id!),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  final messages = snapshot.data!;
-                  return ListView.builder(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    reverse: true, // new messages at bottom
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      final msg = messages[index];
-                      final isMine = msg.senderId == widget.currentUserId;
-
-                      return Align(
-                        alignment: isMine
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.75,
-                          ),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isMine
-                                  ? const Color(
-                                      0xFFDAA579) // your theme’s primary
-                                  : Colors.grey.shade800,
-                              borderRadius: BorderRadius.only(
-                                topLeft: const Radius.circular(16),
-                                topRight: const Radius.circular(16),
-                                bottomLeft: isMine
-                                    ? const Radius.circular(16)
-                                    : const Radius.circular(0),
-                                bottomRight: isMine
-                                    ? const Radius.circular(0)
-                                    : const Radius.circular(16),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withAlpha(50),
-                                  blurRadius: 2,
-                                  offset: const Offset(1, 2),
-                                )
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        msg.content,
-                                        softWrap: true,
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 6),
-                                    // if (isMine) _buildStatusIcon(msg.status),
-                                  ],
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  DateFormat('hh:mm a').format(msg.timestamp),
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }),
-          ),
-
-          /// INPUT FIELD
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              child: Row(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.chevron_left)),
+        title: _searchMode
+            ? TextField(
+                controller: _search,
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: 'Search messages',
+                  border: InputBorder.none,
+                ),
+                onChanged: (_) => _runSearch(),
+              )
+            : Row(
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    color: Colors.grey[600],
-                    onPressed: () {
-                      // attach file / media
-                    },
+                  CircleAvatar(
+                    child: widget.otherUser.image != null
+                        ? ClipOval(
+                            child: Image.network(widget.otherUser.image!),
+                          )
+                        : Text(widget.otherUser.fullname[0].toUpperCase()),
                   ),
-                  Expanded(
-                    child: TextField(
-                      controller: messageController,
-                      decoration: InputDecoration(
-                        hintText: 'Type a message...',
-                        filled: true,
-                        fillColor: Colors.grey.shade200,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
-                        ),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.otherUser.fullname),
+                      TypingIndicator(
+                        conversationId: widget.conversationId,
+                        otherUserId: widget.otherUser.id!,
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFDAA579), // primary color
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.send, color: Colors.white),
-                      onPressed: () {
-                        final message = ChatMessage(
-                          senderId: widget.currentUserId,
-                          receiverId: widget.otherUser.id!,
-                          content: messageController.text,
-                          timestamp: DateTime.now(),
-                        );
-
-                        context
-                            .read<ChatProvider>()
-                            .sendMessage(
-                              message: message,
-                              conversationId: widget.conversationId,
-                            )
-                            .then((_) {
-                          messageController.clear();
-                        });
-                      },
-                    ),
+                    ],
                   ),
                 ],
               ),
+        actions: [
+          IconButton(
+            icon: Icon(_searchMode ? Icons.close : Icons.search),
+            onPressed: () {
+              setState(() {
+                _searchMode = !_searchMode;
+                _searchResults = [];
+                _search.clear();
+              });
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          if (_searchMode)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                _searchResults.isEmpty
+                    ? 'Type to search…'
+                    : 'Found ${_searchResults.length} message(s)',
+                style: const TextStyle(fontSize: 12),
+              ),
             ),
+          Expanded(
+            child: StreamBuilder<List<ChatMessage>>(
+              stream: _repo.messages(widget.conversationId),
+              builder: (context, snap) {
+                if (!snap.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                final messages = snap.data!;
+                // auto-mark as read when viewing
+                _repo.markAsRead(
+                  conversationId: widget.conversationId,
+                  userId: context.read<UserProvider>().myplugUser!.id!,
+                );
+
+                return ListView.builder(
+                  controller: _scroll,
+                  padding: const EdgeInsets.all(12),
+                  itemCount: messages.length,
+                  itemBuilder: (context, i) {
+                    final m = messages[i];
+                    final isMe = m.senderId ==
+                        context.read<UserProvider>().myplugUser!.id!;
+                    final highlight = _searchMode &&
+                        _search.text.isNotEmpty &&
+                        m.text
+                            .toLowerCase()
+                            .contains(_search.text.toLowerCase());
+
+                    return Align(
+                      alignment:
+                          isMe ? Alignment.centerRight : Alignment.centerLeft,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.75,
+                        ),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 4),
+                          padding: const EdgeInsets.fromLTRB(12, 8, 10, 6),
+                          decoration: BoxDecoration(
+                            color: isMe
+                                ? const Color(0xFFD2F8D2)
+                                : const Color(0xFFEDEDED),
+                            borderRadius: BorderRadius.only(
+                              topLeft: const Radius.circular(12),
+                              topRight: const Radius.circular(12),
+                              bottomLeft: Radius.circular(isMe ? 12 : 2),
+                              bottomRight: Radius.circular(isMe ? 2 : 12),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.04),
+                                blurRadius: 2,
+                                offset: const Offset(0, 1),
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: isMe
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
+                            children: [
+                              if (highlight)
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.yellow.withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Text(
+                                    'Match',
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              Text(m.text),
+                              const SizedBox(height: 4),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    _timeShort(m.sentAt),
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  if (isMe) ...[
+                                    const SizedBox(width: 6),
+                                    _statusIcon(m.status),
+                                  ]
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          InputBar(
+            controller: _input,
+            onChanged: _onTypingChanged,
+            onSend: _doSend,
           ),
         ],
       ),
@@ -211,15 +263,19 @@ class _MessagePageState extends State<MessagePage> {
   }
 }
 
-// Widget _buildStatusIcon(MessageStatus status) {
-//   switch (status) {
-//     case MessageStatus.sending:
-//       return const Icon(Icons.access_time, size: 14, color: Colors.grey);
-//     case MessageStatus.sent:
-//       return const Icon(Icons.check, size: 14, color: Colors.grey);
-//     case MessageStatus.delivered:
-//       return const Icon(Icons.done_all, size: 14, color: Colors.grey);
-//     case MessageStatus.seen:
-//       return const Icon(Icons.done_all, size: 14, color: Colors.blueAccent);
-//   }
-// }
+Widget _statusIcon(MessageStatus s) {
+  switch (s) {
+    case MessageStatus.sent:
+      return const Icon(Icons.check, size: 16, color: Colors.grey);
+    case MessageStatus.delivered:
+      return const Icon(Icons.done_all, size: 18, color: Colors.grey);
+    case MessageStatus.read:
+      return const Icon(Icons.done_all, size: 18, color: Colors.blue);
+  }
+}
+
+String _timeShort(DateTime t) {
+  final h = t.hour.toString().padLeft(2, '0');
+  final m = t.minute.toString().padLeft(2, '0');
+  return '$h:$m';
+}

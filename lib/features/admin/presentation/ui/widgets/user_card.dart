@@ -34,8 +34,9 @@ class UserCard extends StatelessWidget {
     final userProvider = context.read<UserProvider>();
 
     if (userProvider.isLoggedIn) {
-      context.read<ChatProvider>().createConversation(
-          senderId: userProvider.myplugUser!.id!, receiverId: user.id!);
+      context
+          .read<ChatProvider>()
+          .createOrGetConversation(userProvider.myplugUser!.id!, user.id!);
     }
   }
 

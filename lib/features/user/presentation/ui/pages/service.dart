@@ -85,16 +85,15 @@ class _ServiceState extends State<Service> {
                             if (provider.myplugUser != null) {
                               context
                                   .read<ChatProvider>()
-                                  .createConversation(
-                                      senderId: provider.myplugUser!.id!,
-                                      receiverId: item.id!)
+                                  .createOrGetConversation(
+                                      provider.myplugUser!.id!, item.id!)
                                   .then((conversationId) {
                                 navigator.push(
                                   MaterialPageRoute(
-                                    builder: (_) => MessagePage(
-                                        currentUserId: provider.myplugUser!.id!,
-                                        otherUser: item,
-                                        conversationId: conversationId),
+                                    builder: (_) => ChatScreen(
+                                      otherUser: item,
+                                      conversationId: conversationId,
+                                    ),
                                   ),
                                 );
                               });

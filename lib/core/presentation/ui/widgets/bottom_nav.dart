@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
 import 'package:myplug_ca/core/presentation/ui/pages/settings.dart';
 import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
+import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
 import 'package:myplug_ca/features/product/presentation/ui/pages/products_page.dart';
 import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
 import 'package:myplug_ca/features/user/presentation/ui/pages/wallet.dart';
@@ -14,14 +15,6 @@ class BottomNav extends StatefulWidget {
   @override
   State<BottomNav> createState() => _BottomNavState();
 }
-
-final List<Widget> _screens = [
-  const ChatPage(),
-  const ProductsPage(),
-  const HomePage(),
-  const WalletPage(),
-  const Settings(),
-];
 
 int _currentIndex = 2;
 
@@ -40,6 +33,14 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _screens = [
+      const ConversationListScreen(),
+      const ProductsPage(),
+      const HomePage(),
+      const WalletPage(),
+      const Settings(),
+    ];
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -64,19 +65,42 @@ class _BottomNavState extends State<BottomNav> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _currentIndex = 0;
-                });
-              },
-              icon: Icon(
-                Icons.message,
-                size: 30,
-                color: _currentIndex == 0
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).unselectedWidgetColor,
-              ),
+            Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _currentIndex = 0;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.message,
+                    size: 30,
+                    color: _currentIndex == 0
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).unselectedWidgetColor,
+                  ),
+                ),
+                Positioned(
+                  right: 2,
+                  child:
+                      Consumer<ChatProvider>(builder: (context, provider, _) {
+                    int unread = provider.totalUnread;
+
+                    return unread > 0
+                        ? CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Colors.green,
+                            child: Text(
+                              unread.toString(),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 12),
+                            ),
+                          )
+                        : Container();
+                  }),
+                ),
+              ],
             ),
             Row(
               children: [

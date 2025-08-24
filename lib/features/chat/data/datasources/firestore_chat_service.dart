@@ -9,18 +9,20 @@ class FirestoreChatService extends ChatRepository {
   FirestoreChatService(this._firestore);
 
   @override
-  Future<String> createConversation(String conversationId) async {
-    final docRef = _firestore.collection('chats').doc(conversationId);
-    final exists = (await docRef.get()).exists;
-
-    if (!exists) {
-      await docRef.set({
-        'id': conversationId,
-        'participants': conversationId.split('_'), // Assuming deterministic ID
-        'last_message': null,
-        'last_sent_at': null,
-        'last_message_status': null,
-        'is_last_message_from_current_user': null,
+  Future<String> createConversation({
+    required String conversationId,
+    required String myId,
+    required String otherId,
+  }) async {
+    final ref = _firestore.collection('conversations').doc(conversationId);
+    final snap = await ref.get();
+    if (!snap.exists) {
+      await ref.set({
+        'participants': [myId, otherId],
+        'lastMessage': null,
+        'lastSentAt': null,
+        'unreadCounts': {myId: 0, otherId: 0},
+        'typing': {myId: false, otherId: false},
       });
     }
 
@@ -63,113 +65,56 @@ class FirestoreChatService extends ChatRepository {
     await convoRef.delete();
   }
 
-  // @override
-  // Future<void> sendMessage({
-  //   required ChatMessage message,
-  //   required String conversationId,
-  // }) async {
-  //   final docRef = _firestore
-  //       .collection('chats')
-  //       .doc(conversationId)
-  //       .collection('messages')
-  //       .doc();
-
-  //   await docRef.set(message.copyWith(id: docRef.id).toMap());
-
-  //   // Update conversation metadata
-  //   await _firestore.collection('chats').doc(conversationId).update({
-  //     'last_message': message.content,
-  //     'last_sent_at': message.timestamp.toIso8601String(),
-  //   });
-  // }
-
   @override
   Future<void> sendMessage({
-    required ChatMessage message,
+    required String senderId,
+    required String receiverId,
+    required String text,
     required String conversationId,
   }) async {
-    final docRef = _firestore
-        .collection('chats')
-        .doc(conversationId)
-        .collection('messages')
-        .doc();
+    final convRef = _firestore.collection('conversations').doc(conversationId);
+    final msgRef = convRef.collection('messages').doc();
 
-    // Save message as "sent"
-    final newMessage = message.copyWith(
-      id: docRef.id,
-      status: MessageStatus.sent,
-    );
-
-    await docRef.set(newMessage.toMap());
-
-    // Update conversation metadata
-    await _firestore.collection('chats').doc(conversationId).update({
-      'last_message': newMessage.content,
-      'last_sent_at': newMessage.timestamp.toIso8601String(),
+    await _firestore.runTransaction((tx) async {
+      tx.set(msgRef, {
+        'senderId': senderId,
+        'text': text,
+        'sentAt': FieldValue.serverTimestamp(),
+        'status': 'sent',
+      });
+      tx.update(convRef, {
+        'lastMessage': text,
+        'lastSentAt': FieldValue.serverTimestamp(),
+        'unreadCounts.$receiverId': FieldValue.increment(1),
+        // mark sender typing false on send
+        'typing.$senderId': false,
+      });
     });
-
-    // (Optional) Mark as delivered immediately if all participants are online
-    // Or listen via snapshot when recipient retrieves messages, then update
-    _firestore
-        .collection('chats')
-        .doc(conversationId)
-        .collection('messages')
-        .doc(docRef.id)
-        .update({'status': MessageStatus.delivered.name});
   }
 
   @override
   Stream<List<Conversation>> getUserConversationsStream(String userId) {
     return _firestore
-        .collection('chats')
+        .collection('conversations')
         .where('participants', arrayContains: userId)
-        .orderBy('last_sent_at', descending: true)
+        .orderBy('lastSentAt', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => Conversation.fromMap(doc.data(), doc.id))
-            .toList());
+        .map((s) =>
+            s.docs.map((d) => Conversation.fromMap(d.data(), d.id)).toList());
   }
 
-  // @override
-  // Stream<List<ChatMessage>> getMessageStream(String conversationId) {
-  //   return _firestore
-  //       .collection('chats')
-  //       .doc(conversationId)
-  //       .collection('messages')
-  //       .orderBy('timestamp')
-  //       .snapshots()
-  //       .map((snapshot) => snapshot.docs
-  //           .map((doc) => ChatMessage.fromMap(doc.data(), doc.id))
-  //           .toList());
-  // }
   @override
-  Stream<List<ChatMessage>> getMessageStream(
-      {required String conversationId, required String currentUserId}) {
+  Stream<List<ChatMessage>> getMessageStream({
+    required String conversationId,
+  }) {
     return _firestore
-        .collection('chats')
+        .collection('conversations')
         .doc(conversationId)
         .collection('messages')
-        .orderBy('timestamp', descending: true)
+        .orderBy('sentAt', descending: false)
         .snapshots()
-        .map((snapshot) {
-      final messages = snapshot.docs.map((doc) {
-        return ChatMessage.fromMap(doc.data(), doc.id);
-      }).toList();
-
-      // Mark messages addressed to current user as delivered
-      for (var msg in messages) {
-        if (msg.senderId != currentUserId && msg.status == MessageStatus.sent) {
-          _firestore
-              .collection('chats')
-              .doc(conversationId)
-              .collection('messages')
-              .doc(msg.id)
-              .update({'status': MessageStatus.delivered.name});
-        }
-      }
-
-      return messages;
-    });
+        .map((s) =>
+            s.docs.map((d) => ChatMessage.fromMap(d.data(), d.id)).toList());
   }
 
   @override
@@ -192,18 +137,53 @@ class FirestoreChatService extends ChatRepository {
   }
 
   @override
-  Future<void> markMessagesAsSeen(
-      String conversationId, String currentUserId) async {
-    final query = await _firestore
-        .collection('chats')
+  Future<void> markMessagesAsSeen(String conversationId, String userId) async {
+    final convRef = _firestore.collection('conversations').doc(conversationId);
+    final msgsRef = convRef.collection('messages');
+
+    await _firestore.runTransaction((tx) async {
+      tx.update(convRef, {'unreadCounts.$userId': 0});
+      // Mark all messages from other as read (idempotent)
+      final unread = await msgsRef.where('status', isNotEqualTo: 'read').get();
+      for (final d in unread.docs) {
+        // Only mark messages not sent by user
+        if ((d.data()['senderId'] as String?) != userId) {
+          tx.update(d.reference, {'status': 'read'});
+        }
+      }
+    });
+  }
+
+  @override
+  Future<void> updateTyping({
+    required String conversationId,
+    required String userId,
+    required bool isTyping,
+  }) async {
+    await _firestore
+        .collection('conversations')
+        .doc(conversationId)
+        .update({'typing.$userId': isTyping});
+  }
+
+  @override
+  Future<List<ChatMessage>> searchMessages({
+    required String conversationId,
+    required String query,
+    int limit = 200,
+  }) async {
+    final snap = await _firestore
+        .collection('conversations')
         .doc(conversationId)
         .collection('messages')
-        .where('sender_id', isNotEqualTo: currentUserId)
-        .where('status', isEqualTo: MessageStatus.delivered.name)
+        .orderBy('sentAt', descending: true)
+        .limit(limit)
         .get();
 
-    for (var doc in query.docs) {
-      await doc.reference.update({'status': MessageStatus.seen.name});
-    }
+    final all =
+        snap.docs.map((d) => ChatMessage.fromMap(d.data(), d.id)).toList();
+    return all
+        .where((m) => m.text.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 }

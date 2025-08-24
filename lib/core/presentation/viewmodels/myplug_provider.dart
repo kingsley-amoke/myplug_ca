@@ -120,18 +120,4 @@ class MyplugProvider extends ChangeNotifier {
 
   //cancel promotion
   Future<void> checkAndCancelPromotions() async {}
-
-  //suspend user
-
-  //make user admin
-
-  //delete user
-
-  //delete chat
-
-  //get user conversation
-  Stream<List<Conversation>> getUserConversationStream() {
-    return chatRepoImpl
-        .getUserConversationsStream(userRepoImpl.currentUser!.id!);
-  }
 }

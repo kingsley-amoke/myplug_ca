@@ -58,7 +58,7 @@ class _BioSectionState extends State<BioSection> {
                       TextField(
                         controller: _bioController,
                         decoration: InputDecoration(
-                          hintText: widget.user.bio ?? "Write here..",
+                          hintText: "Write here..",
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(

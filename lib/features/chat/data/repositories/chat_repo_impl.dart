@@ -8,8 +8,16 @@ class ChatRepoImpl extends ChatRepository {
   ChatRepoImpl(this._databaseService);
 
   @override
-  Future<String> createConversation(String conversationId) async {
-    return await _databaseService.createConversation(conversationId);
+  Future<String> createConversation({
+    required String conversationId,
+    required String myId,
+    required String otherId,
+  }) async {
+    return await _databaseService.createConversation(
+      conversationId: conversationId,
+      myId: myId,
+      otherId: otherId,
+    );
   }
 
   @override
@@ -28,10 +36,18 @@ class ChatRepoImpl extends ChatRepository {
   }
 
   @override
-  Future<void> sendMessage(
-      {required ChatMessage message, required String conversationId}) async {
+  Future<void> sendMessage({
+    required String conversationId,
+    required String senderId,
+    required String receiverId,
+    required String text,
+  }) async {
     return await _databaseService.sendMessage(
-        message: message, conversationId: conversationId);
+      conversationId: conversationId,
+      senderId: senderId,
+      receiverId: receiverId,
+      text: text,
+    );
   }
 
   @override
@@ -40,10 +56,12 @@ class ChatRepoImpl extends ChatRepository {
   }
 
   @override
-  Stream<List<ChatMessage>> getMessageStream(
-      {required String conversationId, required String currentUserId}) {
+  Stream<List<ChatMessage>> getMessageStream({
+    required String conversationId,
+  }) {
     return _databaseService.getMessageStream(
-        conversationId: conversationId, currentUserId: currentUserId);
+      conversationId: conversationId,
+    );
   }
 
   @override
@@ -60,5 +78,30 @@ class ChatRepoImpl extends ChatRepository {
       String conversationId, String currentUserId) async {
     return await _databaseService.markMessagesAsSeen(
         conversationId, currentUserId);
+  }
+
+  @override
+  Future<void> updateTyping({
+    required String conversationId,
+    required String userId,
+    required bool isTyping,
+  }) async {
+    return await _databaseService.updateTyping(
+      conversationId: conversationId,
+      userId: userId,
+      isTyping: isTyping,
+    );
+  }
+
+  @override
+  Future<List<ChatMessage>> searchMessages({
+    required String conversationId,
+    required String query,
+    int limit = 200,
+  }) async {
+    return await _databaseService.searchMessages(
+      conversationId: conversationId,
+      query: query,
+    );
   }
 }

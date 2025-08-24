@@ -14,25 +14,6 @@ class Shops extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CustomButton(
-                    text: 'My Products',
-                    onPressed: () {
-                      //TODO: navigate to my products
-                    }),
-                CustomButton(
-                    text: 'Add Product',
-                    onPressed: () {
-                      //TODO: navigate to add product
-                    })
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
