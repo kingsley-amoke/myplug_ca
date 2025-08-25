@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
-import 'package:myplug_ca/features/job/domain/models/application.dart';
-import 'package:myplug_ca/features/job/domain/models/document_type.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/job/data/repositories/job_repo_impl.dart';
+import 'package:fixnbuy/features/job/domain/models/application.dart';
+import 'package:fixnbuy/features/job/domain/models/document_type.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 class JobProvider extends ChangeNotifier {
   final JobRepoImpl _jobRepoImpl;

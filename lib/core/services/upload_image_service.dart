@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:myplug_ca/core/domain/repositories/image_upload_repo.dart';
+import 'package:fixnbuy/core/domain/repositories/image_upload_repo.dart';
 
 class FirebaseImageUpload extends FileUploadRepo {
   final FirebaseStorage _storage;

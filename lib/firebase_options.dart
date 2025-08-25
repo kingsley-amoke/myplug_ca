@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCnnhr0fajpNKNWPoen8jaY78QtOQO5vao',
-    appId: '1:1029516780358:web:2048853a5f47a040917b47',
-    messagingSenderId: '1029516780358',
-    projectId: 'myplug-ca',
-    authDomain: 'myplug-ca.firebaseapp.com',
-    storageBucket: 'myplug-ca.firebasestorage.app',
+    apiKey: 'AIzaSyCtf8HVOAARQaiK_0pH25f6m7_OODqceOc',
+    appId: '1:151303490742:web:37ce2ade76598fb4e36a17',
+    messagingSenderId: '151303490742',
+    projectId: 'fixnbuy',
+    authDomain: 'fixnbuy.firebaseapp.com',
+    storageBucket: 'fixnbuy.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBzZmIyiwppQ0qeAxu-UdRYlK2RTD43o20',
-    appId: '1:1029516780358:android:3a37a394c7938e45917b47',
-    messagingSenderId: '1029516780358',
-    projectId: 'myplug-ca',
-    storageBucket: 'myplug-ca.firebasestorage.app',
+    apiKey: 'AIzaSyCjhxm3ZPmyyNzl_IiEHouP_Wn1fy2DQxQ',
+    appId: '1:151303490742:android:0e4a07bc28960edde36a17',
+    messagingSenderId: '151303490742',
+    projectId: 'fixnbuy',
+    storageBucket: 'fixnbuy.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAEC1UeEepZPYrdTFoZU0zpVZspD7XsU50',
-    appId: '1:1029516780358:ios:c29cf08e66413ad3917b47',
-    messagingSenderId: '1029516780358',
-    projectId: 'myplug-ca',
-    storageBucket: 'myplug-ca.firebasestorage.app',
-    iosBundleId: 'com.smoq.myplugCa',
+    apiKey: 'AIzaSyDYR2jW5WOJRkm6GR_hfMc-8qbI6KbrhXU',
+    appId: '1:151303490742:ios:bbdc49836e39bfa9e36a17',
+    messagingSenderId: '151303490742',
+    projectId: 'fixnbuy',
+    storageBucket: 'fixnbuy.firebasestorage.app',
+    iosBundleId: 'com.smoqdev.fixnbuy',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAEC1UeEepZPYrdTFoZU0zpVZspD7XsU50',
-    appId: '1:1029516780358:ios:c29cf08e66413ad3917b47',
-    messagingSenderId: '1029516780358',
-    projectId: 'myplug-ca',
-    storageBucket: 'myplug-ca.firebasestorage.app',
-    iosBundleId: 'com.smoq.myplugCa',
+    apiKey: 'AIzaSyDYR2jW5WOJRkm6GR_hfMc-8qbI6KbrhXU',
+    appId: '1:151303490742:ios:bbdc49836e39bfa9e36a17',
+    messagingSenderId: '151303490742',
+    projectId: 'fixnbuy',
+    storageBucket: 'fixnbuy.firebasestorage.app',
+    iosBundleId: 'com.smoqdev.fixnbuy',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCnnhr0fajpNKNWPoen8jaY78QtOQO5vao',
-    appId: '1:1029516780358:web:4c1274a3a1ff0ced917b47',
-    messagingSenderId: '1029516780358',
-    projectId: 'myplug-ca',
-    authDomain: 'myplug-ca.firebaseapp.com',
-    storageBucket: 'myplug-ca.firebasestorage.app',
+    apiKey: 'AIzaSyCtf8HVOAARQaiK_0pH25f6m7_OODqceOc',
+    appId: '1:151303490742:web:54f5f1c3967ca4bce36a17',
+    messagingSenderId: '151303490742',
+    projectId: 'fixnbuy',
+    authDomain: 'fixnbuy.firebaseapp.com',
+    storageBucket: 'fixnbuy.firebasestorage.app',
   );
 
 }

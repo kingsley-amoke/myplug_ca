@@ -1,5 +1,5 @@
-import 'package:myplug_ca/features/user/domain/repositories/user_auth.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/repositories/user_auth.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 class UserAuthService implements UserAuth {
   final UserAuth userAuthService;

@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/subscription/domain/models/highlight.dart';
+import 'package:fixnbuy/features/subscription/domain/models/highlight.dart';
 
 class SubscriptionPlan {
   final String? id;

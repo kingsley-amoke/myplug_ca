@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/profile.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class UserCard extends StatelessWidget {

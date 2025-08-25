@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
-import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/product/data/repositories/product_repo_impl.dart';
+import 'package:fixnbuy/features/product/domain/models/myplug_shop.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 class ProductProvider extends ChangeNotifier {
   final ProductRepoImpl _productRepoImpl;

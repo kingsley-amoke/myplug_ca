@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
 
 abstract class ProductRepository {
   Future<Product?> loadProduct(String productId);

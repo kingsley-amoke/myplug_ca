@@ -1,20 +1,20 @@
 // lib/features/user/views/profile_page.dart
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/core/domain/models/toast.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/product/presentation/ui/pages/my_products.dart';
-import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
-import 'package:myplug_ca/features/subscription/presentation/ui/widgets/cancel_sub.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/presentation/ui/widgets/bio_section.dart';
-import 'package:myplug_ca/features/user/presentation/ui/widgets/portfolio_section.dart';
-import 'package:myplug_ca/features/user/presentation/ui/widgets/skills_section.dart';
-import 'package:myplug_ca/features/user/presentation/ui/widgets/testimonial_section.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/images.dart';
+import 'package:fixnbuy/core/domain/models/toast.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/product/presentation/ui/pages/my_products.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/pages/subscription_page.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/widgets/cancel_sub.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/presentation/ui/widgets/bio_section.dart';
+import 'package:fixnbuy/features/user/presentation/ui/widgets/portfolio_section.dart';
+import 'package:fixnbuy/features/user/presentation/ui/widgets/skills_section.dart';
+import 'package:fixnbuy/features/user/presentation/ui/widgets/testimonial_section.dart';
 import 'package:change_case/change_case.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {

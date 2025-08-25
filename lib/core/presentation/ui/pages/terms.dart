@@ -11,11 +11,11 @@ class TermsAndConditionsPage extends StatelessWidget {
       content: [
         policyHeading("Introduction"),
         policyBody(
-          "MyPlug (\"we,\" \"us,\" or \"our\") provides a marketplace and service providers app "
+          "FixNBuy (\"we,\" \"us,\" or \"our\") provides a marketplace and service providers app "
           "(the \"App\") that connects customers with service providers. These Terms and Conditions (\"Terms\") govern your use of the App.",
         ),
         policyHeading("Definitions"),
-        policyBody("• App: The MyPlug marketplace and service providers app."),
+        policyBody("• App: The FixNBuy marketplace and service providers app."),
         policyBody("• User: Any individual using the App."),
         policyBody("• Customer: A User who requests services through the App."),
         policyBody(
@@ -31,21 +31,21 @@ class TermsAndConditionsPage extends StatelessWidget {
         policyBody(
             "• Service Providers will receive payment for their services through the App's payment system."),
         policyBody(
-            "• MyPlug may charge a commission fee for each transaction."),
+            "• FixNBuy may charge a commission fee for each transaction."),
         policyHeading("Cancellation and Refund Policy"),
         policyBody(
             "• Customers may cancel a service request at any time before the service is completed."),
         policyBody(
             "• Service Providers may cancel a service request at any time before the service is completed."),
         policyBody(
-            "• Refunds will be processed in accordance with MyPlug's refund policy."),
+            "• Refunds will be processed in accordance with FixNBuy's refund policy."),
         policyHeading("Governing Law"),
         policyBody(
           "These Terms shall be governed by and construed in accordance with the laws of the Federal Republic of Nigeria.",
         ),
         policyHeading("Contact Us"),
         policyBody("If you have any questions, please contact us at:"),
-        policyBody("Email: connect@myplugmobile.com"),
+        policyBody("Email: connect@FixNBuymobile.com"),
         policyBody("Phone: +2347017663503"),
         policyBody("Address: 81 Agwangede Extension, Kuje, Abuja."),
         policyBody("Last Updated: December 31, 2024"),

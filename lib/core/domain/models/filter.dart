@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
 
 class FilterOptions {
   final RangeValues? salaryRange;

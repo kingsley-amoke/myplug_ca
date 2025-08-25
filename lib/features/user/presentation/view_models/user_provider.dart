@@ -2,16 +2,16 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/services/location_service.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
-import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
-import 'package:myplug_ca/features/user/domain/models/location.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
-import 'package:myplug_ca/features/user/domain/models/referee.dart';
-import 'package:myplug_ca/features/user/domain/models/skill.dart';
-import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/services/location_service.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
+import 'package:fixnbuy/features/user/data/repositories/user_repo_impl.dart';
+import 'package:fixnbuy/features/user/domain/models/location.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/portfolio.dart';
+import 'package:fixnbuy/features/user/domain/models/referee.dart';
+import 'package:fixnbuy/features/user/domain/models/skill.dart';
+import 'package:fixnbuy/features/user/domain/models/transaction.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProvider extends ChangeNotifier {

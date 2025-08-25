@@ -1,10 +1,11 @@
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/core/presentation/ui/pages/search.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/constants/images.dart';
+import 'package:fixnbuy/core/presentation/ui/pages/search.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_input.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/profile.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/signin.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class HeroSection extends StatelessWidget {
@@ -37,7 +38,7 @@ class HeroSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi, ${provider.myplugUser?.lastName ?? 'Anonymous'}',
+                        'Hi, ${provider.myplugUser?.lastName?.toCapitalCase() ?? 'Anonymous'}',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,

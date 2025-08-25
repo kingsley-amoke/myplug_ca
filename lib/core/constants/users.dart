@@ -1,9 +1,9 @@
-import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/core/constants/location.dart';
-import 'package:myplug_ca/core/constants/portfolios.dart';
-import 'package:myplug_ca/core/constants/skills.dart';
-import 'package:myplug_ca/core/constants/transactions.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/core/constants/images.dart';
+import 'package:fixnbuy/core/constants/location.dart';
+import 'package:fixnbuy/core/constants/portfolios.dart';
+import 'package:fixnbuy/core/constants/skills.dart';
+import 'package:fixnbuy/core/constants/transactions.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 final List<MyplugUser> demoUsers = [
   MyplugUser(

@@ -1,8 +1,8 @@
-import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
-import 'package:myplug_ca/core/constants/users.dart';
-import 'package:myplug_ca/core/constants/shops.dart';
+import 'package:fixnbuy/core/constants/images.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
+import 'package:fixnbuy/core/constants/users.dart';
+import 'package:fixnbuy/core/constants/shops.dart';
 
 //products
 final List<Product> demoProducts = [

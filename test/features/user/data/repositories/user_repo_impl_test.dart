@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myplug_ca/core/constants/users.dart';
-import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/services/auth_service.dart';
-import 'package:myplug_ca/features/user/services/profile_service.dart';
+import 'package:fixnbuy/core/constants/users.dart';
+import 'package:fixnbuy/features/user/data/repositories/user_repo_impl.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/services/auth_service.dart';
+import 'package:fixnbuy/features/user/services/profile_service.dart';
 
 class MockAuthService extends Mock implements UserAuthService {}
 
@@ -55,8 +55,8 @@ void main() {
           password: '123456')).thenAnswer((_) async => demoUsers[0]);
 
 //ACT
-      final user = await userRepoImpl.signUp(
-          user: expectedUser, password: '123456');
+      final user =
+          await userRepoImpl.signUp(user: expectedUser, password: '123456');
 
 //ASSERT
       expect(user, expectedUser);

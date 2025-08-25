@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/ratings.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/ratings.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
 
 void main() {
   group('Config functions', () {

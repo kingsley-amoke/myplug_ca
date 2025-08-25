@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/subscription/presentation/ui/widgets/user_sub_card.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/widgets/user_sub_card.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionSection extends StatefulWidget {

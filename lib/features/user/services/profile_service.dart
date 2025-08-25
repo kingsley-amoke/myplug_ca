@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:myplug_ca/core/domain/repositories/image_upload_repo.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
-import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
+import 'package:fixnbuy/core/domain/repositories/image_upload_repo.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/portfolio.dart';
+import 'package:fixnbuy/features/user/domain/repositories/user_profile.dart';
 
 class ProfileService implements UserProfile {
   final UserProfile userProfileService;

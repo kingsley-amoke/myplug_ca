@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:fixnbuy/features/user/domain/models/transaction.dart';
 
 List<Transaction> demoTransactions = [
   Transaction(
@@ -22,14 +22,14 @@ List<Transaction> demoTransactions = [
     amount: 4000,
     date: DateTime.now().add(const Duration(days: 2)),
   ),
-   Transaction(
+  Transaction(
     id: '5',
     type: TransactionType.debit,
     description: 'Account funded successfully',
     amount: 5000,
     date: DateTime.now().add(const Duration(days: 12)),
   ),
-   Transaction(
+  Transaction(
     id: '4',
     type: TransactionType.debit,
     description: 'Account funded successfully',

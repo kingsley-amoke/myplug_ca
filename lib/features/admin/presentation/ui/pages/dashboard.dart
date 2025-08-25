@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/overview.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/product_section.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/promo_section.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/promotions_section.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/sub_plans.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/subscription_section.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/transaction_section.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/users.dart';
-import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
-import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/overview.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/product_section.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/promo_section.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/promotions_section.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/sub_plans.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/subscription_section.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/transaction_section.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/users.dart';
+import 'package:fixnbuy/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:fixnbuy/features/product/presentation/view_models/product_provider.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class DashboardItem {

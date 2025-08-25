@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/service.dart';
-import 'package:myplug_ca/features/product/presentation/ui/pages/shop.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/service.dart';
+import 'package:fixnbuy/features/product/presentation/ui/pages/shop.dart';
 
 class HomepageGrid extends StatelessWidget {
   final List<dynamic> items;

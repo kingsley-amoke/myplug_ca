@@ -1,8 +1,8 @@
-import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
-import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/features/product/domain/models/myplug_shop.dart';
+import 'package:change_case/change_case.dart';
 
 class ModularSearchFilterBar extends StatefulWidget {
   final Function(String searchTerm, Map<String, dynamic> filters) onSearch;

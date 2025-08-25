@@ -1,4 +1,4 @@
-// import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
+// import 'package:fixnbuy/features/chat/domain/models/chat_message.dart';
 
 // class Conversation {
 //   final String? id;

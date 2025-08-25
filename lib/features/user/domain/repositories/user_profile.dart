@@ -1,5 +1,5 @@
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/portfolio.dart';
 
 abstract class UserProfile {
   Future<MyplugUser?> loadUser(String userId);

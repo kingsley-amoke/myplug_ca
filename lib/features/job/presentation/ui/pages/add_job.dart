@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/nigerian_states.dart';
-import 'package:myplug_ca/core/domain/models/toast.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/custom_dropdown.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
-import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/nigerian_states.dart';
+import 'package:fixnbuy/core/domain/models/toast.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/custom_dropdown.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_input.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddJobPage extends StatefulWidget {

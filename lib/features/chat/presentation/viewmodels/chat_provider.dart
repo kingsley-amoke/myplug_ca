@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
-import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
-import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/chat/data/repositories/chat_repo_impl.dart';
+import 'package:fixnbuy/features/chat/domain/models/chat_message.dart';
+import 'package:fixnbuy/features/chat/domain/models/conversation.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:flutter/material.dart';
 
 class ChatProvider extends ChangeNotifier {
   final ChatRepoImpl _chatRepoImpl;
@@ -17,7 +18,7 @@ class ChatProvider extends ChangeNotifier {
 
   List<Conversation> filteredConversations = [];
 
-  int totalUnread = 0;
+  num totalUnread = 0;
 
   void initUserConversations(List<Conversation> conversations) {
     _userChats = conversations;
@@ -27,16 +28,23 @@ class ChatProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  int calculateTotalUnread(List<Conversation> conversations, String id) {
+  void setTotalUnread(num value) {
+    totalUnread = value;
+    print(value);
+    notifyListeners();
+  }
+
+  void calculateTotalUnread(List<Conversation> conversations, String id) {
     int total = 0;
-    for (final c in _userChats) {
+    for (final c in conversations) {
       final unread = c.unreadCounts[id] ?? 0;
       total += unread;
     }
 
-    totalUnread = total;
-    notifyListeners();
-    return total;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      totalUnread = total;
+      notifyListeners();
+    });
   }
 
   List<Conversation> searchConversations({

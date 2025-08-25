@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
-import 'package:myplug_ca/features/user/domain/repositories/user_profile.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/portfolio.dart';
+import 'package:fixnbuy/features/user/domain/repositories/user_profile.dart';
 
 class FirebaseFirestoreService implements UserProfile {
   final FirebaseFirestore _firestore;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/presentation/ui/widgets/product_card.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/product/presentation/ui/widgets/product_card.dart';
 
 class ProductGrid extends StatelessWidget {
   const ProductGrid({super.key, required this.products});

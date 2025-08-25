@@ -1,7 +1,7 @@
-import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
-import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
-import 'package:myplug_ca/features/promotion/domain/repositories/promotion_database_service.dart';
-import 'package:myplug_ca/features/promotion/domain/repositories/promotion_repo.dart';
+import 'package:fixnbuy/features/promotion/domain/models/promotion.dart';
+import 'package:fixnbuy/features/promotion/domain/models/promotion_plan.dart';
+import 'package:fixnbuy/features/promotion/domain/repositories/promotion_database_service.dart';
+import 'package:fixnbuy/features/promotion/domain/repositories/promotion_repo.dart';
 
 class PromotionRepoImpl implements PromotionRepository {
   final PromotionDatabaseService _databaseService;

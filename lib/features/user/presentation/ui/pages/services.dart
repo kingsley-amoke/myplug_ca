@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/constants/skills.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/service.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/core/constants/skills.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/service.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
 
 class Services extends StatelessWidget {
   const Services({super.key});
@@ -15,7 +15,8 @@ class Services extends StatelessWidget {
           final service = services[index];
 
           return ListTile(
-            title: Text(service.name, style: const TextStyle(color: Colors.black)),
+            title:
+                Text(service.name, style: const TextStyle(color: Colors.black)),
             leading: CircleAvatar(child: Image.asset(service.image)),
             onTap: () {
               Navigator.of(context).push(

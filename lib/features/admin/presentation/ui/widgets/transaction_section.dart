@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
-import 'package:myplug_ca/features/user/presentation/ui/widgets/transaction_item.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
+import 'package:fixnbuy/features/user/presentation/ui/widgets/transaction_item.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class TransactionsSection extends StatefulWidget {

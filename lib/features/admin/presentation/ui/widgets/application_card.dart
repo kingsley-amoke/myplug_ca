@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:change_case/change_case.dart';
-import 'package:myplug_ca/features/job/domain/models/application.dart';
+import 'package:fixnbuy/features/job/domain/models/application.dart';
 
 class JobApplicationCard extends StatelessWidget {
   final JobApplication application;

@@ -7,15 +7,15 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PolicyPage(
-      title: "About MyPlug",
+      title: "About FixNBuy",
       content: [
-        policyHeading("Welcome to MyPlug"),
+        policyHeading("Welcome to FixNBuy"),
         policyBody(
-          "MyPlug is a revolutionary service provider and marketplace app that connects customers with trusted professionals.",
+          "FixNBuy is a revolutionary service provider and marketplace app that connects customers with trusted professionals.",
         ),
         policyHeading("Our Story"),
         policyBody(
-          "We founded MyPlug to bridge the gap between customers and service providers, "
+          "We founded FixNBuy to bridge the gap between customers and service providers, "
           "creating a platform for seamless interaction and business growth.",
         ),
         policyHeading("How It Works"),
@@ -37,12 +37,12 @@ class AboutPage extends StatelessWidget {
           "Download our app today and experience the convenience of booking quality services at your fingertips.",
         ),
         policyHeading("Contact Us"),
-        policyBody("Email: connect@myplugmobile.com"),
+        policyBody("Email: connect@FixNBuymobile.com"),
         policyBody("Phone: +2347017663503"),
         const SizedBox(height: 20),
         const Center(
           child: Text(
-            "© 2025 MyPlug. All rights reserved.",
+            "© 2025 FixNBuy. All rights reserved.",
             style: TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
           ),
         ),

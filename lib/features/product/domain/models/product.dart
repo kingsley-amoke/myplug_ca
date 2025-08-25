@@ -1,6 +1,6 @@
-import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
+import 'package:fixnbuy/features/product/domain/models/myplug_shop.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
 
 class Product {
   final String? id;

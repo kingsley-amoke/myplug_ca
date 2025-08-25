@@ -1,8 +1,9 @@
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
-import 'package:myplug_ca/features/chat/presentation/ui/pages/messagepage.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/features/chat/domain/models/conversation.dart';
+import 'package:fixnbuy/features/chat/presentation/ui/pages/messagepage.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ChatItem extends StatelessWidget {
@@ -32,7 +33,7 @@ class ChatItem extends StatelessWidget {
               )
             : Text(otherUser.fullname[0].toUpperCase()),
       ),
-      title: Text(otherUser.fullname),
+      title: Text(otherUser.fullname.toCapitalCase()),
       subtitle: Text(
         subtitle,
         maxLines: 1,

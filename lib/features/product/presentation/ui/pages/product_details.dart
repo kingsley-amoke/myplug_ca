@@ -1,12 +1,12 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
-import 'package:myplug_ca/features/product/presentation/ui/widgets/review.dart';
-import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/custom_button.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
+import 'package:fixnbuy/features/product/presentation/ui/widgets/review.dart';
+import 'package:fixnbuy/features/product/presentation/view_models/product_provider.dart';
 
 import 'package:provider/provider.dart';
 import 'package:star_rating/star_rating.dart';

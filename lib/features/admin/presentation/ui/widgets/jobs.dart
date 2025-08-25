@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/job_card.dart';
-import 'package:myplug_ca/features/job/presentation/ui/pages/add_job.dart';
-import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/job_card.dart';
+import 'package:fixnbuy/features/job/presentation/ui/pages/add_job.dart';
+import 'package:fixnbuy/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:provider/provider.dart';
 
 class JobsSection extends StatefulWidget {

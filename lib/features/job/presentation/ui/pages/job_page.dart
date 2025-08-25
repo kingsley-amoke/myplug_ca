@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/constants/nigerian_states.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
-import 'package:myplug_ca/features/job/presentation/ui/widgets/job_item.dart';
-import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:fixnbuy/core/constants/nigerian_states.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/features/job/presentation/ui/widgets/job_item.dart';
+import 'package:fixnbuy/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:provider/provider.dart';
 
 class JobPage extends StatefulWidget {

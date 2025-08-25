@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/user/domain/models/skill.dart';
+import 'package:fixnbuy/features/user/domain/models/skill.dart';
 
 //service categories
 final List<Skill> services = [

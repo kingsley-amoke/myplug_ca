@@ -1,7 +1,7 @@
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
-import 'package:myplug_ca/features/subscription/domain/repositories/subscription_repo.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/subscription/services/database_service.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription_plan.dart';
+import 'package:fixnbuy/features/subscription/domain/repositories/subscription_repo.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/services/database_service.dart';
 
 class SubscriptionRepoImpl extends SubscriptionRepository {
   final SubscriptionDatabaseService _databaseService;

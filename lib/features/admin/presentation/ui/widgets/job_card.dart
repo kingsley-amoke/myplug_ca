@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/presentation/ui/pages/edit_job.dart';
-import 'package:myplug_ca/features/job/presentation/ui/pages/job_details_page.dart';
-import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/presentation/ui/pages/edit_job.dart';
+import 'package:fixnbuy/features/job/presentation/ui/pages/job_details_page.dart';
+import 'package:fixnbuy/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class JobCard extends StatelessWidget {

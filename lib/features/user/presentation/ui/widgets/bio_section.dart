@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/section_header.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/section_header.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class BioSection extends StatefulWidget {

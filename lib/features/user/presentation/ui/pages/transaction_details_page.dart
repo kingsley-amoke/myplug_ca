@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/user/domain/models/transaction.dart';
 
 class TransactionDetailsPage extends StatelessWidget {
   final Transaction transaction;

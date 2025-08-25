@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/product/domain/models/myplug_shop.dart';
+import 'package:fixnbuy/features/product/domain/models/myplug_shop.dart';
 
 //shop categories
 

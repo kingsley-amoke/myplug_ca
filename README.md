@@ -1,4 +1,4 @@
-# myplug_ca
+# fixnbuy
 
 A multipurpose app for jobs, marketplace, user interactions.
 

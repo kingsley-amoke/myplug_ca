@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/nigerian_states.dart';
-import 'package:myplug_ca/core/domain/models/toast.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
-import 'package:myplug_ca/features/chat/presentation/ui/pages/messagepage.dart';
-import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
-import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
-import 'package:myplug_ca/features/user/domain/models/skill.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/profile.dart';
-import 'package:myplug_ca/features/user/presentation/ui/widgets/user_card.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/nigerian_states.dart';
+import 'package:fixnbuy/core/domain/models/toast.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
+import 'package:fixnbuy/features/chat/presentation/ui/pages/messagepage.dart';
+import 'package:fixnbuy/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/pages/subscription_page.dart';
+import 'package:fixnbuy/features/user/domain/models/skill.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/profile.dart';
+import 'package:fixnbuy/features/user/presentation/ui/widgets/user_card.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class Service extends StatefulWidget {

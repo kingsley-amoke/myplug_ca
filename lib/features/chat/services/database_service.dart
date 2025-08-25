@@ -1,6 +1,6 @@
-import 'package:myplug_ca/features/chat/domain/models/chat_message.dart';
-import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
-import 'package:myplug_ca/features/chat/domain/repositories/chat_repository.dart';
+import 'package:fixnbuy/features/chat/domain/models/chat_message.dart';
+import 'package:fixnbuy/features/chat/domain/models/conversation.dart';
+import 'package:fixnbuy/features/chat/domain/repositories/chat_repository.dart';
 
 class ChatDatabaseService extends ChatRepository {
   final ChatRepository _databaseService;

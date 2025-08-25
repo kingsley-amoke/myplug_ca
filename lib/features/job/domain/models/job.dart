@@ -1,5 +1,5 @@
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
 
 class Job {
   final String? id;

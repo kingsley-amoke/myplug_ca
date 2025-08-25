@@ -1,10 +1,10 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/product_card.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/presentation/ui/pages/product_details.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/images.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/product_card.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/product/presentation/ui/pages/product_details.dart';
 
 class MyProductCard extends StatelessWidget {
   const MyProductCard({super.key, required this.product});

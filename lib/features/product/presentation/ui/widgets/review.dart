@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/domain/models/rating.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:star_rating/star_rating.dart';
 

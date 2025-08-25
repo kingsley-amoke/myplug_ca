@@ -10,7 +10,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       title: "Privacy Policy",
       content: [
         policyBody(
-          "MyPlug (\"we,\" \"us,\" or \"our\") provides a marketplace and service provider app (the \"App\") "
+          "FixNBuy (\"we,\" \"us,\" or \"our\") provides a marketplace and service provider app (the \"App\") "
           "that connects customers with service providers. This Privacy Policy explains how we collect, "
           "use, share, and protect personal information through the App.",
         ),
@@ -47,9 +47,9 @@ class PrivacyPolicyPage extends StatelessWidget {
         policyBody("• Firewalls."),
         policyBody("• Access controls."),
         policyHeading("Contact Us"),
-        policyBody("MyPlug Mobile App"),
+        policyBody("FixNBuy Mobile App"),
         policyBody("81 Agwangede Extension, Kuje, Abuja."),
-        policyBody("Email: connect@myplugmobile.com"),
+        policyBody("Email: connect@FixNBuymobile.com"),
         policyBody("Phone: +2347017663503"),
         policyBody("Last Updated: 31 December 2024"),
       ],

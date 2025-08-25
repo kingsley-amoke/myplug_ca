@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/stat_card.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/stat_card.dart';
 
 Widget overviewSection({
   required int noOfUsers,

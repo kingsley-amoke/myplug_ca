@@ -1,6 +1,6 @@
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
-import 'package:myplug_ca/features/subscription/domain/repositories/subscription_repo.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription_plan.dart';
+import 'package:fixnbuy/features/subscription/domain/repositories/subscription_repo.dart';
 
 class SubscriptionDatabaseService extends SubscriptionRepository {
   final SubscriptionRepository _databaseService;

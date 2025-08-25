@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/modular_search_filter_bar.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/chat/domain/models/conversation.dart';
-import 'package:myplug_ca/features/chat/presentation/ui/widgets/chat_item.dart';
-import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/chat/domain/models/conversation.dart';
+import 'package:fixnbuy/features/chat/presentation/ui/widgets/chat_item.dart';
+import 'package:fixnbuy/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ConversationListScreen extends StatelessWidget {
@@ -29,6 +29,8 @@ class ConversationListScreen extends StatelessWidget {
 
           final conversations = snap.data!;
           repo.initUserConversations(conversations);
+
+          // repo.calculateTotalUnread(conversations, userId);
 
           if (conversations.isEmpty) {
             return const Center(child: Text('No conversations yet'));
@@ -61,11 +63,6 @@ class ConversationListScreen extends StatelessWidget {
                         thickness: 0.3,
                       ),
                       itemBuilder: (context, i) {
-                        repo.calculateTotalUnread(
-                          conversations,
-                          userId,
-                        );
-
                         final c = provider.filteredConversations[i];
 
                         final other =

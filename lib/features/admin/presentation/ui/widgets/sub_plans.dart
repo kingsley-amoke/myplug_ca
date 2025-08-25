@@ -1,9 +1,9 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/domain/models/toast.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/domain/models/toast.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription_plan.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionAdminPage extends StatelessWidget {

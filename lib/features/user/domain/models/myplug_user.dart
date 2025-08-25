@@ -1,12 +1,12 @@
-import 'package:myplug_ca/core/domain/models/rating.dart';
-import 'package:myplug_ca/features/user/domain/models/referee.dart';
+import 'package:fixnbuy/core/domain/models/rating.dart';
+import 'package:fixnbuy/features/user/domain/models/referee.dart';
 
-import 'package:myplug_ca/features/user/domain/models/portfolio.dart';
+import 'package:fixnbuy/features/user/domain/models/portfolio.dart';
 
-import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:fixnbuy/features/user/domain/models/transaction.dart';
 
-import 'package:myplug_ca/features/user/domain/models/location.dart';
-import 'package:myplug_ca/features/user/domain/models/skill.dart';
+import 'package:fixnbuy/features/user/domain/models/location.dart';
+import 'package:fixnbuy/features/user/domain/models/skill.dart';
 
 class MyplugUser {
   final String? id;

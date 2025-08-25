@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/admin/presentation/ui/widgets/application_card.dart';
-import 'package:myplug_ca/features/job/presentation/viewmodels/job_provider.dart';
+import 'package:fixnbuy/features/admin/presentation/ui/widgets/application_card.dart';
+import 'package:fixnbuy/features/job/presentation/viewmodels/job_provider.dart';
 import 'package:provider/provider.dart';
 
 class ApplicationSection extends StatelessWidget {

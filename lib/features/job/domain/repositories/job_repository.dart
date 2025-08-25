@@ -1,5 +1,5 @@
-import 'package:myplug_ca/features/job/domain/models/application.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/domain/models/application.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
 
 abstract class JobRepository {
   Future<Job?> createJob(Job job);

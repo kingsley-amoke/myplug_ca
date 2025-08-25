@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
+import 'package:fixnbuy/features/promotion/domain/models/promotion_plan.dart';
 
 class Promotion {
   final String? id;

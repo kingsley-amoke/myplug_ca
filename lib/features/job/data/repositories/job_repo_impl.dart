@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:myplug_ca/features/job/domain/models/application.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/repositories/job_repository.dart';
-import 'package:myplug_ca/features/job/services/job_database_service.dart';
+import 'package:fixnbuy/features/job/domain/models/application.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/domain/repositories/job_repository.dart';
+import 'package:fixnbuy/features/job/services/job_database_service.dart';
 
 class JobRepoImpl extends JobRepository {
   final JobDatabaseService _jobDatabaseService;

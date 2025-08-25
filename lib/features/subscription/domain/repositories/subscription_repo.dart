@@ -1,5 +1,5 @@
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription_plan.dart';
 
 abstract class SubscriptionRepository {
   Future<void> createSubscription(Subscription subscription);

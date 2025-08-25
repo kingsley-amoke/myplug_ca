@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 abstract class UserRepo {
   MyplugUser? get currentUser;
@@ -7,7 +7,8 @@ abstract class UserRepo {
 
   Future<MyplugUser?> signIn({required String email, required String password});
 
-  Future<MyplugUser?> signUp({required MyplugUser user, required String password});
+  Future<MyplugUser?> signUp(
+      {required MyplugUser user, required String password});
 
   Future<void> logout();
 

@@ -1,3 +1,4 @@
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 
 class SettingsUserCard extends StatelessWidget {
@@ -75,7 +76,7 @@ class SettingsUserCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            userName!,
+                            userName!.toCapitalCase(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: mediaQueryHeight / 30,

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myplug_ca/core/constants/users.dart';
-import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/constants/users.dart';
+import 'package:fixnbuy/features/user/data/repositories/user_repo_impl.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 
 class MockUserRepoImpl extends Mock implements UserRepoImpl {}
 
@@ -26,9 +26,8 @@ void main() {
             password: '123456',
           )).thenAnswer((_) async => demoUser);
 
-      when(() => mockUserRepoImpl.signUp(
-         
-          password: '123456', user: demoUser)).thenAnswer((_) async => demoUser);
+      when(() => mockUserRepoImpl.signUp(password: '123456', user: demoUser))
+          .thenAnswer((_) async => demoUser);
 
       // Act
       await provider.signIn(email: 'smoq@gmail.com', password: '123456');

@@ -3,17 +3,17 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/images.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/images.dart';
 
-import 'package:myplug_ca/core/constants/validators.dart';
-import 'package:myplug_ca/core/domain/models/toast.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_input.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/core/constants/validators.dart';
+import 'package:fixnbuy/core/domain/models/toast.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/custom_button.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_input.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -41,15 +41,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final userProvider = context.read<UserProvider>();
     File? imageFile = await pickImage();
 
-    if (imageFile != null) {
-      userProvider.uploadProfilePic(imageFile).then((res) {
-        if (res) {
-          showToast(message: 'Success', type: ToastType.success);
-        } else {
-          showToast(message: 'Something went wrong', type: ToastType.error);
-        }
-      });
-    }
+    userProvider.uploadProfilePic(imageFile!).then((res) {
+      if (res) {
+        showToast(message: 'Success', type: ToastType.success);
+      } else {
+        showToast(message: 'Something went wrong', type: ToastType.error);
+      }
+    });
     setState(() {
       isUploading = false;
     });

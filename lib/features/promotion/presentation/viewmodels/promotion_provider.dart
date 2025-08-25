@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/features/promotion/data/repositories/promotion_repo_impl.dart';
-import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
-import 'package:myplug_ca/features/promotion/domain/models/promotion_plan.dart';
+import 'package:fixnbuy/features/promotion/data/repositories/promotion_repo_impl.dart';
+import 'package:fixnbuy/features/promotion/domain/models/promotion.dart';
+import 'package:fixnbuy/features/promotion/domain/models/promotion_plan.dart';
 
 class PromotionProvider extends ChangeNotifier {
   final PromotionRepoImpl _promotionRepoImpl;

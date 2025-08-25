@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
 
 class CancelSubscriptionCard extends StatelessWidget {
   final Subscription subscription;

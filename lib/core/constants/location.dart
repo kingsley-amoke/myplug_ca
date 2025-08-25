@@ -1,4 +1,4 @@
-import 'package:myplug_ca/features/user/domain/models/location.dart';
+import 'package:fixnbuy/features/user/domain/models/location.dart';
 
 final UserLocation demoLocation = UserLocation(
   latitude: 23.45322,

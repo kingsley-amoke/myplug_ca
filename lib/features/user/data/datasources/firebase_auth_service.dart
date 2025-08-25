@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:myplug_ca/features/user/domain/repositories/user_auth.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/repositories/user_auth.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 class FirebaseAuthService implements UserAuth {
   final FirebaseAuth _authInstance;

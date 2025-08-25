@@ -1,5 +1,5 @@
-import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/models/job_type.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/domain/models/job_type.dart';
 
 final List<Job> demoJobs = [
   Job(

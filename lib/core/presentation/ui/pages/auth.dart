@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/bottom_nav.dart';
-import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
-import 'package:myplug_ca/features/promotion/presentation/viewmodels/promotion_provider.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/bottom_nav.dart';
+import 'package:fixnbuy/features/product/presentation/view_models/product_provider.dart';
+import 'package:fixnbuy/features/promotion/presentation/viewmodels/promotion_provider.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/signin.dart';
 import 'package:provider/provider.dart';
 
 class Auth extends StatelessWidget {

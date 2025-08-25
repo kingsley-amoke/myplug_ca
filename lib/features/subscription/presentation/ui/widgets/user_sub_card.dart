@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
 
 class UserSubCard extends StatefulWidget {
   final Subscription subscription;

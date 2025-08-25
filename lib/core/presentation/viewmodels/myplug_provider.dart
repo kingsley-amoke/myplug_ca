@@ -1,15 +1,15 @@
 import 'package:flutter/widgets.dart';
-import 'package:myplug_ca/features/chat/data/repositories/chat_repo_impl.dart';
-import 'package:myplug_ca/features/job/data/repositories/job_repo_impl.dart';
-import 'package:myplug_ca/features/product/data/repositories/product_repo_impl.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/promotion/data/repositories/promotion_repo_impl.dart';
-import 'package:myplug_ca/features/promotion/domain/models/promotion.dart';
-import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/user/data/repositories/user_repo_impl.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
-import 'package:myplug_ca/features/user/domain/models/transaction.dart';
+import 'package:fixnbuy/features/chat/data/repositories/chat_repo_impl.dart';
+import 'package:fixnbuy/features/job/data/repositories/job_repo_impl.dart';
+import 'package:fixnbuy/features/product/data/repositories/product_repo_impl.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/promotion/data/repositories/promotion_repo_impl.dart';
+import 'package:fixnbuy/features/promotion/domain/models/promotion.dart';
+import 'package:fixnbuy/features/subscription/data/repositories/subscription_repo_impl.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/user/data/repositories/user_repo_impl.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/transaction.dart';
 import 'package:uuid/uuid.dart';
 
 class MyplugProvider extends ChangeNotifier {

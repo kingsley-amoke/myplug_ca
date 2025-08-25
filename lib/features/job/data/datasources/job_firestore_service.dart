@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:myplug_ca/features/job/domain/models/application.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
-import 'package:myplug_ca/features/job/domain/repositories/job_repository.dart';
+import 'package:fixnbuy/features/job/domain/models/application.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
+import 'package:fixnbuy/features/job/domain/repositories/job_repository.dart';
 
 class JobFirestoreService extends JobRepository {
   final FirebaseFirestore _firestore;

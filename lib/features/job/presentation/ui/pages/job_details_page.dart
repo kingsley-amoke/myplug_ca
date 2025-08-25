@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/constants/images.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/custom_button.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
-import 'package:myplug_ca/features/job/domain/models/job.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/constants/images.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/custom_button.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/features/job/domain/models/job.dart';
 import 'package:change_case/change_case.dart';
-import 'package:myplug_ca/features/job/presentation/ui/pages/apply_job.dart';
+import 'package:fixnbuy/features/job/presentation/ui/pages/apply_job.dart';
 
 class JobDetailsPage extends StatelessWidget {
   final Job job;

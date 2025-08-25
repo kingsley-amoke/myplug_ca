@@ -1,12 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fixnbuy/features/chat/domain/models/conversation.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/pages/home.dart';
-import 'package:myplug_ca/core/presentation/ui/pages/settings.dart';
-import 'package:myplug_ca/features/chat/presentation/ui/pages/chatpage.dart';
-import 'package:myplug_ca/features/chat/presentation/viewmodels/chat_provider.dart';
-import 'package:myplug_ca/features/product/presentation/ui/pages/products_page.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/wallet.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/presentation/ui/pages/home.dart';
+import 'package:fixnbuy/core/presentation/ui/pages/settings.dart';
+import 'package:fixnbuy/features/chat/presentation/ui/pages/chatpage.dart';
+import 'package:fixnbuy/features/chat/presentation/viewmodels/chat_provider.dart';
+import 'package:fixnbuy/features/product/presentation/ui/pages/products_page.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/wallet.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNav extends StatefulWidget {
@@ -80,24 +82,38 @@ class _BottomNavState extends State<BottomNav> {
                         : Theme.of(context).unselectedWidgetColor,
                   ),
                 ),
-                Positioned(
-                  right: 2,
-                  child:
-                      Consumer<ChatProvider>(builder: (context, provider, _) {
-                    int unread = provider.totalUnread;
+                StreamBuilder<List<Conversation>>(
+                  stream: context
+                      .read<ChatProvider>()
+                      .conversationsFor(FirebaseAuth.instance.currentUser!.uid),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return Container();
 
-                    return unread > 0
-                        ? CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.green,
-                            child: Text(
-                              unread.toString(),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 12),
-                            ),
-                          )
-                        : Container();
-                  }),
+                    final conversations = snapshot.data!;
+
+                    int total = 0;
+                    for (final c in conversations) {
+                      final unread = c.unreadCounts[
+                              FirebaseAuth.instance.currentUser!.uid] ??
+                          0;
+                      total += unread;
+                    }
+
+                    return Positioned(
+                      right: 2,
+                      child: total > 0
+                          ? CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.green,
+                              child: Text(
+                                total.toString(),
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 12),
+                              ),
+                            )
+                          : Container(),
+                    );
+                  },
                 ),
               ],
             ),

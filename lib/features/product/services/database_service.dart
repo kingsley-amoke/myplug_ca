@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:myplug_ca/core/domain/repositories/image_upload_repo.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/domain/repositories/product_repository.dart';
+import 'package:fixnbuy/core/domain/repositories/image_upload_repo.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/product/domain/repositories/product_repository.dart';
 
 class ProductDatabaseService implements ProductRepository {
   final ProductRepository databaseService;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/my_appbar.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
 
 class PolicyPage extends StatelessWidget {
   final String title;

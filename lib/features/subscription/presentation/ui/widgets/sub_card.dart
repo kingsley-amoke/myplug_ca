@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/subscription/presentation/ui/pages/subscription_page.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/pages/subscription_page.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubCard extends StatelessWidget {

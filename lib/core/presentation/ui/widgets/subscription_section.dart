@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:myplug_ca/features/subscription/presentation/ui/widgets/sub_card.dart';
-import 'package:myplug_ca/features/subscription/presentation/ui/widgets/user_sub_card.dart';
-import 'package:myplug_ca/features/subscription/presentation/viewmodels/subscription_provider.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/widgets/sub_card.dart';
+import 'package:fixnbuy/features/subscription/presentation/ui/widgets/user_sub_card.dart';
+import 'package:fixnbuy/features/subscription/presentation/viewmodels/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionSection extends StatelessWidget {

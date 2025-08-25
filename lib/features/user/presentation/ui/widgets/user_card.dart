@@ -1,6 +1,6 @@
 // lib/core/presentation/ui/widgets/user_card.dart
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 class UserCard extends StatelessWidget {
   final MyplugUser user;

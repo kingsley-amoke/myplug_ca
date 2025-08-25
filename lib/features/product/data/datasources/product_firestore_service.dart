@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/domain/repositories/product_repository.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/product/domain/repositories/product_repository.dart';
 
 class ProductFirestoreService implements ProductRepository {
   final FirebaseFirestore _firestore;

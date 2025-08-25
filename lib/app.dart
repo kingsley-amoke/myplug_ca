@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/core/config/theme.dart';
-import 'package:myplug_ca/core/presentation/ui/pages/auth.dart';
-import 'package:myplug_ca/core/presentation/ui/widgets/bottom_nav.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/signin.dart';
-import 'package:myplug_ca/features/user/presentation/ui/pages/signup.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/core/config/theme.dart';
+import 'package:fixnbuy/core/presentation/ui/pages/auth.dart';
+import 'package:fixnbuy/core/presentation/ui/widgets/bottom_nav.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/signin.dart';
+import 'package:fixnbuy/features/user/presentation/ui/pages/signup.dart';
 import 'package:toastification/toastification.dart';
 
 class MyApp extends StatelessWidget {

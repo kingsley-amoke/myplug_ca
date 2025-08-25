@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:myplug_ca/features/subscription/data/repositories/subscription_repo_impl.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
-import 'package:myplug_ca/features/user/domain/models/myplug_user.dart';
+import 'package:fixnbuy/features/subscription/data/repositories/subscription_repo_impl.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription_plan.dart';
+import 'package:fixnbuy/features/user/domain/models/myplug_user.dart';
 
 class SubscriptionProvider extends ChangeNotifier {
   final SubscriptionRepoImpl _subscriptionRepoImpl;

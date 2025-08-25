@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription.dart';
-import 'package:myplug_ca/features/subscription/domain/models/subscription_plan.dart';
-import 'package:myplug_ca/features/subscription/domain/repositories/subscription_repo.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription.dart';
+import 'package:fixnbuy/features/subscription/domain/models/subscription_plan.dart';
+import 'package:fixnbuy/features/subscription/domain/repositories/subscription_repo.dart';
 
 class FirestoreSubscriptionService implements SubscriptionRepository {
   final FirebaseFirestore _firestore;

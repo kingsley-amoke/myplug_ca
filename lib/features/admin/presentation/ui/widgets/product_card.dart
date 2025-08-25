@@ -1,13 +1,13 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
-import 'package:myplug_ca/core/config/config.dart';
-import 'package:myplug_ca/features/product/domain/models/product.dart';
-import 'package:myplug_ca/features/product/presentation/ui/pages/edit_product.dart';
-import 'package:myplug_ca/features/product/presentation/ui/pages/product_details.dart';
-import 'package:myplug_ca/features/product/presentation/view_models/product_provider.dart';
-import 'package:myplug_ca/features/promotion/presentation/ui/pages/promotion_page.dart';
-import 'package:myplug_ca/features/promotion/presentation/viewmodels/promotion_provider.dart';
-import 'package:myplug_ca/features/user/presentation/view_models/user_provider.dart';
+import 'package:fixnbuy/core/config/config.dart';
+import 'package:fixnbuy/features/product/domain/models/product.dart';
+import 'package:fixnbuy/features/product/presentation/ui/pages/edit_product.dart';
+import 'package:fixnbuy/features/product/presentation/ui/pages/product_details.dart';
+import 'package:fixnbuy/features/product/presentation/view_models/product_provider.dart';
+import 'package:fixnbuy/features/promotion/presentation/ui/pages/promotion_page.dart';
+import 'package:fixnbuy/features/promotion/presentation/viewmodels/promotion_provider.dart';
+import 'package:fixnbuy/features/user/presentation/view_models/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
