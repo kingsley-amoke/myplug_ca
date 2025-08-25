@@ -38,7 +38,7 @@ class PromotionProvider extends ChangeNotifier {
   }
 
   void sortPlans() {
-    plans.sort((a, b) => a.price.compareTo(b.price));
+    plans.sort((a, b) => a.duration.compareTo(b.duration));
     notifyListeners();
   }
 

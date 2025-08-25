@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fixnbuy/core/presentation/ui/widgets/modular_search_filter_bar.dart';
 import 'package:fixnbuy/core/presentation/ui/widgets/my_appbar.dart';
@@ -16,7 +17,8 @@ class ConversationListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final repo = context.read<ChatProvider>();
 
-    final userId = context.read<UserProvider>().myplugUser!.id!;
+    final userId = context.read<UserProvider>().myplugUser?.id! ??
+        FirebaseAuth.instance.currentUser!.uid;
 
     return Scaffold(
       appBar: myAppbar(context, title: 'Chats', implyLeading: false),

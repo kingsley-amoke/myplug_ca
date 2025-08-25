@@ -16,19 +16,13 @@ class PromotionsSection extends StatelessWidget {
         builder: (context, provider, _) {
           return provider.products.isEmpty
               ? const Center(child: Text("No products available"))
-              : Column(
-                  children: [
-                    Flexible(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(12),
-                        itemCount: provider.promotedProducts.length,
-                        itemBuilder: (context, index) {
-                          Product product = provider.promotedProducts[index];
-                          return ProductCard(product: product);
-                        },
-                      ),
-                    ),
-                  ],
+              : ListView.builder(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: provider.promotedProducts.length,
+                  itemBuilder: (context, index) {
+                    Product product = provider.promotedProducts[index];
+                    return ProductCard(product: product);
+                  },
                 );
         },
       ),

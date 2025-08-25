@@ -1,4 +1,5 @@
 import 'package:change_case/change_case.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fixnbuy/features/chat/domain/models/conversation.dart';
 import 'package:fixnbuy/features/chat/presentation/ui/pages/messagepage.dart';
@@ -20,7 +21,8 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final me = context.read<UserProvider>().myplugUser!.id!;
+    final me = context.read<UserProvider>().myplugUser?.id ??
+        FirebaseAuth.instance.currentUser!.uid;
     final unread = conversation.unreadCounts[me] ?? 0;
     final typing = conversation.typing[otherUser.id] == true;
     final subtitle = typing ? 'typing…' : (conversation.lastMessage ?? '');

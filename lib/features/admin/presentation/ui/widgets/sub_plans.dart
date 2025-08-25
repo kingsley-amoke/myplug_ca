@@ -13,16 +13,14 @@ class SubscriptionAdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<SubscriptionProvider>(builder: (context, provider, _) {
-        return Flexible(
-          child: ListView.builder(
-              itemCount: provider.plans.length,
-              itemBuilder: (context, index) {
-                final plan = provider.plans[index];
+        return ListView.builder(
+            itemCount: provider.plans.length,
+            itemBuilder: (context, index) {
+              final plan = provider.plans[index];
 
-                return EditableSubscriptionPlanCard(
-                    plan: plan, onSave: (plan) {});
-              }),
-        );
+              return EditableSubscriptionPlanCard(
+                  plan: plan, onSave: (plan) {});
+            });
       }),
     );
   }

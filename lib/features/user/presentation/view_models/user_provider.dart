@@ -210,18 +210,18 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> getLocation() async {
     allUsers = await _userRepo.loadAllUsers();
-
     filteredUsers = allUsers;
-    final locationData = await LocationService.getUserLocationInfo();
-    if (locationData != null) {
-      userLocation = UserLocation(
-        latitude: locationData['latitude'],
-        longitude: locationData['longitude'],
-      );
+    if (FirebaseAuth.instance.currentUser != null) {
+      _user = await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
+      notifyListeners();
 
-      if (FirebaseAuth.instance.currentUser != null) {
-        _user =
-            await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
+      final locationData = await LocationService.getUserLocationInfo();
+      if (locationData != null) {
+        userLocation = UserLocation(
+          latitude: locationData['latitude'],
+          longitude: locationData['longitude'],
+        );
+
         if (userLocation != null) {
           final fullAddress = await getAddressFromCordinates(
             latitude: userLocation!.latitude,
@@ -241,16 +241,15 @@ class UserProvider extends ChangeNotifier {
           _user = _user?.copyWith(location: userLocation);
           _userRepo.updateProfile(_user!);
         }
-      }
-    } else {
-      if (FirebaseAuth.instance.currentUser != null) {
-        _user =
-            await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
+      } else {
+        if (FirebaseAuth.instance.currentUser != null) {
+          _user =
+              await _userRepo.loadUser(FirebaseAuth.instance.currentUser!.uid);
 
-        userLocation = _user!.location;
+          userLocation = _user!.location;
+        }
       }
     }
-
     notifyListeners();
   }
 
